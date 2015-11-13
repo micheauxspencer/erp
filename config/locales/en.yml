@@ -1,0 +1,69 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  hello: "Hello world"
+
+  en:
+  activerecord:
+    attributes:
+      student:
+        first_name: First Name
+        last_name: Family Name
+        grade_id: Grade
+        sin: "SIN #"
+        birthdate: Date of Birth
+        trans_req: Transportation Required?
+        tax_rec_req: Tax Reciept Required?
+        route_id: Route
+        route_fee: Route Fee
+        pick_up: Pick Up
+        drop_off: Drop Off
+        sibling_id: Sibling
+        f_first_name: Father's First Name
+        f_last_name: Father's Last Name
+        f_street: Street Adreess
+        f_city: City
+        f_province: Province
+        f_postal: Postal Code
+        f_phone: Home Phone
+        f_cell: Cell Phone
+        f_work: Work Phone
+        f_email: Email Address
+        m_first_name: Mother's First Name
+        m_last_name: Mother's Last Name
+        m_street: Street Address
+        m_city: City
+        m_province: Province
+        m_postal: Postal Code
+        m_phone: Home Phone
+        m_cell: Cell Phone
+        m_work: Work Phone
+        m_email: Email Address
+        emerg_1_name: Name
+        emerg_1_phone: Phone
+        emerg_1_relation: Relation
+        emerg_2_name: Name
+        emerg_2_phone: Phone
+        emerg_2_relation: Relation
+        healthcard: Ontario Health Card Number
+        doctor_name: Doctor's Name
+        doctor_phone: Phone

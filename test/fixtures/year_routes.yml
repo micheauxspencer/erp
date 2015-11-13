@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  acedemic_year_id: MyString
+  route_id: MyString
+
+two:
+  acedemic_year_id: MyString
+  route_id: MyString

@@ -1,0 +1,16 @@
+<%= simple_form_for(@acedemic_year) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :year, as: :select, collection: Time.now.year-3..Time.now.year+2, :selected=>(f.object.year || Time.now.year) %>
+    <%= f.input :start_date, as: :date_picker %>
+    <%= f.input :end_date, as: :date_picker %>
+    <%= f.association :grades, as: :check_boxes, label_method: :name, value_method: :id, include_blank: false %>
+    <%= f.association :fees, as: :check_boxes, :label_method => lambda { |fee| "#{fee.name} | #{fee.amount}" }, value_method: :id, include_blank: false %>
+    <%= f.association :routes, collection: Route.where(:status => true), label_method: :name, value_method: :id, include_blank: false %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

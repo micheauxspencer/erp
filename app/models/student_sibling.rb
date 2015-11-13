@@ -1,0 +1,27 @@
+class StudentSibling < ActiveRecord::Base
+  belongs_to :student, :foreign_key => "student_id", :class_name => "Student" 
+  belongs_to :sibling, :foreign_key => "sibling_id",  :class_name => 'Student' 
+
+  after_create :create_inverse, unless: :has_inverse?
+  after_destroy :destroy_inverses, if: :has_inverse?
+
+  def create_inverse
+    self.class.create(inverse_student_sibling_options)
+  end
+
+  def destroy_inverses
+    inverses.destroy_all
+  end
+
+  def has_inverse?
+    self.class.exists?(inverse_student_sibling_options)
+  end
+
+  def inverses
+    self.class.where(inverse_student_sibling_options)
+  end
+
+  def inverse_student_sibling_options
+    { sibling_id: student_id, student_id: sibling_id }
+  end
+end

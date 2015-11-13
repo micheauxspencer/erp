@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+    <% if @acedemic_year.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@acedemic_year.errors.count, "error") %> prohibited this student from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @acedemic_year.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+<p>
+  <strong>Year:</strong>
+  <%= @acedemic_year.year %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @acedemic_year.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @acedemic_year.end_date %>
+</p>
+
+<h2>Grades</h2>
+<ul>
+<% @acedemic_year.grades.each do |grade| %>
+  <li><%= grade.name %></li>
+<% end %>
+</ul>
+
+<h2>Fees</h2>
+<ul>
+<% @acedemic_year.fees.each do |fee| %>
+  <li><%= fee.name %> (<%= fee.amount %>)</li>
+<% end %>
+</ul>
+
+<%= link_to 'Edit', edit_acedemic_year_path(@acedemic_year) %> |
+<%= link_to 'Back', acedemic_years_path %>
