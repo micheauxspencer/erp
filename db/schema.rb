@@ -102,26 +102,12 @@ ActiveRecord::Schema.define(version: 20150810012316) do
     t.datetime "updated_at"
   end
 
-  create_table "models", force: true do |t|
-    t.string   "Fee"
-    t.string   "name"
-    t.float    "amount"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "routes", force: true do |t|
     t.string   "name"
     t.string   "details"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "status"
-  end
-
-  create_table "statuses", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "student_siblings", force: true do |t|
@@ -134,15 +120,13 @@ ActiveRecord::Schema.define(version: 20150810012316) do
   create_table "students", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "grade_id"
     t.integer  "sin"
     t.date     "birthdate"
     t.boolean  "trans_req"
     t.boolean  "tax_rec_req"
-    t.string   "route_id"
     t.string   "route_fee"
-    t.string   "pick_up"
-    t.string   "drop_off"
+    t.boolean  "pick_up"
+    t.boolean  "drop_off"
     t.integer  "sibling_id",           limit: 255
     t.string   "f_first_name"
     t.string   "f_last_name"
@@ -165,7 +149,6 @@ ActiveRecord::Schema.define(version: 20150810012316) do
     t.boolean  "enrolled"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
     t.string   "middle_name"
     t.string   "last_shool_attended"
     t.string   "last_school_phone"
@@ -239,13 +222,6 @@ ActiveRecord::Schema.define(version: 20150810012316) do
   create_table "year_routes", force: true do |t|
     t.integer  "acedemic_year_id"
     t.integer  "route_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "yeargrades", force: true do |t|
-    t.integer  "acedemic_year_id"
-    t.integer  "grade_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
