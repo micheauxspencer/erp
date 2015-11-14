@@ -62,6 +62,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    annotate (2.6.10)
+      activerecord (>= 3.2, <= 4.3)
+      rake (~> 10.4)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (5.0.1.20140414130214)
@@ -206,6 +209,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
+  annotate
   cancancan
   coffee-rails (~> 4.0.0)
   datetimepicker-rails!

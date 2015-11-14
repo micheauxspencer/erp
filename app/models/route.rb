@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: routes
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  details    :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#  status     :boolean
+#
+
 class Route < ActiveRecord::Base
 
 	has_many :year_routes, dependent: :restrict_with_error

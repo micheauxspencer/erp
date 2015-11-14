@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: acedemic_years
+#
+#  id         :integer          not null, primary key
+#  year       :integer
+#  start_date :date
+#  end_date   :date
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class AcedemicYear < ActiveRecord::Base
 	has_many :year_grades, dependent: :restrict_with_error
 	has_many :grades, through: :year_grades

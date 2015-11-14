@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: student_siblings
+#
+#  id         :integer          not null, primary key
+#  student_id :integer
+#  sibling_id :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class StudentSibling < ActiveRecord::Base
   belongs_to :student, :foreign_key => "student_id", :class_name => "Student" 
   belongs_to :sibling, :foreign_key => "sibling_id",  :class_name => 'Student' 
