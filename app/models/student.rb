@@ -70,6 +70,7 @@ class Student < ActiveRecord::Base
 
 	belongs_to :grade
 	belongs_to :route
+  belongs_to :class_name
 
   has_many :student_siblings, :foreign_key => "student_id", :class_name => "StudentSibling"
   has_many :siblings, :through => :student_siblings, dependent: :destroy

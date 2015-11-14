@@ -19,6 +19,9 @@ class Term < ActiveRecord::Base
   has_many :term_grades
   has_many :grades, through: :term_grades
 
+  has_many :term_classes
+  has_many :class_names, through: :term_classes
+
   validates :name, presence: true
 
 end

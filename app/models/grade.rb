@@ -18,5 +18,7 @@ class Grade < ActiveRecord::Base
   has_many :term_grades
   has_many :terms, through: :term_grades
 
+  has_many :class_names
+
  	accepts_nested_attributes_for :year_grades, :graduations
 end
