@@ -57,6 +57,11 @@
 #  grade_id             :integer
 #  route_id             :integer
 #
+# Indexes
+#
+#  index_students_on_grade_id  (grade_id)
+#  index_students_on_route_id  (route_id)
+#
 
 class Student < ActiveRecord::Base
 	has_many :enrollments
