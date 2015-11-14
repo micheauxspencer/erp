@@ -1,10 +1,14 @@
 class StudentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_student, only: [:show, :edit, :update, :destroy]
 
   # GET /students
   # GET /students.json
   def index
     @students = Student.all
+
+    # Example use of authorize using ability
+    # authorize! :read, @students
   end
 
   # GET /students/1
