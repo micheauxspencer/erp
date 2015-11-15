@@ -37,6 +37,8 @@ class User < ActiveRecord::Base
   belongs_to :grade
   has_one :teacher
 
+  has_many :class_names
+
   validates :user_name, :presence => true, uniqueness: {
       :case_sensitive => false
   }
