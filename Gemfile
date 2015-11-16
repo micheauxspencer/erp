@@ -26,7 +26,7 @@ gem 'simple_form'
 gem 'rails4-autocomplete'
 gem 'momentjs-rails', '>= 2.8.1',  :github => 'derekprior/momentjs-rails'
 gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
-gem 'activeadmin', github: 'activeadmin', branch: 'master'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -40,3 +40,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 gem 'cancancan'
 
 gem 'annotate'
+
+gem 'rails_admin'

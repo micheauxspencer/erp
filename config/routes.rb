@@ -1,14 +1,13 @@
 Rails.application.routes.draw do
 
+  devise_for :admin_user
 
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root :to => "students#index"
 
   resources :teachers
 
   devise_for :users
-
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
 
   resources :acedemic_years 
 
