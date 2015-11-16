@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(version: 20151116011912) do
     t.string   "route_fee"
     t.boolean  "pick_up"
     t.boolean  "drop_off"
-    t.integer  "sibling_id",           limit: 255
+    t.integer  "sibling_id"#,           limit: 255
     t.string   "f_first_name"
     t.string   "f_last_name"
     t.string   "f_province"
