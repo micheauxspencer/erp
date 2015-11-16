@@ -22,6 +22,10 @@ class Term < ActiveRecord::Base
   has_many :term_classes
   has_many :class_names, through: :term_classes
 
+  has_many :term_students
+  has_many :students, through: :term_students
+
+
   validates :name, presence: true
 
 end

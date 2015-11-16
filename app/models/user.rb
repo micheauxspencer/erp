@@ -35,7 +35,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:user_name]
   belongs_to :grade
-  has_one :teacher
 
   has_many :class_names
 

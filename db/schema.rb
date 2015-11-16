@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151115091130) do
+ActiveRecord::Schema.define(version: 20151116003800) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -68,17 +68,22 @@ ActiveRecord::Schema.define(version: 20151115091130) do
     t.integer  "student_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "term_id"
   end
 
   add_index "attendances", ["class_name_id"], name: "index_attendances_on_class_name_id"
   add_index "attendances", ["student_id"], name: "index_attendances_on_student_id"
+  add_index "attendances", ["term_id"], name: "index_attendances_on_term_id"
 
   create_table "charges", force: true do |t|
     t.integer  "student_id"
     t.integer  "fee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "term_id"
   end
+
+  add_index "charges", ["term_id"], name: "index_charges_on_term_id"
 
   create_table "class_names", force: true do |t|
     t.integer  "grade_id"
@@ -95,7 +100,10 @@ ActiveRecord::Schema.define(version: 20151115091130) do
     t.integer  "student_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "term_id"
   end
+
+  add_index "enrollments", ["term_id"], name: "index_enrollments_on_term_id"
 
   create_table "fee_categories", force: true do |t|
     t.string   "name"
@@ -110,7 +118,10 @@ ActiveRecord::Schema.define(version: 20151115091130) do
     t.datetime "updated_at"
     t.integer  "fee_caregory_id"
     t.string   "category"
+    t.integer  "term_id"
   end
+
+  add_index "fees", ["term_id"], name: "index_fees_on_term_id"
 
   create_table "grades", force: true do |t|
     t.string   "name"
@@ -133,9 +144,11 @@ ActiveRecord::Schema.define(version: 20151115091130) do
     t.integer  "class_name_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "term_id"
   end
 
   add_index "reports", ["class_name_id"], name: "index_reports_on_class_name_id"
+  add_index "reports", ["term_id"], name: "index_reports_on_term_id"
 
   create_table "routes", force: true do |t|
     t.string   "name"
@@ -217,6 +230,13 @@ ActiveRecord::Schema.define(version: 20151115091130) do
     t.datetime "updated_at"
   end
 
+  create_table "teacher_attendances", force: true do |t|
+    t.integer  "teacher_id"
+    t.integer  "work_status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "teachers", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -241,6 +261,16 @@ ActiveRecord::Schema.define(version: 20151115091130) do
 
   add_index "term_grades", ["grade_id"], name: "index_term_grades_on_grade_id"
   add_index "term_grades", ["term_id"], name: "index_term_grades_on_term_id"
+
+  create_table "term_students", force: true do |t|
+    t.integer  "term_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "term_students", ["student_id"], name: "index_term_students_on_student_id"
+  add_index "term_students", ["term_id"], name: "index_term_students_on_term_id"
 
   create_table "terms", force: true do |t|
     t.string   "name"

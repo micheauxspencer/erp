@@ -158,7 +158,6 @@ GEM
       activesupport (>= 3.0)
       i18n
       polyamorous (~> 1.2)
-    rdoc (4.2.0)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
     sass (3.2.19)
@@ -167,9 +166,6 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
-    sdoc (0.4.1)
-      json (~> 1.7, >= 1.7.7)
-      rdoc (~> 4.0)
     simple_form (3.2.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -222,7 +218,6 @@ DEPENDENCIES
   rails4-autocomplete
   rails_12factor
   sass-rails (~> 4.0.3)
-  sdoc (~> 0.4.0)
   simple_form
   sqlite3
   turbolinks

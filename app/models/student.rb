@@ -78,6 +78,9 @@ class Student < ActiveRecord::Base
   has_many :charges, dependent: :restrict_with_error
   has_many :fees, through: :charges
 
+  has_many :term_students
+  has_many :terms, through: :term_students
+
   accepts_nested_attributes_for :acedemic_years, :enrollments, :grade, :charges, :route
 
  #has_many :siblings, :class_name => "Student",
