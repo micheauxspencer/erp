@@ -1,6 +1,6 @@
 class ChangeSiblingIdToInteger < ActiveRecord::Migration
  def up
-    change_column :students, :sibling_id, :integer
+    change_column :students, :sibling_id, 'integer USING CAST(column_name AS integer)'
   end
 
   def down
