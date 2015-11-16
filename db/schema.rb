@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116003800) do
+ActiveRecord::Schema.define(version: 20151116011912) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20151116003800) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "user_name"
   end
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
