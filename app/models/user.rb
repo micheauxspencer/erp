@@ -30,17 +30,6 @@
 #
 
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:user_name]
-  belongs_to :grade
-
-  has_many :class_names
-
-  validates :user_name, :presence => true, uniqueness: {
-      :case_sensitive => false
-  }
 
   ROLE = {
       teacher: 'teacher',
@@ -48,12 +37,26 @@ class User < ActiveRecord::Base
       assistant: 'assistant'
   }
 
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:user_name]
+  belongs_to :grade
+
+  has_many :class_names, foreign_key: :teacher_id
+
+  validates :user_name, :presence => true, uniqueness: {
+      :case_sensitive => false
+  }
+
+  validates :role, inclusion: ROLE.values
+
   def role?(r)
     self.role && (self.role.include? r.to_s)
   end
 
   def name
-    return self.first_name + ' ' + self.last_name
+    return self.first_name.to_s + ' ' + self.last_name.to_s
   end
 
   def self.find_for_database_authentication(warden_conditions)

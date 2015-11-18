@@ -22,6 +22,12 @@ Rails.application.routes.draw do
 
   resources :students
 
+  resource :attendances
+
+  get '/class/:class_id/attendance' => "attendances#index", as: :class_attendance
+
+  get '/classes' => 'class_names#index', as: :class_list
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

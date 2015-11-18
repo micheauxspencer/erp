@@ -1,0 +1,38 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th><%= Student.human_attribute_name(:id) %></th>
+    <th><%= Student.human_attribute_name(:name) %></th>
+    <th><%= Student.human_attribute_name(:grade_id) %></th>
+    <th><%= Student.human_attribute_name(:gender) %></th>
+    <th><%=t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @students.each do |student| %>
+      <tr>
+        <td><%= link_to student.id, student_path(student) %></td>
+        <td><%= student.last_name %>, <%= student.first_name %> <%= student.middle_name %></td>
+        <td><%= student.grade_id %></td>
+        <td><%= student.gender %></td>
+        <td>
+          <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "student_attendance_form") do %>
+             <%= label_tag 'late' %>
+             <%= check_box_tag 'late', 1, false, style: 'top: 2px; position: relative; margin-right: 15px;' %>
+
+              <%= label_tag 'absence' %>
+              <%= check_box_tag 'absence', 1, false, style: 'top: 2px; position: relative' %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function(){
+      $("#student_attendance_form input").click(function () {
+          $("form#student_attendance_form").submit();
+      })
+  });
+</script>

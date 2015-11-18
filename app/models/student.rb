@@ -56,6 +56,7 @@
 #  medication           :string(255)
 #  grade_id             :integer
 #  route_id             :integer
+#  class_name_id        :integer
 #
 # Indexes
 #
@@ -81,7 +82,7 @@ class Student < ActiveRecord::Base
   has_many :term_students
   has_many :terms, through: :term_students
 
-  accepts_nested_attributes_for :acedemic_years, :enrollments, :grade, :charges, :route
+  # accepts_nested_attributes_for :acedemic_years, :enrollments, :grade, :charges, :route
 
  #has_many :siblings, :class_name => "Student",
  #  :foreign_key => "sibling_id"
