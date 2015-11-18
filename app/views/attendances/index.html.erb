@@ -12,7 +12,7 @@
   <% @students.each do |student| %>
       <tr>
         <td><%= link_to student.id, student_path(student) %></td>
-        <td><%= student.last_name %>, <%= student.first_name %> <%= student.middle_name %></td>
+        <td><%= student.last_name %> <%= student.first_name %> <%= student.middle_name %></td>
         <td><%= student.grade_id %></td>
         <td><%= student.gender %></td>
         <td>
