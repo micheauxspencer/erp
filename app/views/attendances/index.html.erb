@@ -16,12 +16,20 @@
         <td><%= student.grade_id %></td>
         <td><%= student.gender %></td>
         <td>
-          <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "student_attendance_form") do %>
+          <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "student_#{student.id}_attendance_form") do %>
+              <%= hidden_field_tag :student_id, student.id %>
              <%= label_tag 'late' %>
-             <%= check_box_tag 'late', 1, false, style: 'top: 2px; position: relative; margin-right: 15px;' %>
+              <% attendance = Attendance.where(
+                      "student_id = ? AND term_id = ? AND ? >= created_at AND created_at >= ?",
+                      student.id,
+                      current_term,
+                      Time.zone.now.end_of_day,
+                      Time.zone.now.beginning_of_day
+              ).first %>
+             <%= check_box_tag 'late', 1, attendance ? attendance.is_late : false, style: 'top: 2px; position: relative; margin-right: 15px;' %>
 
               <%= label_tag 'absence' %>
-              <%= check_box_tag 'absence', 1, false, style: 'top: 2px; position: relative' %>
+              <%= check_box_tag 'absence', 1, attendance ? attendance.absence : false, style: 'top: 2px; position: relative' %>
           <% end %>
         </td>
       </tr>
@@ -31,8 +39,8 @@
 
 <script>
   $(document).ready(function(){
-      $("#student_attendance_form input").click(function () {
-          $("form#student_attendance_form").submit();
+      $("input[type=checkbox]").click(function () {
+          $(this).parent().submit();
       })
   });
 </script>

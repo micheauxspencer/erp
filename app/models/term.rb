@@ -4,17 +4,13 @@
 #
 #  id               :integer          not null, primary key
 #  name             :string(255)
-#  academic_year_id :integer
 #  created_at       :datetime
 #  updated_at       :datetime
-#
-# Indexes
-#
-#  index_terms_on_academic_year_id  (academic_year_id)
+#  acedemic_year_id :integer
 #
 
 class Term < ActiveRecord::Base
-  belongs_to :academic_year
+  belongs_to :acedemic_year
 
   has_many :term_grades
   has_many :grades, through: :term_grades

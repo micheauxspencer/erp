@@ -53,14 +53,30 @@
 
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
-  <li>
-  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
-  </li>
-<% else %>
-  <li>
-  <%= link_to('Login', new_user_session_path)  %>  
-  </li>
-<% end %>
+            <li>
+              <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="choose-term-text"> <%= current_term && current_term != "" ? Term.where(id: current_term).first.name : 'Choose Term' %> <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+
+                    <% Term.all.each do |term| %>
+                        <li><%= link_to "#{term.name}", set_current_term_path(term_id: term.id), :onclick => "termChosen('" + term.name + "')" %></li>
+                        <!---->
+                    <% end %>
+
+                  </ul>
+                </li>
+              </ul>
+
+            </li>
+          <li>
+              <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+          </li>
+        <% else %>
+          <li>
+          <%= link_to('Login', new_user_session_path)  %>
+          </li>
+        <% end %>
 
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -82,6 +98,12 @@
       <div class="container">
         <p class="muted credit">Powered by <a href="http://balantech.com">Balantech</a></p>
       </div>
-    </div> 
+    </div>
+
+<script>
+  var termChosen = function(term_name){
+      $('#choose-term-text').text(term_name);
+  }
+</script>
 </body>
 </html>

@@ -5,6 +5,15 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  before_filter :current_term
+
+  def current_term
+    return cookies[:current_term] ? cookies[:current_term] : (Term.last ? Term.last.id : 1) #for example default value
+  end
+
+  # Set this method as helper method to be able to use in views
+  helper_method :current_term
+
   protected
 
   def configure_permitted_parameters

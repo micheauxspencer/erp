@@ -28,6 +28,8 @@ Rails.application.routes.draw do
 
   get '/classes' => 'class_names#index', as: :class_list
 
+  get 'set_current_term' => "terms#set_current_term", as: :set_current_term
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

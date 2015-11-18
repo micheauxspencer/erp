@@ -3,13 +3,14 @@
 # Table name: attendances
 #
 #  id            :integer          not null, primary key
-#  absence       :boolean
+#  absence       :boolean          default(FALSE)
 #  teacher_id    :integer
 #  class_name_id :integer
 #  student_id    :integer
 #  created_at    :datetime
 #  updated_at    :datetime
 #  term_id       :integer
+#  is_late       :boolean          default(FALSE)
 #
 # Indexes
 #
@@ -25,5 +26,5 @@ class Attendance < ActiveRecord::Base
 
   belongs_to :term
 
-  validate :absence, presence: true
+  validates :student_id, presence: true
 end

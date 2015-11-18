@@ -2,7 +2,7 @@ class CreateTerms < ActiveRecord::Migration
   def change
     create_table :terms do |t|
       t.string :name
-      t.references :academic_year, index: true
+      t.integer :academic_year_id
 
       t.timestamps
     end

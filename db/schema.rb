@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151118072609) do
+ActiveRecord::Schema.define(version: 20151118151707) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -63,13 +63,14 @@ ActiveRecord::Schema.define(version: 20151118072609) do
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
   create_table "attendances", force: true do |t|
-    t.boolean  "absence"
+    t.boolean  "absence",       default: false
     t.integer  "teacher_id"
     t.integer  "class_name_id"
     t.integer  "student_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "term_id"
+    t.boolean  "is_late",       default: false
   end
 
   add_index "attendances", ["class_name_id"], name: "index_attendances_on_class_name_id"
@@ -276,12 +277,10 @@ ActiveRecord::Schema.define(version: 20151118072609) do
 
   create_table "terms", force: true do |t|
     t.string   "name"
-    t.integer  "academic_year_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "acedemic_year_id"
   end
-
-  add_index "terms", ["academic_year_id"], name: "index_terms_on_academic_year_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
