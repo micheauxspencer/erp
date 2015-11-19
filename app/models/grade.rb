@@ -6,6 +6,7 @@
 #  name       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#  teacher_id :integer
 #
 
 class Grade < ActiveRecord::Base
@@ -18,7 +19,9 @@ class Grade < ActiveRecord::Base
   has_many :term_grades
   has_many :terms, through: :term_grades
 
-  has_many :class_names
+  belongs_to :teacher, :class_name => "User"
+
+  validates :name, presence: true
 
  	accepts_nested_attributes_for :year_grades, :graduations
 end

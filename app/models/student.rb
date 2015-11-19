@@ -12,7 +12,7 @@
 #  route_fee            :string(255)
 #  pick_up              :boolean
 #  drop_off             :boolean
-#  sibling_id           :integer
+#  sibling_id           :string(255)
 #  f_first_name         :string(255)
 #  f_last_name          :string(255)
 #  f_province           :string(255)
@@ -56,7 +56,6 @@
 #  medication           :string(255)
 #  grade_id             :integer
 #  route_id             :integer
-#  class_name_id        :integer
 #
 # Indexes
 #
@@ -71,9 +70,8 @@ class Student < ActiveRecord::Base
 
 	belongs_to :grade
 	belongs_to :route
-  belongs_to :class_name
 
-  has_many :student_siblings, :foreign_key => "student_id", :class_name => "StudentSibling"
+  has_many :student_siblings, :class_name => "StudentSibling"
   has_many :siblings, :through => :student_siblings, dependent: :destroy
 
   has_many :charges, dependent: :restrict_with_error
@@ -93,9 +91,9 @@ class Student < ActiveRecord::Base
 #has_many :siblings, :through => :student_siblings
 #has_many :inverse_student_siblings, :class_name => "StudentSibling", :foreign_key => "sibling_id"
 #has_many :inverse_siblings, :through => :inverse_student_siblings, :source => :student
-  
+
 
   #validates :first_name, :last_name, :sin, :birthdate, :email, :healthcard, :doctor_name, :doctor_phone, presence: true
   #validates :email, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/ , :message => 'Invalid e-mail! Please provide a valid e-mail address'}
- 
+
 end
