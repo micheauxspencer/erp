@@ -10,8 +10,8 @@
 #
 
 class StudentSibling < ActiveRecord::Base
-  belongs_to :student, :foreign_key => "student_id", :class_name => "Student" 
-  belongs_to :sibling, :foreign_key => "sibling_id",  :class_name => 'Student' 
+  belongs_to :student,  :class_name => "Student"
+  belongs_to :sibling,  :class_name => 'Student'
 
   after_create :create_inverse, unless: :has_inverse?
   after_destroy :destroy_inverses, if: :has_inverse?

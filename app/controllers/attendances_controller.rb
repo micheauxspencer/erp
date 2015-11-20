@@ -3,7 +3,7 @@ class AttendancesController < ApplicationController
   FALSE = '0'
 
   def index
-    @students = Student.where(class_name_id: params[:class_id].to_i)
+    @students = Student.where(grade_id: params[:class_id].to_i)
   end
 
   def create

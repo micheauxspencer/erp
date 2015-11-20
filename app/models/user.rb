@@ -41,9 +41,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:user_name]
-  belongs_to :grade
 
-  has_many :class_names, foreign_key: :teacher_id
+  has_many :grades, foreign_key: :teacher_id
 
   validates :user_name, :presence => true, uniqueness: {
       :case_sensitive => false
