@@ -10,6 +10,9 @@ class GradesController < ApplicationController
   # GET /grades/1
   # GET /grades/1.json
   def show
+    @students = Student.all
+    @teachers = User.teachers
+    @teacher = @grade.teacher
   end
 
   # GET /grades/new
@@ -69,6 +72,6 @@ class GradesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def grade_params
-      params.require(:grade).permit(:name)
+      params.require(:grade).permit(:name, :teacher_id, student_ids: [])
     end
 end

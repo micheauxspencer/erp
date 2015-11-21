@@ -95,5 +95,7 @@ class Student < ActiveRecord::Base
 
   #validates :first_name, :last_name, :sin, :birthdate, :email, :healthcard, :doctor_name, :doctor_phone, presence: true
   #validates :email, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/ , :message => 'Invalid e-mail! Please provide a valid e-mail address'}
-
+  def grade_name
+    grade.try(:name)
+  end
 end

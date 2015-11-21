@@ -17,3 +17,47 @@
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>
+<%= link_to "#", class: "btn btn-default", data: {toggle: "modal", target: "#assign_students_modal"} do %>
+  <%= t("grades.buttons.assign_students") %>
+<% end %>
+<%= link_to "#", class: "btn btn-default", data: {toggle: "modal", target: "#assign_teacher_modal"} do %>
+  <%= t("grades.buttons.assign_teacher") %>
+<% end %>
+<dl class="dl-horizontal">
+  <h2><%= t "teacher_infomations" %>:</h2>
+  <% if @teacher %>
+    <dt><%= model_class.human_attribute_name(:first_name) %>:</dt>
+    <dd><td><%= @teacher.first_name %></td></dd>
+    <dt><%= model_class.human_attribute_name(:email) %>:</dt>
+    <dd><%= @teacher.email %></dd>
+    <dt><%= model_class.human_attribute_name(:created_at) %>:</dt>
+    <dd><%=l @teacher.created_at %></dd>
+  <% else %>
+    <h2><%= t "grade.has_not_teacher" %></h2>
+  <% end %>
+</dl>
+
+<h2><%= t "grade.student_infomations" %></h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= t "grade.current_grade" %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @grade.students.each do |student| %>
+      <tr>
+        <td><%= link_to student.id, student_path(student) %></td>
+        <td><%= student.last_name %>, <%= student.first_name %> <%= student.middle_name %></td>
+        <td><%=l student.created_at %></td>
+        <td><%= student.grade_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render "assign_students_form", model_class: model_class %>
+<%= render "assign_teacher_form", model_class: model_class %>
