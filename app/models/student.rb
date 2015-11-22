@@ -12,7 +12,7 @@
 #  route_fee            :string(255)
 #  pick_up              :boolean
 #  drop_off             :boolean
-#  sibling_id           :string(255)
+#  sibling_id           :integer
 #  f_first_name         :string(255)
 #  f_last_name          :string(255)
 #  f_province           :string(255)

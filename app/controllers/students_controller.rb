@@ -14,6 +14,8 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
+    current_term = @student.terms.last
+    @fees = Fee.where(term: current_term).order('amount asc')
   end
 
   # GET /students/new
@@ -62,6 +64,17 @@ class StudentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def assign_fee
+    @student_id = params[:student_id]
+    @fee_id = params[:fee_id]
+
+    @student = Student.find(@student_id)
+    @fee = Fee.find(@fee_id)
+    if @student && @fee && !(@student.fee_ids.include? @fee_id)
+      @student.fees << @fee
     end
   end
 

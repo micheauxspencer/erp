@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
       :case_sensitive => false
   }
 
-  validates :role, inclusion: ROLE.values
+  # validates :role, inclusion: ROLE.values
 
   def role?(r)
     self.role && (self.role.include? r.to_s)

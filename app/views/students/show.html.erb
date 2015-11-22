@@ -5,7 +5,7 @@
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
-  <dd><%= @student.last_name %></dd>
+  <dd style="padding-top: 10px"><%= @student.last_name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
   <dd><%= @student.first_name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:grade) %>:</strong></dt>
@@ -19,7 +19,7 @@
   <dt><strong><%= model_class.human_attribute_name(:tax_rec_req) %>:</strong></dt>
   <dd><%= @student.tax_rec_req %></dd>
   <dt><strong><%= model_class.human_attribute_name(:route_id) %>:</strong></dt>
-  <dd><%= @student.route.name %></dd>
+  <dd><%= @student.route.name if @student.route %></dd>
   <dt><strong><%= model_class.human_attribute_name(:route_fee) %>:</strong></dt>
   <dd><%= @student.route_fee %></dd>
   <dt><strong><%= model_class.human_attribute_name(:pick_up) %>:</strong></dt>
@@ -71,3 +71,50 @@
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
               :class => 'btn btn-danger' %>
+
+<br>
+
+
+<div class="page-header">
+  <h1> Manage Student's Fees</h1>
+</div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Amount</th>
+    <th>Term</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @fees.each do |fee| %>
+      <tr style="height: 60px;">
+        <td><%= link_to fee.id, fee_path(fee) %></td>
+        <td><%= fee.name %></td>
+        <td><%= fee.amount %></td>
+        <td><%= fee.term.name %></td>
+        <td>
+          <% if @student.fees.include? fee %>
+            <span class="grey-text">Assigned</span>
+          <% else %>
+              <%= form_tag assign_fee_path, :method => :post, remote: true, id: "form_#{@student.id}_#{fee.id}" do %>
+
+                <%= hidden_field_tag 'fee_id', fee.id %>
+                <%= hidden_field_tag 'student_id', @student.id %>
+                <%= submit_tag 'Assign', class: 'btn btn-default' %>
+              <% end %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<style>
+  dl dt, dl dd {
+      margin-top: 10px;
+  }
+</style>

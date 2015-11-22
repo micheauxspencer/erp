@@ -24,6 +24,9 @@
         <td><%= student.siblings.count %></td>
         <td><%= student.enrolled %></td>
         <td>
+          <%= link_to 'Show',
+                      student_path(student), :class => 'btn btn-default btn-xs' %>
+
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_student_path(student), :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),

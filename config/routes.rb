@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
   get 'set_current_term' => "terms#set_current_term", as: :set_current_term
 
+  post 'students/assign_fee' => "students#assign_fee", as: :assign_fee
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
