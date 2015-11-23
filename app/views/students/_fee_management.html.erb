@@ -20,7 +20,7 @@
         <td><%= link_to fee.id, fee_path(fee) %></td>
         <td><%= fee.name %></td>
         <td><%= fee.amount %></td>
-        <td><%= fee.term.name %></td>
+        <td><%= fee.term ? fee.term.name : ''%></td>
         <td>
           <% if @student.fees.include? fee %>
               <span class="grey-text">Assigned</span>
