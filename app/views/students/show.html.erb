@@ -73,48 +73,13 @@
               :class => 'btn btn-danger' %>
 
 <br>
+<%= render 'fee_management' %>
 
+<%= render 'routes_management' %>
 
-<div class="page-header">
-  <h1> Manage Student's Fees</h1>
-</div>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Amount</th>
-    <th>Term</th>
-    <th>Status</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @fees.each do |fee| %>
-      <tr style="height: 60px;">
-        <td><%= link_to fee.id, fee_path(fee) %></td>
-        <td><%= fee.name %></td>
-        <td><%= fee.amount %></td>
-        <td><%= fee.term.name %></td>
-        <td>
-          <% if @student.fees.include? fee %>
-            <span class="grey-text">Assigned</span>
-          <% else %>
-              <%= form_tag assign_fee_path, :method => :post, remote: true, id: "form_#{@student.id}_#{fee.id}" do %>
-
-                <%= hidden_field_tag 'fee_id', fee.id %>
-                <%= hidden_field_tag 'student_id', @student.id %>
-                <%= submit_tag 'Assign', class: 'btn btn-default' %>
-              <% end %>
-          <% end %>
-        </td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
 
 <style>
-  dl dt, dl dd {
-      margin-top: 10px;
-  }
+    dl dt, dl dd {
+        margin-top: 10px;
+    }
 </style>

@@ -32,8 +32,6 @@
     <dd><%= @teacher.email %></dd>
     <dt><%= model_class.human_attribute_name(:created_at) %>:</dt>
     <dd><%=l @teacher.created_at %></dd>
-  <% else %>
-    <h2><%= t "grade.has_not_teacher" %></h2>
   <% end %>
 </dl>
 
