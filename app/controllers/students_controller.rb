@@ -79,6 +79,19 @@ class StudentsController < ApplicationController
     end
   end
 
+
+  def assign_route
+    @student_id = params[:student_id]
+    @route_id = params[:route_id]
+
+    @student = Student.find(@student_id)
+    @route = Route.find(@route_id)
+    if @student && @route && !@student.route
+      @student.route = @route
+      @student.save
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student

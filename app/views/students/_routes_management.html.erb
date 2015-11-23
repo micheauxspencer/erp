@@ -20,13 +20,27 @@
     </dl>
 <% else %>
     <div class="row col-md-12" style=" margin-bottom: 50px;">
-      <div class="btn btn-primary">
+      <div class="btn btn-primary" onclick="newRouteBtnClicked()">
         New Route
       </div>
 
-      <div class="btn btn-default" style="margin-left: 30px;">
+      <div class="btn btn-default" style="margin-left: 30px;" onclick="findRouteBtnClicked()">
         Find Route
       </div>
+
+      <%= render 'find_route' %>
+      <%= render 'new_route' %>
     </div>
 <% end %>
 
+<script>
+    var newRouteBtnClicked = function(){
+        $("#student-info-find-route").hide();
+        $("#student-info-new-route").show(200);
+    };
+
+    var findRouteBtnClicked = function(){
+        $("#student-info-new-route").hide();
+        $("#student-info-find-route").show(200);
+    };
+</script>

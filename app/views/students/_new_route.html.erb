@@ -1,0 +1,21 @@
+<div id="student-info-new-route" style="margin-top: 30px;">
+  <%= simple_form_for(Route.new, remote: true) do |f| %>
+      <%= f.error_notification %>
+      <%= f.hidden_field :student_id, value: @student.id %>
+      <div class="form-inputs">
+        <%= f.input :name %>
+        <%= f.input :details %>
+        <%= f.input :status %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit %>
+      </div>
+  <% end %>
+</div>
+
+<style>
+    #student-info-new-route {
+        display: none;
+    }
+</style>
