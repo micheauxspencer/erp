@@ -1,0 +1,8 @@
+grade:
+  have_not_teacher: "This grade hasn't teacher yet"
+  current_grade: "Current grade"
+  student_infomations: "Student infomation"
+  teacher_infomations: "Teacher infomation"
+  buttons:
+    assign_students: "Assign students"
+    assign_teacher: "Assign teacher"

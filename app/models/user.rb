@@ -50,6 +50,8 @@ class User < ActiveRecord::Base
 
   # validates :role, inclusion: ROLE.values
 
+  scope :teachers, -> {where role: "teacher"}
+
   def role?(r)
     self.role && (self.role.include? r.to_s)
   end

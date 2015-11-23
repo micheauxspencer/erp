@@ -1,0 +1,45 @@
+<div id="assign_teacher_modal" class="modal fade" role="dialog" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <%= form_for @grade do |f| %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><%= t "grades.buttons.assign_teacher" %></h4>
+        </div>
+        
+        <div class="modal-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th><%= model_class.human_attribute_name(:id) %></th>
+                <th><%= model_class.human_attribute_name(:name) %></th>
+                <th><%= model_class.human_attribute_name(:email) %></th>
+                <th><%= model_class.human_attribute_name(:created_at) %></th>
+                <th><%=t '.actions', :default => t("helpers.actions") %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @teachers.each do |teacher| %>
+                <tr>
+                  <td><%= link_to teacher.id, student_path(teacher) %></td>
+                  <td><%= teacher.last_name %>, <%= teacher.first_name %></td>
+                  <td><%= teacher.email %></td>
+                  <td><%= teacher.created_at %></td>
+                  <td>
+                    <%= f.radio_button :teacher_id, teacher.id %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <div class="modal-footer">
+            <%= f.button :submit, :class => 'btn btn-primary' %>
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <%= t "buttons.close" %>
+            </button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
