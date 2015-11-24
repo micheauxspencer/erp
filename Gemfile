@@ -43,3 +43,4 @@ gem 'cancancan'
 gem 'annotate'
 
 gem 'rails_admin'
+gem "font-awesome-rails"

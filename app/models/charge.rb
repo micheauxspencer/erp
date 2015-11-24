@@ -2,12 +2,14 @@
 #
 # Table name: charges
 #
-#  id         :integer          not null, primary key
-#  student_id :integer
-#  fee_id     :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  term_id    :integer
+#  id           :integer          not null, primary key
+#  student_id   :integer
+#  fee_id       :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  term_id      :integer
+#  amount       :integer
+#  is_completed :boolean          default(FALSE)
 #
 # Indexes
 #

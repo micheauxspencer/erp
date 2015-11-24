@@ -7,33 +7,122 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Amount</th>
-    <th>Term</th>
-    <th>Status</th>
+    <div class="row">
+        <th class="col-md-1">Id</th>
+
+        <th class="col-md-1">Name</th>
+
+        <th class="col-md-1">Amount</th>
+
+        <th class="col-md-1">Term</th>
+
+        <th class="col-md-1">Status</th>
+
+        <th class="col-md-1">Completion</th>
+
+        <th class="col-md-1">Paid Amount</th>
+    </div>
+
   </tr>
   </thead>
   <tbody>
   <% @fees.each do |fee| %>
-      <tr style="height: 60px;">
-        <td><%= link_to fee.id, fee_path(fee) %></td>
-        <td><%= fee.name %></td>
-        <td><%= fee.amount %></td>
-        <td><%= fee.term ? fee.term.name : ''%></td>
-        <td>
-          <% if @student.fees.include? fee %>
-              <span class="grey-text">Assigned</span>
-          <% else %>
-              <%= form_tag assign_fee_path, :method => :post, remote: true, id: "form_#{@student.id}_#{fee.id}" do %>
+      <% charge = Charge.where(student_id: @student.id, fee_id: fee.id).first %>
 
-                  <%= hidden_field_tag 'fee_id', fee.id %>
-                  <%= hidden_field_tag 'student_id', @student.id %>
-                  <%= submit_tag 'Assign', class: 'btn btn-default' %>
-              <% end %>
+      <tr>
+        <div class="row">
+          <%= form_tag student_fee_path, :method => :post, remote: true, id: "student_fee_form_#{@student.id}_#{fee.id}" do %>
+              <%= hidden_field_tag 'fee_id', fee.id %>
+              <%= hidden_field_tag 'student_id', @student.id %>
+              <%= hidden_field_tag 'amount', charge.amount.to_i, id: "student_fee_form_amount_#{@student.id}_#{fee.id}" %>
           <% end %>
-        </td>
+
+            <td class="col-md-1"><%= link_to fee.id, fee_path(fee) %></td>
+
+            <td class="col-md-1"><%= fee.name %></td>
+
+            <td class="col-md-1"><%= fee.amount %></td>
+
+            <td class="col-md-1"><%= fee.term ? fee.term.name : ''%></td>
+
+            <td class="col-md-1">
+              <% if @student.fees.include? fee %>
+                  <span class="grey-text">Assigned</span>
+              <% else %>
+                  <%= form_tag assign_fee_path, :method => :post, remote: true, id: "form_#{@student.id}_#{fee.id}" do %>
+
+                      <%= hidden_field_tag 'fee_id', fee.id %>
+                      <%= hidden_field_tag 'student_id', @student.id %>
+                      <%= submit_tag 'Assign', class: 'btn btn-default' %>
+                  <% end %>
+              <% end %>
+            </td>
+
+            <td class="col-md-1">
+              <span id="charge_status_<%= "#{@student.id}_#{fee.id}"%>"><%= charge && charge.is_completed ? 'Completed' : 'Not yet' %></span>
+            </td>
+
+            <td class="col-md-2">
+              <div class="pull-left" id="amount_field_<%= "#{@student.id}_#{fee.id}"%>">
+                <%= hidden_field_tag "original_amount", charge.amount.to_i %>
+                <input disabled type="text" name="amount" value="<%= charge.amount.to_i if charge %>" style="width: 50px; height: 1.8em" class="form-control">
+              </div>
+
+              <div class="amount-edit-group-btns">
+                <div class="btn btn-default" style="padding: 1px 5px; margin-left: 10px; top: -2px; position: relative" id="btn_edit_<%= "#{@student.id}_#{fee.id}"%>" onclick="updatePaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                  <span class="fa fa-pencil"></span>
+                </div>
+
+                <div class="btn btn-success payment_update pull-left" style="padding: 1px 5px; margin-left: 10px; top: -2px; position: relative" id="payment_update_<%= "#{@student.id}_#{fee.id}" %>" onclick="confirmPaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                  <span class="fa fa-check"></span>
+                </div>
+                <div class="btn btn-default payment_cancel pull-left" style="padding: 1px 6px; margin-left: 5px; top: -2px; position: relative" id="payment_cancel_<%= "#{@student.id}_#{fee.id}"%>" onclick="cancelPaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                  <span class="fa fa-close"> </span>
+                </div>
+              </div>
+            </td>
+
+        </div>
+
       </tr>
   <% end %>
   </tbody>
 </table>
+
+<style>
+    .payment_update, .payment_cancel {
+        display: none;
+    }
+
+    .amount-edit-group-btns {
+        margin-top: 2px;
+    }
+</style>
+
+<script>
+  var updatePaymentClicked = function(studentId, feeId){
+    $("#btn_edit_" + studentId + "_" + feeId).hide(100);
+    $("#amount_field_" + studentId + "_" + feeId).find('input').removeAttr('disabled');
+    $("#payment_update_" + studentId + "_" + feeId).show(200);
+    $("#payment_cancel_" + studentId + "_" + feeId).show(200);
+  };
+
+  var cancelPaymentClicked = function(studentId, feeId){
+      $("#btn_edit_" + studentId + "_" + feeId).show(200);
+      $("#payment_update_" + studentId + "_" + feeId).hide();
+      $("#payment_cancel_" + studentId + "_" + feeId).hide();
+      $("#amount_field_" + studentId + "_" + feeId).find('input').attr('disabled', true);
+      $("#amount_field_" + studentId + "_" + feeId).find('input').val($("#amount_field_" + studentId + "_" + feeId).find('#original_amount').val());
+  };
+
+  var confirmPaymentClicked = function(studentId, feeId){
+      $("#btn_edit_" + studentId + "_" + feeId).show(200);
+      $("#payment_update_" + studentId + "_" + feeId).hide();
+      $("#payment_cancel_" + studentId + "_" + feeId).hide();
+      $("#amount_field_" + studentId + "_" + feeId).find('input').attr('disabled', true);
+
+
+      $("input#student_fee_form_amount_" + studentId + "_" + feeId).val($("#amount_field_" + studentId + "_" + feeId).find("input[name=amount]").val());
+      $("form#student_fee_form_"  + studentId + "_" + feeId).submit()
+  }
+</script>

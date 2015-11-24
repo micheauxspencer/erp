@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119150145) do
+ActiveRecord::Schema.define(version: 20151123171705) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -82,6 +82,8 @@ ActiveRecord::Schema.define(version: 20151119150145) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "term_id"
+    t.integer  "amount"
+    t.boolean  "is_completed", default: false
   end
 
   add_index "charges", ["term_id"], name: "index_charges_on_term_id"
@@ -166,7 +168,7 @@ ActiveRecord::Schema.define(version: 20151119150145) do
     t.string   "route_fee"
     t.boolean  "pick_up"
     t.boolean  "drop_off"
-    t.integer  "sibling_id"
+    t.integer  "sibling_id",           limit: 255
     t.string   "f_first_name"
     t.string   "f_last_name"
     t.string   "f_province"

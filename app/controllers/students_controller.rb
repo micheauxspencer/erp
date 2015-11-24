@@ -92,6 +92,20 @@ class StudentsController < ApplicationController
     end
   end
 
+  def payment
+
+    @fee = Fee.where(id: params[:fee_id]).first
+    @student = Student.where(id: params[:student_id]).first
+
+    @charge = Charge.where(fee_id: params[:fee_id], student_id: params[:student_id]).first
+    if @charge && (params[:amount].to_i != 0)
+      @charge.update_attributes(amount: params[:amount].to_i)
+    end
+
+    @is_completed = (params[:amount].to_i == @fee.amount.to_i)
+    @charge.update_attributes(is_completed: @is_completed)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
