@@ -65,7 +65,7 @@
             <td class="col-md-2">
               <div class="pull-left" id="amount_field_<%= "#{@student.id}_#{fee.id}"%>">
                 <%= hidden_field_tag "original_amount", charge.amount.to_i %>
-                <input disabled type="text" name="amount" value="<%= charge.amount.to_i if charge %>" style="width: 50px; height: 1.8em" class="form-control">
+                <input disabled type="text" name="amount" value="<%= charge.amount.to_i if charge %>" style="width: 80px; height: 1.8em" class="form-control">
               </div>
 
               <div class="amount-edit-group-btns">
