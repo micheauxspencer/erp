@@ -20,6 +20,8 @@
         <td>
           <%= link_to 'Show',
                       grade_path(grade), :class => 'btn btn-default btn-xs' %>
+          <%= link_to "Attendances", grade_attendance_path(grade), :class => 'btn btn-default btn-xs' %></li>
+
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_grade_path(grade), :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
