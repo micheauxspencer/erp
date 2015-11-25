@@ -15,7 +15,6 @@ class StudentsController < ApplicationController
   # GET /students/1.json
   def show
     current_term = @student.terms.last
-    @fees = Fee.where(term: current_term).order('amount asc')
     @route = @student.route
   end
 
@@ -26,6 +25,7 @@ class StudentsController < ApplicationController
 
   # GET /students/1/edit
   def edit
+    @fees = Fee.where(term: current_term).order('amount asc')
   end
 
   # POST /students

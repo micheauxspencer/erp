@@ -1,10 +1,4 @@
-
-
-<div class="page-header">
-  <h1> Manage Student's Fees</h1>
-</div>
-
-<table class="table table-striped">
+<table class="table table-striped" style="margin-top: 30px; margin-bottom: 50px;">
   <thead>
   <tr>
     <div class="row">
@@ -31,11 +25,7 @@
 
       <tr>
         <div class="row">
-          <%= form_tag student_fee_path, :method => :post, remote: true, id: "student_fee_form_#{@student.id}_#{fee.id}" do %>
-              <%= hidden_field_tag 'fee_id', fee.id %>
-              <%= hidden_field_tag 'student_id', @student.id %>
               <%= hidden_field_tag 'amount', charge.amount.to_i, id: "student_fee_form_amount_#{@student.id}_#{fee.id}" %>
-          <% end %>
 
             <td class="col-md-1"><%= link_to fee.id, fee_path(fee) %></td>
 
@@ -123,6 +113,19 @@
 
 
       $("input#student_fee_form_amount_" + studentId + "_" + feeId).val($("#amount_field_" + studentId + "_" + feeId).find("input[name=amount]").val());
-      $("form#student_fee_form_"  + studentId + "_" + feeId).submit()
+//      $("form#student_fee_form_"  + studentId + "_" + feeId).submit()
+
+      $.ajax({
+          url: 'payment',
+          type: 'post',
+          dataType: 'script',
+          data: {
+              fee_id: feeId,
+              student_id: studentId,
+              amount: $("input#student_fee_form_amount_" + studentId + "_" + feeId).val()
+          }
+      });
   }
 </script>
+
+

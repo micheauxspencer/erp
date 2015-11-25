@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   resources :fees
 
+  resources :terms
+
   resources :models
 
   resources :grades
@@ -33,7 +35,7 @@ Rails.application.routes.draw do
   post 'students/assign_fee' => "students#assign_fee", as: :assign_fee
   post 'students/assign_routee' => "students#assign_route", as: :assign_route
 
-  post 'students/payment' => "students#payment", as: :student_fee
+  post 'students/:student_id/payment' => "students#payment", as: :student_fee
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
