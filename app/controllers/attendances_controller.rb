@@ -9,12 +9,23 @@ class AttendancesController < ApplicationController
   def create
     # create attendance for that student in that day if we have not done before
     # other wise, update it
+    start_of_the_day = if params[:attendance] && params[:attendance][:created_at]
+                         params[:attendance][:created_at].to_date.beginning_of_day
+                       else
+                         Time.now.beginning_of_day
+                       end
+    end_of_the_day = if params[:attendance] && params[:attendance][:created_at]
+                       params[:attendance][:created_at].to_date.end_of_day
+                     else
+                       Time.now.end_of_day
+                     end
+
     @attendance = Attendance.where(
         "student_id = ? AND term_id = ? AND ? >= created_at AND created_at >= ?",
         params[:student_id],
         current_term,
-        Time.zone.now.end_of_day,
-        Time.zone.now.beginning_of_day
+        end_of_the_day,
+        start_of_the_day
     ).first
 
     @attendance = Attendance.create(student_id: params[:student_id], term_id: current_term) unless @attendance
