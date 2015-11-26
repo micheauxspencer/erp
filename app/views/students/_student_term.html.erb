@@ -21,11 +21,11 @@
 
   <div class="col-md-9">
     <div class="sub-title">
-      <strong>Grade:</strong> <span id="grade-name"><%= @student.grade.name %></span>
+      <strong>Grade:</strong> <span id="grade-name"><%= @student.grade.name if @student.grade %></span>
     </div>
     <br>
     <div class="sub-title">
-      <strong>Teacher:</strong> <span id="teacher-name"><%= @student.grade.teacher.name %></span>
+      <strong>Teacher:</strong> <span id="teacher-name"><%= @student.grade.teacher.name if @student.grade%></span>
     </div>
     <br>
 
