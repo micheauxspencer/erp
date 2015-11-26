@@ -14,7 +14,8 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
-    current_term = @student.terms.last
+    return redirect_to root_path if current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:office])
+    
     @route = @student.route
   end
 

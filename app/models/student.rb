@@ -80,21 +80,6 @@ class Student < ActiveRecord::Base
   has_many :term_students
   has_many :terms, through: :term_students
 
-  # accepts_nested_attributes_for :acedemic_years, :enrollments, :grade, :charges, :route
-
- #has_many :siblings, :class_name => "Student",
- #  :foreign_key => "sibling_id"
- #belongs_to :sibling, :class_name => "Student",
- #  :foreign_key => "sibling_id"
-
-#has_many :student_siblings
-#has_many :siblings, :through => :student_siblings
-#has_many :inverse_student_siblings, :class_name => "StudentSibling", :foreign_key => "sibling_id"
-#has_many :inverse_siblings, :through => :inverse_student_siblings, :source => :student
-
-
-  #validates :first_name, :last_name, :sin, :birthdate, :email, :healthcard, :doctor_name, :doctor_phone, presence: true
-  #validates :email, :format => { :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/ , :message => 'Invalid e-mail! Please provide a valid e-mail address'}
   def grade_name
     grade.try(:name)
   end
