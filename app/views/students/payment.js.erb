@@ -1,7 +1,7 @@
 $("#amount_field_<%= "#{@student.id}_#{@fee.id}" %>").find('input').val('<%= @charge.amount %>');
 
 <% if @is_completed %>
-    $("#charge_status_<%= "#{@student.id}_#{@fee.id}" %>").html('Completed');
+    $("#charge_status_<%= "#{@student.id}_#{@fee.id}" %>").html('Paid');
 <% else %>
     $("#charge_status_<%= "#{@student.id}_#{@fee.id}" %>").html('Not yet');
 <% end %>
