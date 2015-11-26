@@ -341,6 +341,11 @@
       <% end %>
     </div>
 
+    <div role="tabpanel" class="tab-pane" id="transportation">
+      <% if params[:action] == 'edit' && params[:controller] == 'students' %>
+          <%= render 'routes_management' %>
+        <% end %>
+    </div>
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
   <%= link_to 'Cancel',

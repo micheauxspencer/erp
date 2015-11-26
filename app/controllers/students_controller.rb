@@ -16,7 +16,6 @@ class StudentsController < ApplicationController
   def show
     return redirect_to root_path if current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:office])
     
-    @route = @student.route
   end
 
   # GET /students/new
@@ -27,6 +26,7 @@ class StudentsController < ApplicationController
   # GET /students/1/edit
   def edit
     @fees = Fee.where(term: current_term).order('amount asc')
+    @route = @student.route
   end
 
   # POST /students
