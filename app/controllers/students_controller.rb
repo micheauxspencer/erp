@@ -107,6 +107,15 @@ class StudentsController < ApplicationController
     @charge.update_attributes(is_completed: @is_completed)
   end
 
+  def term_snapshot
+    # {"student_id"=>"1", "term_id"=>"1"}
+    @student = Student.find(params[:student_id])
+    @term = Term.find(params[:term_id])
+    @student.grades.each do |grade|
+      @grade = grade if grade.term_id == params[:term_id].to_i
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student

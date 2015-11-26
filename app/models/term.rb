@@ -12,8 +12,7 @@
 class Term < ActiveRecord::Base
   belongs_to :acedemic_year
 
-  has_many :term_grades
-  has_many :grades, through: :term_grades
+  has_many :grades
 
   has_many :term_students
   has_many :students, through: :term_students

@@ -68,7 +68,7 @@ class Student < ActiveRecord::Base
 	has_many :acedemic_years, through: :enrollments
 	belongs_to :acedemic_year
 
-	belongs_to :grade
+	# belongs_to :grade
 	belongs_to :route
 
   has_many :student_siblings, :class_name => "StudentSibling"
@@ -80,7 +80,14 @@ class Student < ActiveRecord::Base
   has_many :term_students
   has_many :terms, through: :term_students
 
+  has_many :grade_students
+  has_many :grades, through: :grade_students
+
   def grade_name
     grade.try(:name)
+  end
+
+  def grade
+    return self.grades.last
   end
 end

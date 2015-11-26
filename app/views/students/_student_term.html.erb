@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="page-header">
+    <h1> Term </h1>
+  </div>
+
+  <br>
+  <div class="col-md-3">
+    <strong>Select Term</strong>
+    <br>
+    <br>
+    <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false" id="choose-term-text" style="width: 160px">
+      <%= current_term && current_term != "" ? Term.where(id: current_term).first.name : 'Choose Term' %>
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu" style="margin-left: 15px;">
+      <% Term.all.each do |term| %>
+          <li><%= link_to "#{term.name}", view_snapshot_term_path(student_id: @student.id, term_id: term.id), :remote => true %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="col-md-9">
+    <div class="sub-title">
+      <strong>Grade:</strong> <span id="grade-name"><%= @student.grade.name %></span>
+    </div>
+    <br>
+    <div class="sub-title">
+      <strong>Teacher:</strong> <span id="teacher-name"><%= @student.grade.teacher.name %></span>
+    </div>
+    <br>
+
+    <div class="sub-title">
+      <strong>Attendances: </strong>
+      <br>
+    </div>
+
+    <div class="sub-content">
+      <br>
+      <b>Late:</b> <span id="total-late"><%= Attendance.where(student_id: @student.id, term_id: current_term, is_late: true).count %></span>
+      <br>
+      <br>
+      <b>Absence:</b> <span id="total-absence"><%= Attendance.where(student_id: @student.id, term_id: current_term, absence: true).count %></span>
+    </div>
+    <hr>
+  </div>
+
+</div>
+
+<style>
+    .sub-title {
+        margin-left: 30px;
+    }
+
+    .sub-content {
+        margin-left: 80px;
+    }
+</style>

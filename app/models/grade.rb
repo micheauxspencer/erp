@@ -7,6 +7,11 @@
 #  created_at :datetime
 #  updated_at :datetime
 #  teacher_id :integer
+#  term_id    :integer
+#
+# Indexes
+#
+#  index_grades_on_term_id  (term_id)
 #
 
 class Grade < ActiveRecord::Base
@@ -16,10 +21,12 @@ class Grade < ActiveRecord::Base
 	has_many :year_grades, dependent: :restrict_with_exception
 	has_many :acedemic_years, through: :year_grades
 
-  has_many :term_grades
-  has_many :terms, through: :term_grades
-
   belongs_to :teacher, :class_name => "User"
+
+  belongs_to :term
+
+  has_many :grade_students
+  has_many :students, through: :grade_students
 
   validates :name, presence: true
 

@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
   get '/classes' => 'class_names#index', as: :class_list
 
+  get '/term_snapshot' => 'students#term_snapshot', as: :view_snapshot_term
+
   get 'set_current_term' => "terms#set_current_term", as: :set_current_term
 
   post 'students/assign_fee' => "students#assign_fee", as: :assign_fee
