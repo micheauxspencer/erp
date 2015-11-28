@@ -44,7 +44,12 @@
             </td>
 
             <td class="col-md-1">
-              <span id="charge_status_<%= "#{@student.id}_#{fee.id}"%>"><%= charge && charge.is_completed ? 'Paid' : 'Not yet' %></span>
+              <%
+                 fee_status = 'Unpaid'
+                 fee_status = 'Paid' if charge && charge.is_completed
+                 fee_status = 'Partial' if charge && !charge.is_completed && charge.amount.to_i > 0
+              %>
+              <span id="charge_status_<%= "#{@student.id}_#{fee.id}"%>"><%= fee_status %></span>
             </td>
 
             <td class="col-md-2">

@@ -99,11 +99,11 @@ class StudentsController < ApplicationController
     @student = Student.where(id: params[:student_id]).first
 
     @charge = Charge.where(fee_id: params[:fee_id], student_id: params[:student_id]).first
-    if @charge && (params[:amount].to_i != 0)
+    if @charge && params[:amount]
       @charge.update_attributes(amount: params[:amount].to_i)
     end
 
-    @is_completed = (params[:amount].to_i == @fee.amount.to_i)
+    @is_completed = (params[:amount].to_i >= @fee.amount.to_i)
     @charge.update_attributes(is_completed: @is_completed)
   end
 
