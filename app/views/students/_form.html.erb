@@ -39,7 +39,7 @@
       <li role="presentation">
         <a href="#transportation" aria-controls="transportation" role="tab" data-toggle="tab">Transportation</a></li>
       <li role="presentation"><a href="#reports" aria-controls="reports" role="tab" data-toggle="tab">Reports</a></li>
-      <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Term</a></li>
+      <li role="presentation"><a href="#term" aria-controls="settings" role="tab" data-toggle="tab">Term</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -345,6 +345,10 @@
       <% if params[:action] == 'edit' && params[:controller] == 'students' %>
           <%= render 'routes_management' %>
         <% end %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="term">
+      <%= render 'student_term' %>
     </div>
 
   <%= f.submit nil, :class => 'btn btn-primary' %>
