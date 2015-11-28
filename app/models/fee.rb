@@ -22,4 +22,6 @@ class Fee < ActiveRecord::Base
   has_many :students, through: :charges
 
   belongs_to :term
+
+  validates :term, presence: true
 end

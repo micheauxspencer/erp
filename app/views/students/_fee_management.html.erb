@@ -25,7 +25,7 @@
 
       <tr>
         <div class="row">
-              <%= hidden_field_tag 'amount', charge.amount.to_i, id: "student_fee_form_amount_#{@student.id}_#{fee.id}" %>
+              <%= hidden_field_tag 'amount', charge ? charge.amount.to_i : 0, id: "student_fee_form_amount_#{@student.id}_#{fee.id}" %>
 
             <td class="col-md-1"><%= link_to fee.id, fee_path(fee) %></td>
 
@@ -39,12 +39,7 @@
               <% if @student.fees.include? fee %>
                   <span class="grey-text">Assigned</span>
               <% else %>
-                  <%= form_tag assign_fee_path, :method => :post, remote: true, id: "form_#{@student.id}_#{fee.id}" do %>
-
-                      <%= hidden_field_tag 'fee_id', fee.id %>
-                      <%= hidden_field_tag 'student_id', @student.id %>
-                      <%= submit_tag 'Assign', class: 'btn btn-default' %>
-                  <% end %>
+                  <div class="btn btn-default" id="fee_assign_<%= "#{@student.id}_#{fee.id}" %>" onclick='assignFee(<%= fee.id %>, <%= @student.id %>)'>Assign</div>
               <% end %>
             </td>
 
@@ -54,8 +49,8 @@
 
             <td class="col-md-2">
               <div class="pull-left" id="amount_field_<%= "#{@student.id}_#{fee.id}"%>">
-                <%= hidden_field_tag "original_amount", charge.amount.to_i %>
-                <input disabled type="text" name="amount" value="<%= charge.amount.to_i if charge %>" style="width: 80px; height: 1.8em" class="form-control">
+                <%= hidden_field_tag "original_amount", charge ? charge.amount.to_i : 0%>
+                <input disabled type="text" name="amount" value="<%= charge ? charge.amount.to_i : 0 %>" style="width: 80px; height: 1.8em" class="form-control">
               </div>
 
               <div class="amount-edit-group-btns">
@@ -123,6 +118,23 @@
               fee_id: feeId,
               student_id: studentId,
               amount: $("input#student_fee_form_amount_" + studentId + "_" + feeId).val()
+          }
+      });
+  };
+
+  var assignFee = function(feeId, studentId){
+      $.ajax({
+          url: '/students/assign_fee',
+          type: 'post',
+          dataType: 'script',
+          data: {
+              fee_id: feeId,
+              student_id: studentId
+          },
+          success: function(data){
+              $("#fee_assign_" + studentId + "_" + feeId).html('Assigned');
+              $("#fee_assign_" + studentId + "_" + feeId).removeClass('btn');
+              $("#fee_assign_" + studentId + "_" + feeId).removeClass('btn-default');
           }
       });
   }
