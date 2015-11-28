@@ -32,7 +32,7 @@
           <% end %>
 
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_student_path(student), :class => 'btn btn-default btn-xs' %>
+                      edit_student_path(student), :class => 'btn btn-default btn-xs',:data => { :reload => true } %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       student_path(student),
                       :method => :delete,
