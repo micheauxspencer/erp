@@ -54,6 +54,11 @@ class TermsController < ApplicationController
     end
   end
 
+  def set_current_term
+    cookies.permanent[:current_term] = params[:term_id]
+    redirect_to request.referer || root_url
+  end
+
   private
   def set_term
     @term = Term.find(params[:id])
@@ -61,10 +66,5 @@ class TermsController < ApplicationController
 
   def term_params
     params.require(:term).permit(:name, :acedemic_year_id)
-  end
-
-  def set_current_term
-    cookies.permanent[:current_term] = params[:term_id]
-    redirect_to request.referer || root_url
   end
 end
