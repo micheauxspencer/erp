@@ -90,4 +90,8 @@ class Student < ActiveRecord::Base
   def grade
     return self.grades.last
   end
+
+  def name
+    return first_name + ' ' + last_name
+  end
 end

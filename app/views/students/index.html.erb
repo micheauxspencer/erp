@@ -5,24 +5,26 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:last_name) %></th>
-      <th><%= model_class.human_attribute_name(:grade_id) %></th>
-      <th><%= model_class.human_attribute_name(:gender) %></th>
-      <th><%= model_class.human_attribute_name(:sibling_id) %></th>
-      <th><%= model_class.human_attribute_name(:enrolled) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th>Name</th>
+      <th>Grade</th>
+      <th>Gender</th>
+      <th>Date of Birth</th>
+      <th>Fees Amount</th>
+      <th>Health Issues</th>
+      <th>Enrolled</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @students.each do |student| %>
       <tr>
-        <td><%= link_to student.id, student_path(student) %></td>
-        <td><%= student.last_name %>, <%= student.first_name %> <%= student.middle_name %></td>
-        <td><%= student.grade_id %></td>
+        <td><%= link_to student.name, edit_student_path(student) %></td>
+        <td><%= student.grade.name %></td>
         <td><%= student.gender %></td>
-        <td><%= student.siblings.count %></td>
-        <td><%= student.enrolled %></td>
+        <td><%= student.birthdate.strftime("%B, %d, %Y") %></td>
+        <td><%= student.fees.sum(:amount) %></td>
+        <td><%= student.medical_conditions ? '<span style="color: red">Yes</span>'.html_safe : 'No' %></td>
+        <td><%= student.enrolled ? 'Yes' : 'No' %></td>
         <td>
           <% unless (current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:office])) %>
               <%= link_to 'Show',
