@@ -44,3 +44,5 @@ gem 'annotate'
 
 gem 'rails_admin'
 gem "font-awesome-rails"
+
+# gem 'bootstrap-datepicker-rails'
