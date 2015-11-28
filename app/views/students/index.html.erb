@@ -21,7 +21,7 @@
         <td><%= link_to student.name, edit_student_path(student) %></td>
         <td><%= student.grade.name %></td>
         <td><%= student.gender %></td>
-        <td><%= student.birthdate.strftime("%B, %d, %Y") %></td>
+        <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
         <td><%= student.fees.sum(:amount) %></td>
         <td><%= student.medical_conditions ? '<span style="color: red">Yes</span>'.html_safe : 'No' %></td>
         <td><%= student.enrolled ? 'Yes' : 'No' %></td>
