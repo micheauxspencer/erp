@@ -179,7 +179,12 @@
         </div>
       </div>
 
-    </div>
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel',
+                  students_path, :class => 'btn btn-default' %>
+    </div> <!-- End first tab panel -->
+
+
     <div role="tabpanel" class="tab-pane" id="contact">
 
       <div class="row">
@@ -274,7 +279,13 @@
           </div>
         </div>
       </div>
-    </div>
+
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel',
+                  students_path, :class => 'btn btn-default' %>
+    </div> <!-- End second tab panel -->
+
+
     <div role="tabpanel" class="tab-pane" id="health">
 
       <div class="row">
@@ -343,7 +354,15 @@
         </div>
 
       </div>
-    </div>
+
+
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel',
+                  students_path, :class => 'btn btn-default' %>
+    </div> <!--  End third tab panel  -->
+
+
+
     <div role="tabpanel" class="tab-pane" id="fees">
       <% if params[:action] == 'edit' && params[:controller] == 'students' %>
           <%= render 'fee_management' %>
@@ -357,9 +376,7 @@
 
     <br>
     <br>
-  <%= f.submit nil, :class => 'btn btn-primary' %>
-  <%= link_to 'Cancel',
-              students_path, :class => 'btn btn-default' %>
+
 
 <% end %>
 
