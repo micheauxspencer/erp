@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   get 'set_current_term' => "terms#set_current_term", as: :set_current_term
 
   post 'students/assign_fee' => "students#assign_fee", as: :assign_fee
-  post 'students/assign_routee' => "students#assign_route", as: :assign_route
+  post 'students/:student_id/routes' => "students#assign_route", as: :assign_route
 
   post 'students/:student_id/payment' => "students#payment", as: :student_fee
 

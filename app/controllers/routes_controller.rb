@@ -32,7 +32,7 @@ class RoutesController < ApplicationController
         @student.route = @route
         @student.save
 
-        format.html { redirect_to @route, notice: 'Route was successfully created.' }
+        format.html { redirect_to edit_student_path(@student), notice: 'Route was successfully created.' }
         format.json { render :show, status: :created, location: @route }
         format.js
       else

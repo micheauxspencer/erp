@@ -18,20 +18,21 @@
       <dt><strong><%= Route.human_attribute_name(:status) %>:</strong></dt>
       <dd><%= @route.status %></dd>
     </dl>
-<% else %>
-    <div class="row col-md-12" style=" margin-bottom: 50px;">
-      <div class="btn btn-primary" onclick="newRouteBtnClicked()">
-        New Route
-      </div>
-
-      <div class="btn btn-default" style="margin-left: 30px;" onclick="findRouteBtnClicked()">
-        Find Route
-      </div>
-
-      <%= render 'find_route' %>
-      <%= render 'new_route' %>
-    </div>
 <% end %>
+
+<div class="row col-md-12" style=" margin-bottom: 50px;">
+  <div class="btn btn-primary" onclick="newRouteBtnClicked()">
+    New Route
+  </div>
+
+  <div class="btn btn-default" style="margin-left: 30px;" onclick="findRouteBtnClicked()">
+    Find Route
+  </div>
+
+  <%= render 'find_route' %>
+  <%= render 'new_route' %>
+</div>
+
 <div style="height: 50px;"></div>
 <script>
     var newRouteBtnClicked = function(){

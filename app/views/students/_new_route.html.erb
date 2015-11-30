@@ -1,5 +1,5 @@
 <div id="student-info-new-route" style="margin-top: 30px;">
-  <%= simple_form_for(Route.new, remote: true) do |f| %>
+  <%= simple_form_for(Route.new) do |f| %>
       <%= f.error_notification %>
       <%= f.hidden_field :student_id, value: @student.id %>
       <div class="form-inputs">
@@ -7,6 +7,10 @@
         <%= f.input :details %>
         <%= f.input :status %>
       </div>
+
+      <!--<div class="btn btn-default" onclick="createRoute()">-->
+        <!--Create Route-->
+      <!--</div>-->
 
       <div class="form-actions">
         <%= f.button :submit %>
@@ -19,3 +23,16 @@
         display: none;
     }
 </style>
+
+<script>
+  var createRoute = function(){
+//      $.ajax({
+//          url: 'routes',
+//          type: 'post',
+////            dataType: 'script',
+//          data: {
+//              route_id: routeId
+//          }
+//      });
+  }
+</script>

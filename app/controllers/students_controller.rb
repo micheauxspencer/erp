@@ -87,10 +87,12 @@ class StudentsController < ApplicationController
 
     @student = Student.find(@student_id)
     @route = Route.find(@route_id)
-    if @student && @route && !@student.route
+    if @student && @route
       @student.route = @route
       @student.save
     end
+
+    redirect_to edit_student_path(@student)
   end
 
   def payment
