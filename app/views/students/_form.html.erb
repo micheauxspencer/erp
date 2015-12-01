@@ -387,6 +387,12 @@
   <% end %>
 </div>
 
+<div role="tabpanel" class="tab-pane" id="reports">
+  <% if params[:action] == 'edit' && params[:controller] == 'students' %>
+      <%= render 'reports_management' %>
+  <% end %>
+</div>
+
 </div>
 </div>
 </div>
