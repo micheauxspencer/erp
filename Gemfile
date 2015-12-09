@@ -46,3 +46,5 @@ gem 'rails_admin'
 gem "font-awesome-rails"
 
 # gem 'bootstrap-datepicker-rails'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'

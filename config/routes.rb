@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :acedemic_years 
+  resources :acedemic_years
 
   resources :fee_categories
   resources :routes
@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
   post 'students/:student_id/payment' => "students#payment", as: :student_fee
 
+  get 'students/export_pdf/:student_id' => "students#export_pdf", as: :export_pdf
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

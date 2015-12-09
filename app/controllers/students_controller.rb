@@ -15,7 +15,7 @@ class StudentsController < ApplicationController
   # GET /students/1.json
   def show
     return redirect_to root_path if current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:office])
-    
+
   end
 
   # GET /students/new
@@ -123,6 +123,21 @@ class StudentsController < ApplicationController
     @term = Term.find(params[:term_id])
     @student.grades.each do |grade|
       @grade = grade if grade.term_id == params[:term_id].to_i
+    end
+  end
+
+  def export_pdf
+    @student = Student.find(params[:student_id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => "my_pdf", # pdf will download as my_pdf.pdf
+        :layout => 'pdf', # uses views/layouts/pdf.haml
+        title:                          'Alternate Title',
+        template:                       'students/export_pdf.pdf.erb',
+        layout:                         'pdf.html.erb',
+        :show_as_html => params[:debug].present? # renders html version if you set debug=true in URL
+      end
     end
   end
 
