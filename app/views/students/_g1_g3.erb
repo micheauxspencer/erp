@@ -1,13 +1,128 @@
 <table id="pdf-table" width="100%" cellspacing="0">
+  <tr width="100%" >
+    <table style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000; width: 100%;">
+      <td style="padding: 5px 15px; width: 25%;">
+        <div class="info-left">
+          <div class="info1">
+            <label class="field-label">Student: </label> <label class="infolbl" style="text-align:left;">
+              <%= @student.name %>
+            </label>
+          </div>
+          <div class="info1">
+            <label class="field-label">Grade: </label> <label class="infolbl">
+              ?????
+            </label>
+          </div>
+        </div>
+      </td>
+      <td style="padding: 5px 15px; border-right: 1px solid #000; width: 25%%;">
+        <div class="info-left">
+          <div class="info1">
+            <label class="field-label"></label>
+          </div>
+          <div class="info1">
+            <label class="field-label">Teachers: </label> <label class="infolbl">
+              <%= @student.name %>
+            </label>
+          </div>
+        </div>
+      </td>
+      <td style="padding: 5px 15px; width: 25%;">
+        <div class="info-left">
+          <div class="info1">
+            <label class="field-label2">Days Absent: </label> <label class="infolbl"> <%= @leaves.to_i %></label>
+          </div>
+          <div class="info1">
+            <label class="field-label2">Times Late: </label> 
+            <label class="infolbl"> <%= @leaves_forenoon.to_i %></label>
+          </div>
+        </div>
+      </td>
+      <td style="padding: 5px 15px; border-right: 1px solid #000; width: 25%%;">
+        <div class="info-left">
+          <div class="info1">
+            <label class="field-label2">Total Days Absent: </label> 
+            <label class="infolbl"><%= @leaves.to_i %></label>
+          </div>
+          <div class="info1">
+            <label class="field-label">Total Times Late: </label> 
+            <label class="infolbl"><%= @leaves_forenoon.to_i %></label>
+          </div>
+        </div>
+      </td>
+    </table>
+  <tr>
+  <tr>
+    <table style="border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000; width: 100%;">
+      <tr>
+        <td style="border:0;border-left:1px solid #000; padding: 5px 15px; width: 15%;" class="logobox">
+          <%#= wicked_pdf_image_tag current_school_detail.logo,:s3=>true,:style=>:original,:timestamp=>false %>
+          <%= wicked_pdf_image_tag("logo_pdf.png") %>
+        </td>
+        <td>
+          <table width="100%">
+            <tr>
+              <td><label>School:</label></td>
+              <td>KHALSA COMMUNITY SCHOOL</td>
+              <td><label>Grade in September:</label></td>
+              <td>???</td>
+            </tr>
+            <tr>
+              <td><label>Address:</label></td>
+              <td>69 Maitland Street<br>
+                  Brampton<br>
+                  ON L6S 3B5</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><label>Administrator:</label></td>
+              <td>RIPSODHAK S. GREWAL</td>
+              <td><label>Telephone: </label></td>
+              <td>905-791-0603</td>
+            </tr>
+          </table>
+        </td>
+        
+      </tr>
+    </table>
+  </tr>
+  <tr>
+    <table style="border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000; width: 100%; text-align: center">
+      <tr>
+        <td>
+          <p>In the Primary years, children are assessed and evaluated according to their individual progress. It is normal for young<br/>
+          children to acquire skills at differing rates and times.</p>
+          <h3 style="font-weight: bold; font-size: 11px; pading: 8px" >The following developmental scale is used to describe student progress:</h3>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%" >
+            <tr height="20px">
+              <td>1 - Not yet within expectations </td>
+              <td>2 - Meets expectations at a beginning level</td>
+              <td>3 - Meets expectations</td>
+              <td>4 - Exceeds expectations</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </tr>
+</table>
+
+
+<!-- <table id="pdf-table" width="100%" cellspacing="0">
 <tr>
 <td width="60%">
 <div class="">
       <div class="info-left">
         <div class="info1">
-          <label class="field-label">Student</label> <label class="infolbl" style="text-align:left;"><%= @student.full_name %></label>
+          <label class="field-label">Student</label> <label class="infolbl" style="text-align:left;"><%#= @student.full_name %></label>
         </div>
         <div class="info1">
-          <label class="field-label">Grade</label> <label class="infolbl"> <%= @student.batch.course.full_name %></label>
+          <label class="field-label">Grade</label> <label class="infolbl"> <%#= @student.batch.course.full_name %></label>
         </div>
       </div>
      <div class="info-right">
@@ -15,7 +130,7 @@
        <% unless @employees[@batch.id.to_s].nil? %>
        <% @employees[@batch.id.to_s].each do |detail| %>
           <div class="info1">
-          <label class="field-label"><%="Teacher" %></label> <label class="infolbl"> <%= "#{detail.full_name}" %></label>
+          <label class="field-label"><%#="Teacher" %></label> <label class="infolbl"> <%#= "#{detail.full_name}" %></label>
         </div>
       <% end %>
   <% end %>
@@ -48,7 +163,7 @@
 <table id="pdf-table" width="100%" cellspacing="0" >
 <tr>
 <td style="border:0;border-left:1px solid #000;" class="logobox">
-    <%= wicked_pdf_image_tag current_school_detail.logo,:s3=>true,:style=>:original,:timestamp=>false %>
+    <%#= wicked_pdf_image_tag current_school_detail.logo,:s3=>true,:style=>:original,:timestamp=>false %>
 </td>
 <td style="border:0;border-right:1px solid #000;">
       <div class="info-left" style="width:50%;">
@@ -103,4 +218,4 @@ ON L6S 3B5</label>
 <p>N/A - Not Applicable at this time
 </td>
 <tr>
-</table>
+</table> -->
