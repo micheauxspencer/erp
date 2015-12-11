@@ -5,3 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+[ReportTemplate].each(&:delete_all)
+ReportTemplate::NAME.each { |name| ReportTemplate.create(name: name)}

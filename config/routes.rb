@@ -20,11 +20,17 @@ Rails.application.routes.draw do
 
   resources :models
 
-  resources :grades
+  resources :grades do
+    collection do
+      get 'enter_grade' => "grades#enter_grade", as: :enter_grade
+      post 'add_template'
+    end
+  end
 
   resources :students
 
   resource :attendances
+
 
   get '/grades/:grade_id/attendance' => "attendances#index", as: :grade_attendance
 
