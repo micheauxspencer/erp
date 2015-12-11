@@ -2,12 +2,13 @@
 #
 # Table name: grades
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#  teacher_id :integer
-#  term_id    :integer
+#  id                 :integer          not null, primary key
+#  name               :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  teacher_id         :integer
+#  term_id            :integer
+#  report_template_id :integer
 #
 # Indexes
 #
@@ -24,6 +25,7 @@ class Grade < ActiveRecord::Base
   belongs_to :teacher, :class_name => "User"
 
   belongs_to :term
+  belongs_to :report_template
 
   has_many :grade_students
   has_many :students, through: :grade_students

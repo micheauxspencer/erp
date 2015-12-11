@@ -28,7 +28,7 @@ class GradesController < ApplicationController
   # POST /grades.json
   def create
     @grade = Grade.new(grade_params)
-
+    @grade.report_template = ReportTemplate.all.first
     respond_to do |format|
       if @grade.save
         format.html { redirect_to @grade, notice: 'Grade was successfully created.' }
@@ -64,6 +64,16 @@ class GradesController < ApplicationController
     end
   end
 
+  def enter_grade
+    @grades = Grade.all
+  end
+
+  def add_template
+    grade = Grade.find(params[:grade_id])
+    grade.update_attributes(report_template_id: params[:tem_id].to_i)
+    render json: { results: "success"}
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_grade
@@ -72,6 +82,6 @@ class GradesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def grade_params
-      params.require(:grade).permit(:name, :teacher_id, :term_id, student_ids: [])
+      params.require(:grade).permit(:name, :teacher_id, :term_id, :report_template_id,student_ids: [])
     end
 end

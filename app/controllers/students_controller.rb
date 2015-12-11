@@ -136,7 +136,13 @@ class StudentsController < ApplicationController
         title:                          'Alternate Title',
         template:                       'students/export_pdf.pdf.erb',
         layout:                         'pdf.html.erb',
-        :show_as_html => params[:debug].present? # renders html version if you set debug=true in URL
+        page_size:                      'A4',  
+        margin: { top:    12,                    
+                  bottom: 12,
+                  left:   10,
+                  right:  10 },
+        :save_as_html => true,
+        header:  {   html: {  template: 'students/header.pdf.erb' } }
       end
     end
   end
