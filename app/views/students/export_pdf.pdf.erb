@@ -10,8 +10,9 @@
     margin-right: 25px;
     font-size: 10px;
     font-weight: bold;
-    margin-bottom: 0px;
-    padding-bottom: 0px
+    margin-bottom: 2px;
+    padding-bottom: 0px;
+    margin-top: 10px;
   }
   .section1 {
     font-size: 10px;
@@ -66,6 +67,35 @@
     border: 1px solid #000;
     display: inline-block;
   }
+  .content-extra {
+    height: 550px;
+  }
+  .content-extra_46 {
+    height: 670px;
+  }
+  .content-extra_78{
+    height: 650px;
+  }
+  .content-extra_js {
+    height: 670px;
+  }
+  .set-mark tr td{
+    padding: 3px 3px !important;
+  }
+  .border {
+    border: 1px solid #000;
+  }
+  .table-magin-top {
+    margin-top: 5px;
+  }
+  .border_no_top {
+    border-left: 1px solid #000; 
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+  .padding-td {
+    padding: 1px 5px;
+  }
 </style>
 <div id="page-yield" class="available_sections1">
   <div class="page1"></div>
@@ -74,81 +104,16 @@
     <div class="extender"></div>
     <h4 class="title-pdf">KHALSA COMMUNITY SCHOOL REPORT CARD</h4>
     <span class="date-head-pdf">Date:8/24/2015</span>
-    <%= render :partial => 'g1_g3' %>
-    <%#= render :partial => 'g4_g6' %>
-    <%#= render :partial => 'g7_g8' %>
-    <%#= render :partial => 'js_jk' %>
-    <div id="score-table">
-      <table class="pdf-table" width="100%" border="1" cellspacing="0" cellpadding="2" style="border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000; width: 100%;" >
-        <tr class="table-header">
-          <td class="fixed" width="70%"><label><%= @student.name %></label></td>
-          <td colspan="2" width="10%" class="score" align="center">Report 1</td>
-          <td colspan="2" width="10%" class="score" align="center">Report 2</td>
-          <td colspan="2" width="10%" class="score" align="center">Report 3</td>
-        </tr>
-        <!-- <tr class="table-header">
-          <td class="score"></td>
-          <td class="score">Mark</td>
-          <td class="score">Average</td>
-          <td class="score">Mark</td>
-          <td class="score">Average</td>
-          <td class="score">Mark</td>
-          <td class="score">Average</td>
-        </tr> -->
-
-        <tr class="tr">
-          <td class="fixed">
-            <%= @student.name %>
-          </td>
-
-          <td class="score" align="center">
-            <div class="label-field-pair">
-              <div class="text-input-bg"> 100</div>
-            </div>
-          </td>
-          <td class="score" align="center">
-            <div class="label-field-pair">
-              <div class="text-input-bg">100</div>
-            </div>
-          </td>
-          <td class="score" align="center">
-            <div class="label-field-pair">
-              <div class="text-input-bg">100</div>
-            </div>
-          </td>
-          <td class="score" align="center">
-            <div class="label-field-pair">
-              <div class="text-input-bg">100</div>
-            </div>
-          </td>
-          <td class="score" align="center">
-            <div class="label-field-pair">
-              <div class="text-input-bg">100</div>
-            </div>
-          </td>
-          <td class="score" align="center">
-            <div class="label-field-pair">
-              <div class="text-input-bg">100</div>
-            </div>
-          </td>
-
-        </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <table class="pdf-table table-margin" width="100%" cellspacing="0" class="page" style="border: 1px solid #000000; margin-top: 5px">
-      <tr style="border-bottom: 1px solid #000000;">
-        <td style="border:0;">
-          <h4 class="add title-table">EXTRA CURRICULAR ACTIVITIES</h4>
-        </td>
-      <tr>
-      <tr>
-        <td>
-          <p class="extra-comment">Participation And General Comments</p>
-        </td>
-      </tr>
-    </table>
+    <% case @template_name %>
+    <% when ReportTemplate::TEAMPLATE_NAME[:grade_jsjk] %>
+      <%= render :partial => 'js_jk' %>
+    <% when ReportTemplate::TEAMPLATE_NAME[:grade_13] %>
+      <%= render :partial => 'g4_g6' %>
+    <% when ReportTemplate::TEAMPLATE_NAME[:grade_46] %>
+      <%= render :partial => 'g7_g8' %>
+    <% when ReportTemplate::TEAMPLATE_NAME[:grade_78] %>
+      <%= render :partial => 'g7_g8' %>
+    <% end %>
     <!-- page braek -->
     <div class="page-break"></div>
     <div style="margin-top: 20px;">
@@ -159,7 +124,7 @@
       <tr>
         <td height="1000px" valign="top" style="border:none;">
           <div class="custom_header">
-            <h2 class="add title-table border-title" style="margin-top: 0;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
+            <h2 class="add title-table border-title" style="margin-top: 0; line-height: 20px;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
             <div>
               <span class="name-term"><label>First Term:</label></span>
               <span style="float: right; padding-right: 30px;"><label>Date:</label></span>
@@ -181,7 +146,7 @@
       <tr>
         <td height="1000px" valign="top" style="border:none;">
           <div class="custom_header">
-            <h2 class="add title-table border-title" style="margin-top: 0;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
+            <h2 class="add title-table border-title" style="margin-top: 0; line-height: 20px;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
             <div>
               <span class="name-term"><label>Second Term:</label></span>
               <span style="float: right; padding-right: 30px;"><label>Date:</label></span>
@@ -202,7 +167,7 @@
       <tr>
         <td height="1000px" valign="top" style="border:none;">
           <div class="custom_header">
-            <h2 class="add title-table border-title" style="margin-top: 0;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
+            <h2 class="add title-table border-title" style="margin-top: 0; line-height: 20px;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
             <div>
               <span class="name-term"><label>Third Term:</label></span>
               <span style="float: right; padding-right: 30px;"><label>Date:</label></span>
@@ -232,35 +197,38 @@
       </tr>
       <tr >
         <td>
-          <table width="100%" width="100%" cellspacing="0" style="border: 1px solid #000000; padding: 8px;" >
+          <table width="100%" width="100%" cellspacing="0" class="border" style="padding: 8px;" >
             <tr>
-              <td><label>Student:</label></td>
-              <td><label><%= @student.name %></label></td>
-              <td><label>Grade: </label> </td>
-              <td><label>Date:</label></td>
+              <td class="padding-td" width="15%"><label style="line-height: 20px;">Student:</label></td>
+              <td class="padding-td" width="35%"><label style="line-height: 20px;"><%= @student.name %></label></td>
+              <td class="padding-td" width="25%"><label style="line-height: 20px;">Grade: </label> </td>
+              <td class="padding-td" width="25%"><label style="line-height: 20px;">Date:</label></td>
             </tr>
             <tr>
-              <td><label class="field-label">School:</label> </td>
-              <td><label class="infolbl">KHALSA COMMUNITY SCHOOL</label> </td>
-              <td colspan="2">Homeroom Teachers: </td>
+              <td class="padding-td"><label class="field-label" style="line-height: 20px;">School:</label> </td>
+              <td class="padding-td"><label class="infolbl" style="line-height: 20px;">KHALSA COMMUNITY SCHOOL</label> </td>
+              <td class="padding-td" colspan="2"><label class="infolbl" style="line-height: 20px;">Homeroom Teachers: </label></td>
             </tr>
           </table>
         </td>
       </tr>
       <tr>
       <td>
-        <div style="border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000; width: 100%; padding: 8px;">
-          <p>Parent's/Guardian's and student's comments on student achievement, goals and home support:</p>
+        <div class="border_no_top" style="padding: 8px;">
+          <p style="font-weight: bold;">Parent's/Guardian's and student's comments on student achievement, goals and home support:</p>
           <div style="height: 620px;"></div>
           <table class="pdf-table" width="100%" cellspacing="0" class="sig">
             <tr>
-              <td width="50%">
-                <span class="square"></span>
-                <span style="margin-top: -10px;">I have received the report card</span>
-              </td>
-              <td width="50%">
-                <span class="square"></span>
-                <span style="margin-top: -10px;">I would like to discuss this report card. Please contact me.</span>
+              <td colspan="3">
+                <table width="100%" >
+                  <tr>
+                    <td width="7%"><span class="square"></span></td>
+                    <td width="33%"><span >I have received the report<br/>card</span></td>
+                    <td width="15"></td>
+                    <td width="7%"><span class="square"></span></td>
+                    <td width="38%"><span >I would like to discuss this report card. Please<br/>contact me.</span></td>
+                  </tr>
+                </table>
               </td>
             </tr>
             <tr height="70px"></tr>

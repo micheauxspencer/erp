@@ -128,21 +128,23 @@ class StudentsController < ApplicationController
 
   def export_pdf
     @student = Student.find(params[:student_id])
+    @template_name = @student.grade.report_template.name
     respond_to do |format|
       format.html
       format.pdf do
-        render :pdf => "my_pdf", # pdf will download as my_pdf.pdf
-        :layout => 'pdf', # uses views/layouts/pdf.haml
-        title:                          'Alternate Title',
-        template:                       'students/export_pdf.pdf.erb',
-        layout:                         'pdf.html.erb',
-        page_size:                      'A4',  
-        margin: { top:    12,                    
-                  bottom: 12,
-                  left:   10,
-                  right:  10 },
-        :save_as_html => true,
-        header:  {   html: {  template: 'students/header.pdf.erb' } }
+        render  pdf:  "report_student",
+                layout:      'pdf',
+                title:       'Alternate Title',
+                template:    'students/export_pdf.pdf.erb',
+                layout:      'pdf.html.erb',
+                page_size:   'A4',  
+                margin:      { top:    5,                    
+                               bottom: 8,
+                               left:   10,
+                               right:  10 },
+                save_as_htm: true,
+                header:      { html: { template: 'students/header.pdf.erb' }},
+                footer:      { html: { template: 'students/footer.pdf.erb' }}
       end
     end
   end
