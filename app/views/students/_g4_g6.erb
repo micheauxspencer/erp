@@ -1,6 +1,6 @@
 <table id="pdf-table" width="100%" cellspacing="0">
   <tr width="100%" >
-    <table style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000; width: 100%;">
+    <table width="100%" class="border">
       <td style="padding: 5px 15px; width: 25%;">
         <div class="info-left">
           <div class="info1">
@@ -33,19 +33,19 @@
             <label class="field-label2">Days Absent: </label> <label class="infolbl"> <%= @leaves.to_i %></label>
           </div>
           <div class="info1">
-            <label class="field-label2">Times Late: </label> 
+            <label class="field-label2">Times Late: </label>
             <label class="infolbl"> <%= @leaves_forenoon.to_i %></label>
           </div>
         </div>
       </td>
-      <td style="padding: 5px 15px; border-right: 1px solid #000; width: 25%%;">
+      <td style="padding: 5px 15px; border-right: 1px solid #000; width: 25%;">
         <div class="info-left">
           <div class="info1">
-            <label class="field-label2">Total Days Absent: </label> 
+            <label class="field-label2">Total Days Absent: </label>
             <label class="infolbl"><%= @leaves.to_i %></label>
           </div>
           <div class="info1">
-            <label class="field-label">Total Times Late: </label> 
+            <label class="field-label">Total Times Late: </label>
             <label class="infolbl"><%= @leaves_forenoon.to_i %></label>
           </div>
         </div>
@@ -53,7 +53,7 @@
     </table>
   <tr>
   <tr>
-    <table style="border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000; width: 100%;">
+    <table width="100%" class="border_no_top">
       <tr>
         <td style="border:0;border-left:1px solid #000; padding: 5px 15px; width: 15%;" class="logobox">
           <%#= wicked_pdf_image_tag current_school_detail.logo,:s3=>true,:style=>:original,:timestamp=>false %>
@@ -83,12 +83,12 @@
             </tr>
           </table>
         </td>
-        
+
       </tr>
     </table>
   </tr>
   <tr>
-    <table style="border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000; width: 100%;">
+    <table class="set-mark border_no_top" width="100%">
       <tr>
         <td style="font-weight: bold; text-align: center;" width="15%">% Mark</td>
         <td style="font-weight: bold;" width="85%">PERFORMANCE SCALE for subject areas in reference to Ministry of Education standards:</td>
@@ -116,3 +116,322 @@
     </table>
   </tr>
 </table>
+<table class="pdf-table border_no_top" width="100%" border="1" cellspacing="0" >
+  <tr class="table-header" style="font-weight: bold;">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">LANGUAGE ARTS</td>
+    <td width="8%" class="score" align="center">Report 1</td>
+    <td width="8%" class="score" align="center">Report 2</td>
+    <td width="8%" class="score" align="center">Report 3</td>
+  </tr>
+
+  <tr class="tr">
+    <td class="padding-td">Reads with understanding</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Uses the writing process for a variety of audiences and purposes</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Effectively communicates oral information</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Analyzes and creates media texts</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
+  <tr class="table-header" style="font-weight: bold;">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">MATHEMATICS - Intellectual Development</td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Understands and applies new concepts (Fractions, Ratios, Percentage)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Understands numbers and the quantities they represent (Measurement, Decimals)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Recognizes, continues and creates patterns (Geometry)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Makes reasonable estimates (Data Management, Probability)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Applies a variety of strategies to read</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Understands basic number operations (Numeracy)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Recalls basic facts (Algebra)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
+  <tr class="table-header" style="font-weight: bold;">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">SOCIAL STUDIES</td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Understands concepts and facts in the content area</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Acquires and evaluates information and ideas</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Demonstrates skill with maps and diagrams</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
+  <tr class="table-header" style="font-weight: bold;">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">SCIENCE</td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Understands concepts of content area</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Applies scientific principles</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
+  <tr class="table-header" style="font-weight: bold;">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">ART / DRAMA</td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Demonstrates skill development</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Participates in all activities</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
+  <tr class="table-header" style="font-weight: bold;">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">PHYSICAL EDUCATION</td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Demonstrates skill development</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Participates in all activities</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Demonstrates etiquette and fair play</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
+  <tr class="table-header" style="font-weight: bold;">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">FRENCH (CORE)</td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Recognizes, understands and uses vocabulary to communicate</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Participates in all activities</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
+  <tr class="table-header" style="font-weight: bold;">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">PERSONAL PLANNING</td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Sets, monitors and evaluates personal goals</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Demonstrates connections between own strengths, interests and career choices</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Demonstrates an awareness of healthy life choices</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<!-- page braek -->
+<div class="page-break"></div>
+<div style="margin-top: 20px;">
+  <span style="padding-left: 20px"><label>Student:</label></span>
+  <span style="float: right; padding-right: 20px;"><label>Grade:</label></span>
+</div>
+<div class="border" style="padding: 0px 5px; font-weight: bold;">
+  <p style="">PERFORMANCE SCALE for work habits and personal and social development:<br/>
+  4 - Always 3 - Usually 2 - Sometimes 1 - Seldom</p>
+</div>
+<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
+  <tr class="table-header" style="font-weight: bold;">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">WORK HABITS</td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Organizes time</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Organizes materials and written work</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Completes assignments when due</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Produces legible and neat work</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Works independently</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
+  <tr class="table-header" style="font-weight: bold;">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">PERSONAL & SOCIAL DEVELOPMENT</td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Demonstrates responsibility and reliability</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Interacts with others cooperatively</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr class="tr">
+    <td class="padding-td">Demonstrates appropriate behaviour</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
+  <tr class="table-header">
+    <td class="fixed" width="76%" style="padding: 0px 5px;">This student is on a modified program (Y/N If Yes, see Comment)</td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+    <td width="8%" class="score" align="center"></td>
+  </tr>
+</table>
+<table class="pdf-table table-margin" width="100%" cellspacing="0" class="page" style="border: 1px solid #000000; margin-top: 5px">
+  <tr style="border-bottom: 1px solid #000000;">
+    <td style="border:0;">
+      <h4 class="add title-table">EXTRA CURRICULAR ACTIVITIES</h4>
+    </td>
+  <tr>
+  <tr>
+    <td>
+      <p class="extra-comment">Participation And General Comments</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div class="content-extra_46"></div>
+    </td>
+  </tr>
