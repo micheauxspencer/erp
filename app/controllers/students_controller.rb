@@ -134,6 +134,7 @@ class StudentsController < ApplicationController
       format.pdf do
         render  pdf:  "report_student",
                 layout:      'pdf',
+                disposition: 'attachment',
                 title:       'Report Student',
                 template:    'students/export_pdf.pdf.erb',
                 layout:      'pdf.html.erb',
