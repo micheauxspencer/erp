@@ -138,6 +138,7 @@ class StudentsController < ApplicationController
                 template:    'students/export_pdf.pdf.erb',
                 layout:      'pdf.html.erb',
                 page_size:   'A4',
+                show_as_html: params.key?('debug'),
                 margin:      { top:    5,
                                bottom: 8,
                                left:   10,
