@@ -1,4 +1,10 @@
 <style type="text/css">
+  .table-boder {
+    border: 1px solid #000000;
+  }
+  .border-none {
+    border: none !important;
+  }
   .title-pdf{
   text-align: center;
   font-weight: bold;
@@ -71,7 +77,7 @@
   height: 550px;
 }
 .content-extra_46 {
-  height: 400px;
+  height: 600px;
 }
 .content-extra_78{
   height: 650px;
@@ -109,21 +115,46 @@
     <% when ReportTemplate::NAME[1] %>
       <%= render :partial => 'g1_g3' %>
     <% when ReportTemplate::NAME[2] %>
-      <%= render :partial => 'g4_g6' %>
+      <%= render :partial => 'g7_g8' %>
     <% when ReportTemplate::NAME[3] %>
       <%= render :partial => 'g7_g8' %>
     <% end %>
+
+    <div class="clearfix"></div>
     <div style="margin-top: 20px;">
       <span style="padding-left: 20px"><label>Student: <%= @student.name %></label></span>
       <span style="float: right; padding-right: 20px;"><label>Grade: <%= @student.grade.name %></label></span>
     </div>
-    <div class="term">
+
+    <table class="pdf-table table-magin-top border-none term" width="100%" border="1" cellspacing="0">
       <tr>
-        <td height="1000px" valign="top" style="border:none;">
+        <td height="300px" valign="top" style="border:none;">
           <div class="custom_header">
             <h2 class="add title-table border-title" style="margin-top: 0; line-height: 20px;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
             <div>
-              <span class="name-term"><label>Third Term:</label></span>
+              <span class="name-term"><label>First Term:</label></span>
+              <span style="float: right; padding-right: 30px;"><label>Date:</label></span>
+            </div>
+            <div class="input-content"></div>
+            <table width="100%" cellspacing="0">
+              <tr>
+                <td width="33%" class="signature"><span>Teacher's Signature</span></td>
+                <td width="34%" align="center"></td>
+                <td width="33%" class="signature"><span>Administrator's Signature</span></td>
+              </tr>
+            </table>
+          </div>
+
+        </td>
+      </tr>
+    </table>
+    <table class="pdf-table table-magin-top border-none term" width="100%" border="1" cellspacing="0">
+      <tr>
+        <td height="300px" valign="top" style="border:none;">
+          <div class="custom_header">
+            <h2 class="add title-table border-title" style="margin-top: 0; line-height: 20px;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
+            <div>
+              <span class="name-term"><label>Second Term:</label></span>
               <span style="float: right; padding-right: 30px;"><label>Date:</label></span>
             </div>
             <div class="input-content"></div>
@@ -137,12 +168,36 @@
           </div>
         </td>
       </tr>
-    </div>
-    <p style="text-align: center; padding: 25px 10px;"> ______________________________________ is Assigned to Grade ____________ in September ________ </p>
+    </table>
+    <table class="pdf-table table-magin-top border-none term" width="100%" border="1" cellspacing="0">
+      <tr>
+        <td height="300px" valign="top" style="border:none;">
+          <div class="custom_header">
+            <h2 class="add title-table border-title" style="margin-top: 0; line-height: 20px;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
+            <div>
+              <span class="name-term"><label>Third Term:</label></span>
+              <span style="float: right; padding-right: 30px;"><label>Date:</label></span>
+            </div>
+            <div class="input-content"></div>
+            <table width="100%" cellspacing="0">
+              <tr>
+                <td width="33%" class="signature"><span>Teacher's Signature</span></td>
+                <td width="34%" align="center"></td>
+                <td width="33%" class="signature"><span>Administrator's Signature</span></td>
+              </tr>
+              <tr>
+                <td colspan="3"><p style="text-align: center; padding: 25px 10px;"> ______________________________________ is Assigned to Grade ____________ in September ________ </p></td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+
     <!-- page braek -->
     <div class="page-break"></div>
 
-    <table class="pdf-table" width="100%" cellspacing="0" class="page">
+    <table class="pdf-table border-none" width="100%" cellspacing="0" class="page">
       <tr>
         <td style="border:0; text-align:center; padding-top: 35px;" colspan="2"><b>Response Form
           <br>
