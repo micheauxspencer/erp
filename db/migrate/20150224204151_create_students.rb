@@ -10,7 +10,7 @@ class CreateStudents < ActiveRecord::Migration
       t.string :route_fee
       t.boolean :pick_up
       t.boolean :drop_off
-      t.string :sibling_id
+      t.integer :sibling_id
       t.string :f_first_name
       t.string :f_last_name
       t.string :f_street
