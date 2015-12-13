@@ -3,9 +3,9 @@ namespace :import do
   task insert_db_test: :environment do
 
     User.create!([
-      {email: "office@example.com", password: "password", role: "office", user_name: "office"},
-      {email: "assistant@example.com", password: "password", role: "assistant", user_name: "assistant"},
-      {email: "teacher@example.com", password: "password", role: "teacher", user_name: "teacher"},
+      {email: "office@example.com", first_name: "Dao", last_name: "Colin", password: "password", role: "office", user_name: "office"},
+      {email: "assistant@example.com", first_name: "Dao", last_name: "Colin", password: "password", role: "assistant", user_name: "assistant"},
+      {email: "teacher@example.com", first_name: "Dao", last_name: "Colin", password: "password", role: "teacher", user_name: "teacher"},
     ])
 
     ReportTemplate.create!([
@@ -20,9 +20,11 @@ namespace :import do
     fee = Fee.create(name: "Term Fee", amount: 150.0, fee_caregory_id: nil, category: nil, term_id: 1)
 
     route = Route.create(name: "Hanoi - Saigon", details: "", status: true)
+    teacher = User.where(role: "teacher").first
 
     ReportTemplate.all.each_with_index do |report_template, index| 
       grade =  Grade.create( name: "Grade" + index.to_s,
+                             teacher_id: teacher.id,
                              term_id: term.id,
                              report_template_id: report_template.id)
 

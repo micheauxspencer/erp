@@ -58,19 +58,19 @@
             <div class="controls">
               <%= f.input :last_name, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:last_name]) %>
+            <%#= error_span(@student[:last_name]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :middle_name, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:middle_name]) %>
+            <%#= error_span(@student[:middle_name]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :first_name, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:first_name]) %>
+            <%#= error_span(@student[:first_name]) %>
           </div>
           <div class="row">
             <div class="col-md-6">
@@ -78,7 +78,7 @@
                 <div class="controls">
                   <%= f.input :birthdate, as: :date_picker, :class => 'form-controll' %>
                 </div>
-                <%= error_span(@student[:birthdate]) %>
+                <%#= error_span(@student[:birthdate]) %>
               </div>
             </div>
             <div class="col-md-6">
@@ -86,7 +86,7 @@
                 <div class="controls">
                   <%= f.input :gender, collection: ["Male", "Female"], prompt: "Select gender", :class => 'form-control' %>
                 </div>
-                <%= error_span(@student[:birthdate]) %>
+                <%#= error_span(@student[:birthdate]) %>
               </div>
             </div>
           </div>
@@ -96,36 +96,36 @@
 
               <%#= f.association :grade, prompt: "Choosa a Grade", :class => 'form-control' %>
             </div>
-            <%#= error_span(@student[:grade_id]) %>
+            <%##= error_span(@student[:grade_id]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :sin, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:sin]) %>
+            <%#= error_span(@student[:sin]) %>
           </div>
           <div class="control-group">
             <div class="controls">
             </div>
-            <%= error_span(@student[:birthdate]) %>
+            <%#= error_span(@student[:birthdate]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :trans_req, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:trans_req]) %>
+            <%#= error_span(@student[:trans_req]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :tax_rec_req, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:tax_rec_req]) %>
+            <%#= error_span(@student[:tax_rec_req]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.association :siblings, label_method: :first_name, value_method: :id, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:sibling_id]) %>
+            <%#= error_span(@student[:sibling_id]) %>
           </div>
         </div>
         <div class="col-md-6">
@@ -133,37 +133,37 @@
             <div class="controls">
               <%= f.input :street, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:street]) %>
+            <%#= error_span(@student[:street]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :city, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:city]) %>
+            <%#= error_span(@student[:city]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :postal_code, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:postal_code]) %>
+            <%#= error_span(@student[:postal_code]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :status, collection: ["Citizen", "Student Visa", "Other Visa"], prompt: "Select Citizenship", :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:status]) %>
+            <%#= error_span(@student[:status]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :last_shool_attended, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:last_shool_attended]) %>
+            <%#= error_span(@student[:last_shool_attended]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :last_school_phone, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:last_school_phone]) %>
+            <%#= error_span(@student[:last_school_phone]) %>
           </div>
 
           <!--<div class="col-md-6">-->
@@ -173,7 +173,7 @@
           <div class="controls">
             <%= f.input :medical_conditions, :class => 'form-control' %>
           </div>
-          <%= error_span(@student[:medical_conditions]) %>
+          <%#= error_span(@student[:medical_conditions]) %>
         </div>
           <!--</div>-->
         </div>
@@ -195,37 +195,37 @@
             <div class="controls">
               <%= f.input :f_first_name, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:f_first_name]) %>
+            <%#= error_span(@student[:f_first_name]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :f_last_name, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:f_last_name]) %>
+            <%#= error_span(@student[:f_last_name]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :f_phone, as: :tel, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:f_phone]) %>
+            <%#= error_span(@student[:f_phone]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :f_cell, as: :tel, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:f_cell]) %>
+            <%#= error_span(@student[:f_cell]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :f_work, as: :tel, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:f_work]) %>
+            <%#= error_span(@student[:f_work]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :f_email, as: :tel, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:f_email]) %>
+            <%#= error_span(@student[:f_email]) %>
           </div>
         </div>
         <div class="col-md-6">
@@ -235,37 +235,37 @@
             <div class="controls">
               <%= f.input :m_first_name, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:m_first_name]) %>
+            <%#= error_span(@student[:m_first_name]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :m_last_name, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:m_last_name]) %>
+            <%#= error_span(@student[:m_last_name]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :m_phone, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:m_phone]) %>
+            <%#= error_span(@student[:m_phone]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :m_cell, as: :tel, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:m_cell]) %>
+            <%#= error_span(@student[:m_cell]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :m_work, as: :tel, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:m_work]) %>
+            <%#= error_span(@student[:m_work]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :m_email, as: :tel, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:m_email]) %>
+            <%#= error_span(@student[:m_email]) %>
           </div>
         </div>
       </div>
@@ -275,7 +275,7 @@
             <div class="controls">
               <%= f.input :custody, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:custody]) %>
+            <%#= error_span(@student[:custody]) %>
           </div>
         </div>
       </div>
@@ -296,37 +296,37 @@
             <div class="controls">
               <%= f.input :emerg_1_name, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:emerg_1_name]) %>
+            <%#= error_span(@student[:emerg_1_name]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :emerg_1_phone, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:emerg_1_phone]) %>
+            <%#= error_span(@student[:emerg_1_phone]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :emerg_1_relation, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:emerg_1_relation]) %>
+            <%#= error_span(@student[:emerg_1_relation]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :emerg_2_name, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:emerg_2_name]) %>
+            <%#= error_span(@student[:emerg_2_name]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :emerg_2_phone, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:emerg_2_phone]) %>
+            <%#= error_span(@student[:emerg_2_phone]) %>
           </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :emerg_2_relation, :class => 'form-control' %>
             </div>
-            <%= error_span(@student[:emerg_2_relation]) %>
+            <%#= error_span(@student[:emerg_2_relation]) %>
           </div>
         </div>
 
@@ -337,19 +337,19 @@
               <div class="controls">
                 <%= f.input :doctor_name, :class => 'form-control' %>
               </div>
-              <%= error_span(@student[:doctor_name]) %>
+              <%#= error_span(@student[:doctor_name]) %>
             </div>
             <div class="control-group">
               <div class="controls">
                 <%= f.input :doctor_phone, :class => 'form-control' %>
               </div>
-              <%= error_span(@student[:doctor_phone]) %>
+              <%#= error_span(@student[:doctor_phone]) %>
             </div>
             <div class="control-group">
               <div class="controls">
                 <%= f.input :healthcard, :class => 'form-control' %>
               </div>
-              <%= error_span(@student[:healthcard]) %>
+              <%#= error_span(@student[:healthcard]) %>
             </div>
         </div>
 
