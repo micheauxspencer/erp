@@ -1,6 +1,6 @@
-AdminUser.create!([
-  {email: "admin@example.com", password: "password", user_name: "admin"}
-])
+# AdminUser.create!([
+#   {email: "admin@example.com", password: "password", user_name: "admin"}
+# ])
 User.create!([
   {email: "office@example.com", password: "password", role: "office", user_name: "office"},
   {email: "assistant@example.com", password: "password", role: "assistant", user_name: "assistant"},
