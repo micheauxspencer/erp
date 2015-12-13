@@ -18,7 +18,7 @@
   font-weight: bold;
   margin-bottom: 2px;
   padding-bottom: 0px;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 .section1 {
   font-size: 10px;
@@ -37,7 +37,7 @@
   padding: 0px 3px !important;
 }
 .border-title {
-  padding-bottom: 5px important;
+  padding-bottom: 5px !important;
   border-bottom: 2px solid #000;
 }
 .extra-comment {
@@ -102,13 +102,12 @@
 .padding-td {
   padding: 1px 5px;
 }
-
 </style>
 <div id="page-yield" class="available_sections1">
   <div class="page1"></div>
 
   <div class="section1">
-    <span class="date-head-pdf pull-right">Date:8/24/2015</span>
+    <span class="date-head-pdf pull-right">Date: <%= Time.now.strftime("%m/%d/%Y") %></span>
     <% case @template_name %>
     <% when ReportTemplate::NAME[0] %>
       <%= render :partial => 'js_jk' %>
@@ -120,7 +119,7 @@
       <%= render :partial => 'g7_g8' %>
     <% end %>
 
-    <div class="clearfix"></div>
+    <div class="page-break"></div>
     <div style="margin-top: 20px;">
       <span style="padding-left: 20px"><label>Student: <%= @student.name %></label></span>
       <span style="float: right; padding-right: 20px;"><label>Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label></span>
@@ -207,15 +206,15 @@
       </tr>
       <tr >
         <td>
-          <table width="100%" width="100%" cellspacing="0" class="border" style="padding: 8px;" >
+          <table width="100%" width="100%" cellspacing="0" class="border" >
             <tr>
-              <td class="padding-td" width="15%"><label style="line-height: 20px;">Student:</label></td>
+              <td class="padding-td" width="15%"><label style="line-height: 20px; padding: 8px 10px 0px 10px">Student:</label></td>
               <td class="padding-td" width="35%"><label style="line-height: 20px;"><%= @student.name %></label></td>
-              <td class="padding-td" width="25%"><label style="line-height: 20px;">Grade: </label> </td>
+              <td class="padding-td" width="25%"><label style="line-height: 20px; padding: 8px 10px 0px 0px">Grade: </label> </td>
               <td class="padding-td" width="25%"><label style="line-height: 20px;">Date:</label></td>
             </tr>
             <tr>
-              <td class="padding-td"><label class="field-label" style="line-height: 20px;">School:</label> </td>
+              <td class="padding-td"><label class="field-label" style="line-height: 20px;padding-left: 10px">School:</label> </td>
               <td class="padding-td"><label class="infolbl" style="line-height: 20px;">KHALSA COMMUNITY SCHOOL</label> </td>
               <td class="padding-td" colspan="2"><label class="infolbl" style="line-height: 20px;">Homeroom Teachers: </label></td>
             </tr>
@@ -224,7 +223,7 @@
       </tr>
       <tr>
       <td>
-        <div class="border_no_top" style="padding: 8px;">
+        <div class="border_no_top" style="padding: 15px;">
           <p style="font-weight: bold;">Parent's/Guardian's and student's comments on student achievement, goals and home support:</p>
           <div style="height: 620px;"></div>
           <table class="pdf-table" width="100%" cellspacing="0" class="sig">

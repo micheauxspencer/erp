@@ -280,9 +280,9 @@
 </table>
 <!-- page braek -->
 <div class="page-break"></div>
-<div style="margin-top: 20px;">
-  <span style="padding-left: 20px"><label>Student:</label></span>
-  <span style="float: right; padding-right: 20px;"><label>Grade:</label></span>
+<div style="margin-top: 30px;">
+  <span style="padding-left: 20px"><label>Student: <%= @student.name %></label></span>
+  <span style="float: right; padding-right: 20px;"><label>Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label></span>
 </div>
 <table class="pdf-table border table-magin-top" width="100%" border="1" cellspacing="0">
   <tr class="table-header" style="font-weight: bold;">
