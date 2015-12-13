@@ -20,6 +20,7 @@
       <tr>
         <td><%= link_to student.name, edit_student_path(student) %></td>
         <td><%= student.grade ? student.grade.name : '' %></td>
+
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
         <td><%= student.fees.sum(:amount) %></td>
