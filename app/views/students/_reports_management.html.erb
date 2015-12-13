@@ -1,0 +1,24 @@
+<div class="row" style="text-align: left;">
+  <div class="col-md-4">
+    <div class="btn btn-default">
+      Enter Marks
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <%= link_to "Export PDF", export_pdf_path(@student, :format => :pdf), class: "btn btn-default" %>
+  </div>
+
+  <div class="col-md-4">
+    <div class="btn btn-default">
+      Previous Reports
+    </div>
+  </div>
+
+</div>
+
+<div style="height: 50px;"></div>
+
+<div class="row">
+  <%= render "student_cce_report_pdf" %>
+</div>

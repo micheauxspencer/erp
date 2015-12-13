@@ -1,0 +1,173 @@
+<div id="page-yield" class="available_sections1 hidden">
+  <div class="page1"></div>
+
+  <div class="section1">
+    <div class="extender"></div>
+    <%= render :partial => 'js_jk' %>
+
+    <br>
+    <br>
+
+    <div id="score-table">
+      <table id="pdf-table" width="100%" cellspacing="0">
+        <tr class="table-header">
+          <td class="fixed"><%= @student.name %></td>
+          <td colspan="2" class="score">Report 1</td>
+          <td colspan="2" class="score">Report 2</td>
+          <td colspan="2" class="score">Report 3</td>
+        </tr>
+        <tr class="table-header">
+          <td class="score"></td>
+          <td class="score">Mark</td>
+          <td class="score">Average</td>
+          <td class="score">Mark</td>
+          <td class="score">Average</td>
+          <td class="score">Mark</td>
+          <td class="score">Average</td>
+        </tr>
+
+        <tr class="tr">
+          <td class="fixed">
+            <%= @student.name %>
+          </td>
+
+          <td class="score">
+            <div class="label-field-pair">
+              <div class="text-input-bg"> 100</div>
+            </div>
+          </td>
+          <td class="score">
+            <div class="label-field-pair">
+              <div class="text-input-bg">100</div>
+            </div>
+          </td>
+          <td class="score">
+            <div class="label-field-pair">
+              <div class="text-input-bg">100</div>
+            </div>
+          </td>
+          <td class="score">
+            <div class="label-field-pair">
+              <div class="text-input-bg">100</div>
+            </div>
+          </td>
+          <td class="score">
+            <div class="label-field-pair">
+              <div class="text-input-bg">100</div>
+            </div>
+          </td>
+          <td class="score">
+            <div class="label-field-pair">
+              <div class="text-input-bg">100</div>
+            </div>
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <table id="pdf-table" width="100%" cellspacing="0" class="page">
+      <tr>
+        <td style="border:0;">
+          <h2 class="add">EXTRA CURRICULAR ACTIVITIES</h2>
+        </td>
+      <tr>
+    </table>
+
+    <table id="pdf-table" width="100%" cellspacing="0" class="page">
+      <tr>
+        <td height="1000px" valign="top" style="border:none;">
+          <div class="custom_header">
+            <h2 class="add">ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
+
+            <span class="date"><b>date</b></span>
+            <table id="pdf-table" width="100%" cellspacing="0" class="page">
+              <tr>
+                <td height="100%" style="border:0;">
+                </td>
+              <tr>
+            </table>
+
+
+            <table id="pdf-table" width="100%" cellspacing="0" class="sig">
+              <tr>
+                <td width="50%" height="60px"><span>Teacher's Signature</span></td>
+                <td colspan="2"><span>Administrator's Signature</span></td>
+              </tr>
+
+            </table>
+          </div>
+          <p>NO Remarks Available for this student</p>
+        </td>
+      <tr>
+    </table>
+
+
+    <table id="pdf-table" width="100%" cellspacing="0" class="page">
+      <tr>
+        <td style="border:0; text-align:center;" colspan="2"><b>Response Form
+          <br>
+          ( to be completed, signed and returned)</b>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="">
+            <div class="info1">
+              <label class="field-label">Student</label> <label class="infolbl"> <%= @student.name %></label>
+            </div>
+            <div class="info-left">
+              <div class="info1">
+                <label class="field-label">School </label> <label class="infolbl">KHALSA COMMUNITY SCHOOL</label>
+              </div>
+            </div>
+          </div>
+
+        </td>
+        <td>
+          <div class="info-right">
+            <div class="info1">
+              <label class="field-label">Grade</label>
+              <label class="infolbl"><%= @student.name %></label>
+            </div>
+
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="border-bottom:0;">
+          <div style="position:relative;top:0;left:0;">Parent's/Guardian's and student's comments on student achievement,
+            goals and home support:
+          </div>
+      <tr>
+      <tr>
+        <td height="900px" colspan="2" valign="bottom" style="border-top:0;">
+
+          <table id="pdf-table" width="100%" cellspacing="0" class="sig">
+            <tr>
+              <td width="50%" height="80px">
+                <div id="square"></div>
+                I have received the report card
+              </td>
+              <td width="50%" colspan="2">
+                <div id="square"></div>
+                I would like to discuss this report card. Please contact me.
+              </td>
+            </tr>
+            <tr>
+              <td width="50%" height="60px"><span>Parent's/Guardian's Signature</span></td>
+              <td colspan="2"><span>Parent's/Guardian's Name (please print)</span></td>
+            </tr>
+            <tr>
+              <td width="50%" height="60px"><span>Student's Signature</span></td>
+              <td>(____)________-__________ <br> Telephone (day)</td>
+              <td>(____)________-__________ <br> Telephone (bight)</td>
+            </tr>
+
+          </table>
+        </td>
+      <tr>
+    </table>
+  </div>
+</div>

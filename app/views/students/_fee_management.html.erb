@@ -1,0 +1,194 @@
+<h2> Student's Fees </h2>
+<table class="table table-striped" style="margin-top: 30px; margin-bottom: 50px;">
+  <thead>
+  <tr>
+    <div class="row">
+        <th class="col-md-1">Id</th>
+
+        <th class="col-md-1">Name</th>
+
+        <th class="col-md-1">Amount</th>
+
+        <th class="col-md-1">Term</th>
+
+        <th class="col-md-1">Completion</th>
+
+        <th class="col-md-1">Paid Amount</th>
+    </div>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @fees.each do |fee| %>
+      <% charge = Charge.where(student_id: @student.id, fee_id: fee.id).first %>
+
+      <tr>
+        <div class="row">
+              <%= hidden_field_tag 'amount', charge ? charge.amount.to_i : 0, id: "student_fee_form_amount_#{@student.id}_#{fee.id}" %>
+
+            <td class="col-md-1"><%= link_to fee.id, fee_path(fee) %></td>
+
+            <td class="col-md-1"><%= fee.name %></td>
+
+            <td class="col-md-1"><%= fee.amount %></td>
+
+            <td class="col-md-1"><%= fee.term ? fee.term.name : ''%></td>
+
+            <td class="col-md-1">
+              <%
+                 fee_status = 'Unpaid'
+                 fee_status = 'Paid' if charge && charge.is_completed
+                 fee_status = 'Partial' if charge && !charge.is_completed && charge.amount.to_i > 0
+              %>
+              <span id="charge_status_<%= "#{@student.id}_#{fee.id}"%>"><%= fee_status %></span>
+            </td>
+
+            <td class="col-md-2">
+              <div class="pull-left" id="amount_field_<%= "#{@student.id}_#{fee.id}"%>">
+                <%= hidden_field_tag "original_amount", charge ? charge.amount.to_i : 0%>
+                <input disabled type="text" name="amount" value="<%= charge ? charge.amount.to_i : 0 %>" style="width: 80px; height: 1.8em" class="form-control">
+              </div>
+
+              <div class="amount-edit-group-btns">
+                <div class="btn btn-default" style="padding: 1px 5px; margin-left: 10px; top: -2px; position: relative" id="btn_edit_<%= "#{@student.id}_#{fee.id}"%>" onclick="updatePaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                  <span class="fa fa-pencil"></span>
+                </div>
+
+                <div class="btn btn-success payment_update pull-left" style="padding: 1px 5px; margin-left: 10px; top: -2px; position: relative" id="payment_update_<%= "#{@student.id}_#{fee.id}" %>" onclick="confirmPaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                  <span class="fa fa-check"></span>
+                </div>
+                <div class="btn btn-default payment_cancel pull-left" style="padding: 1px 6px; margin-left: 5px; top: -2px; position: relative" id="payment_cancel_<%= "#{@student.id}_#{fee.id}"%>" onclick="cancelPaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                  <span class="fa fa-close"> </span>
+                </div>
+              </div>
+            </td>
+
+        </div>
+
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
+<br>
+<br>
+<h2>
+  Other Fees
+</h2>
+<table class="table table-striped" style="margin-top: 30px; margin-bottom: 50px;">
+  <thead>
+      <tr>
+        <div class="row">
+          <th class="col-md-1">Id</th>
+
+          <th class="col-md-1">Name</th>
+
+          <th class="col-md-1">Amount</th>
+
+          <th class="col-md-1">Term</th>
+
+          <th class="col-md-1">Completion</th>
+        </div>
+      </tr>
+  </thead>
+
+  <tbody>
+      <% @other_fees.each do |fee| %>
+
+        <tr>
+          <div class="row">
+            <td class="col-md-1"><%= link_to fee.id, fee_path(fee) %></td>
+
+            <td class="col-md-1"><%= fee.name %></td>
+
+            <td class="col-md-1"><%= fee.amount %></td>
+
+            <td class="col-md-1"><%= fee.term ? fee.term.name : ''%></td>
+
+            <td class="col-md-1">
+              <% if @student.fees.include? fee %>
+                  <span class="grey-text">Assigned</span>
+              <% else %>
+                  <%= form_tag assign_fee_path, :method => :post do %>
+                      <%= hidden_field_tag 'fee_id', fee.id %>
+                      <%= hidden_field_tag 'student_id', @student.id %>
+                      <%= submit_tag 'Assign', class: 'btn btn-default' %>
+                  <% end %>
+
+                  <!--<div class="btn btn-default" id="fee_assign_<%= "#{@student.id}_#{fee.id}" %>" onclick='assignFee(<%= fee.id %>, <%= @student.id %>)'>Assign</div>-->
+              <% end %>
+            </td>
+          </div>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<style>
+    .payment_update, .payment_cancel {
+        display: none;
+    }
+
+    .amount-edit-group-btns {
+        margin-top: 2px;
+    }
+</style>
+
+<script>
+  var updatePaymentClicked = function(studentId, feeId){
+    $("#btn_edit_" + studentId + "_" + feeId).hide(100);
+    $("#amount_field_" + studentId + "_" + feeId).find('input').removeAttr('disabled');
+    $("#payment_update_" + studentId + "_" + feeId).show(200);
+    $("#payment_cancel_" + studentId + "_" + feeId).show(200);
+  };
+
+  var cancelPaymentClicked = function(studentId, feeId){
+      $("#btn_edit_" + studentId + "_" + feeId).show(200);
+      $("#payment_update_" + studentId + "_" + feeId).hide();
+      $("#payment_cancel_" + studentId + "_" + feeId).hide();
+      $("#amount_field_" + studentId + "_" + feeId).find('input').attr('disabled', true);
+      $("#amount_field_" + studentId + "_" + feeId).find('input').val($("#amount_field_" + studentId + "_" + feeId).find('#original_amount').val());
+  };
+
+  var confirmPaymentClicked = function(studentId, feeId){
+      $("#btn_edit_" + studentId + "_" + feeId).show(200);
+      $("#payment_update_" + studentId + "_" + feeId).hide();
+      $("#payment_cancel_" + studentId + "_" + feeId).hide();
+      $("#amount_field_" + studentId + "_" + feeId).find('input').attr('disabled', true);
+
+
+      $("input#student_fee_form_amount_" + studentId + "_" + feeId).val($("#amount_field_" + studentId + "_" + feeId).find("input[name=amount]").val());
+//      $("form#student_fee_form_"  + studentId + "_" + feeId).submit()
+
+      $.ajax({
+          url: 'payment',
+          type: 'post',
+          dataType: 'script',
+          data: {
+              fee_id: feeId,
+              student_id: studentId,
+              amount: $("input#student_fee_form_amount_" + studentId + "_" + feeId).val()
+          }
+      });
+  };
+
+  var assignFee = function(feeId, studentId){
+      $.ajax({
+          url: '/students/assign_fee',
+          type: 'post',
+          dataType: 'script',
+          data: {
+              fee_id: feeId,
+              student_id: studentId
+          },
+          success: function(data){
+              $("#fee_assign_" + studentId + "_" + feeId).html('Assigned');
+              $("#fee_assign_" + studentId + "_" + feeId).removeClass('btn');
+              $("#fee_assign_" + studentId + "_" + feeId).removeClass('btn-default');
+          }
+      });
+  }
+</script>
+
+

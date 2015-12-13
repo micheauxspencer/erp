@@ -1,0 +1,9 @@
+$("#amount_field_<%= "#{@student.id}_#{@fee.id}" %>").find('input').val('<%= @charge.amount %>');
+
+<% if @is_completed %>
+    $("#charge_status_<%= "#{@student.id}_#{@fee.id}" %>").html('Paid');
+<% elsif @charge.amount.to_i > 0 %>
+    $("#charge_status_<%= "#{@student.id}_#{@fee.id}" %>").html('Partial');
+<% else %>
+    $("#charge_status_<%= "#{@student.id}_#{@fee.id}" %>").html('Unpaid');
+<% end %>

@@ -1,0 +1,47 @@
+<div id="assign_students_modal" class="modal fade" role="dialog" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <%= form_for @grade do |f| %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><%= t "grades.buttons.assign_students" %></h4>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th><%= model_class.human_attribute_name(:id) %></th>
+                <th><%= model_class.human_attribute_name(:name) %></th>
+                <th><%= model_class.human_attribute_name(:created_at) %></th>
+                <th><%= t "grade.current_grade" %></th>
+                <th><%=t '.actions', :default => t("helpers.actions") %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @students.each do |student| %>
+                <tr>
+                  <td><%= link_to student.id, student_path(student) %></td>
+                  <td><%= student.last_name %>, <%= student.first_name %> <%= student.middle_name %></td>
+                  <td><%=l student.created_at %></td>
+                  <td><%= student.grade_name %></td>
+                  <td>
+                    <%= f.check_box :student_ids,
+                      {name: "grade[student_ids][]",
+                      checked: @grade.students.include?(student)}, student.id, nil %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+            
+          <div class="modal-footer">
+            <%= f.button :submit, :class => 'btn btn-primary' %>
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <%= t "buttons.close" %>
+            </button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

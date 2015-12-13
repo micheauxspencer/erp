@@ -1,0 +1,2 @@
+module FeeCategoriesHelper
+end

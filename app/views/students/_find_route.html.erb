@@ -1,0 +1,60 @@
+<div id="student-info-find-route">
+  <%= hidden_field_tag 'student_id', @student.id %>
+
+  <table class="table table-striped" style="margin-top: 30px; margin-bottom: 50px">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Details</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <br>
+    <br>
+    <% student_route_id = @student.route ? @student.route.id : '' %>
+    <% Route.all.each do |route| %>
+        <tr style="height: 60px;">
+          <td><%= link_to route.id, route_path(route) %></td>
+          <td><%= route.name %></td>
+          <td><%= route.details %></td>
+          <td><%= route.status %></td>
+          <td id="assign_status_<%= "#{@student.id}_#{route.id}" %>">
+            <% if student_route_id == route.id %>
+                Assigned
+            <% else %>
+                <%= form_tag assign_route_path(@student), :method => :post, id: "assign_route_form_#{@student.id}_#{route.id}" do %>
+                    <%= hidden_field_tag 'route_id', route.id %>
+                   <%= hidden_field_tag 'student_id', @student.id %>
+                    <%= submit_tag 'Assign', class: 'btn btn-default' %>
+                <% end %>
+            <% end %>
+
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+</div>
+
+<style>
+    #student-info-find-route {
+        display: none;
+    }
+</style>
+
+<script>
+    var assignRouteToStudent = function(routeId) {
+        $.ajax({
+            url: 'routes',
+            type: 'post',
+            dataType: 'script',
+            data: {
+                route_id: routeId
+            }
+        });
+    };
+</script>

@@ -1,0 +1,64 @@
+<div class="row">
+
+    <%= simple_form_for Attendance.new, :url => grade_attendance_path, method: :get, :html => {:class => "form-horizontal student"} do |f| %>
+      <div class="col-md-3">
+        <div style="margin-left: 25px !important;"> <%= f.input :created_at, as: :date_picker, :class => 'form-control',
+                                                                :input_html => { value: params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at] : Time.now.strftime("%d/%m/%Y") } %></div>
+      </div>
+      <div class="col-md-9" style="margin-top: 26px;">
+        <%= f.submit 'Check', :class => 'btn btn-default', style: 'margin-left: 10px;' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<br>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th><%= Student.human_attribute_name(:id) %></th>
+    <th><%= Student.human_attribute_name(:name) %></th>
+    <th><%= Student.human_attribute_name(:grade_id) %></th>
+    <th><%= Student.human_attribute_name(:gender) %></th>
+    <th><%=t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @students.each do |student| %>
+      <tr>
+        <td><%= link_to student.id, student_path(student) %></td>
+        <td><%= student.last_name %> <%= student.first_name %> <%= student.middle_name %></td>
+        <td><%= student.grade_id %></td>
+        <td><%= student.gender %></td>
+        <td>
+          <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "student_#{student.id}_attendance_form") do %>
+              <%= hidden_field_tag :student_id, student.id %>
+              <%= label_tag 'late' %>
+              <% start_of_the_day = params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at].to_date.beginning_of_day : Time.now.beginning_of_day %>
+              <% end_of_the_day = params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at].to_date.end_of_day : Time.now.end_of_day %>
+              <% attendance = Attendance.where(
+                      "student_id = ? AND term_id = ? AND ? >= created_at AND created_at >= ?",
+                      student.id,
+                      current_term,
+                      end_of_the_day,
+                      start_of_the_day
+              ).first %>
+             <%= check_box_tag 'late', 1, attendance ? attendance.is_late : false, style: 'top: 2px; position: relative; margin-right: 15px;' %>
+
+              <%= label_tag 'absence' %>
+              <%= check_box_tag 'absence', 1, attendance ? attendance.absence : false, style: 'top: 2px; position: relative' %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function(){
+      $("input[type=checkbox]").click(function () {
+          $(this).parent().submit();
+      })
+  });
+</script>

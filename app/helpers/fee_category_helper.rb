@@ -1,0 +1,2 @@
+module FeeCategoryHelper
+end

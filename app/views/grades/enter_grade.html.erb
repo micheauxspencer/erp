@@ -1,0 +1,36 @@
+<div class="col-md-12">
+  <h3>Set report template for grades</h3>
+   <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <td><span></span></td>
+        <td><center>Grades</center></td>
+        <td><center>Template</center></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @grades.each_with_index do |grade, index| %>
+      <tr>
+        <td class="col-md-1"><center><%= index + 1 %></td>
+        <td class="col-md-9"><center><%= grade.name %></center></td>
+        <td class="col-md-2"><center><%= select_tag "report_template_id", options_from_collection_for_select(ReportTemplate.all, "id", "name", grade.report_template.id), class: "form-control add_grade_to_template", grade_id: grade.id %></center></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+  $(".add_grade_to_template").on('change', function(){
+    var tem_id = $(this).val();
+    var grade_id = $(this).attr('grade_id');
+    $.ajax({
+      url : '/grades/add_template',
+      method : "POST",
+      data : 'tem_id=' + tem_id + '&grade_id=' + grade_id,
+      dataType : "json",
+      success : function(data) {
+      }
+    })
+  })
+</script>

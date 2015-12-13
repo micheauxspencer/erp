@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h1> Student's Route </h1>
+</div>
+
+<% if @route %>
+
+    <dl class="dl-horizontal">
+      <dt><strong><%= Route.human_attribute_name(:name) %>:</strong></dt>
+      <dd><%= @route.name %></dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+      <dt><strong><%= Route.human_attribute_name(:details) %>:</strong></dt>
+      <dd><%= @route.details %></dd>
+    </dl>
+
+    <dl class="dl-horizontal">
+      <dt><strong><%= Route.human_attribute_name(:status) %>:</strong></dt>
+      <dd><%= @route.status %></dd>
+    </dl>
+<% end %>
+
+<div class="row col-md-12" style=" margin-bottom: 50px;">
+  <div class="btn btn-primary" onclick="newRouteBtnClicked()">
+    New Route
+  </div>
+
+  <div class="btn btn-default" style="margin-left: 30px;" onclick="findRouteBtnClicked()">
+    Find Route
+  </div>
+
+  <%= render 'find_route' %>
+  <%= render 'new_route' %>
+</div>
+
+<div style="height: 50px;"></div>
+<script>
+    var newRouteBtnClicked = function(){
+        $("#student-info-find-route").hide();
+        $("#student-info-new-route").show(200);
+    };
+
+    var findRouteBtnClicked = function(){
+        $("#student-info-new-route").hide();
+        $("#student-info-find-route").show(200);
+    };
+</script>
