@@ -8,6 +8,13 @@ namespace :import do
       {email: "teacher@example.com", password: "password", role: "teacher", user_name: "teacher"},
     ])
 
+    ReportTemplate.create!([
+      {name: "js_jk"},
+      {name: "g1_g3"},
+      {name: "g4_g6"},
+      {name: "g7_g8"}
+    ])
+
     term = Term.create(name: "Term 3 - 2015", acedemic_year_id: nil)
 
     fee = Fee.create(name: "Term Fee", amount: 150.0, fee_caregory_id: nil, category: nil, term_id: 1)
