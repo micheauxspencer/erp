@@ -33,6 +33,12 @@ class StudentsController < ApplicationController
     @other_fees = Fee.where(term: current_term).where('id NOT IN (?)', student_fee_ids).order('amount asc')
 
     @route = @student.route
+
+    @report_template = if @student.grade
+                        @student.grade.report_template
+                      else
+                        ReportTemplate.first
+                      end
   end
 
   # POST /students
@@ -155,6 +161,18 @@ class StudentsController < ApplicationController
                 footer:      { html: { template: 'students/footer.pdf.erb' }}
       end
     end
+  end
+
+  def enter_mark
+    @student = Student.find(params[:student_id])
+    term_student = TermStudent.find_or_create_by(student_id: params[:student_id], term_id: params[:term_id])
+
+    params[:evaluate].each do |evaluate_id, mark|
+      student_evaluate = StudentEvaluate.find_or_create_by(term_student_id: term_student.id, evaluate_id: evaluate_id)
+      student_evaluate.update_attributes( mark: mark)
+    end
+
+    redirect_to edit_student_path(@student)
   end
 
   private

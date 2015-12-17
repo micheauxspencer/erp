@@ -17,4 +17,5 @@
 class TermStudent < ActiveRecord::Base
   belongs_to :term
   belongs_to :student
+  has_many :student_evaluates
 end

@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   post 'students/:student_id/payment' => "students#payment", as: :student_fee
 
   get 'students/export_pdf/:student_id' => "students#export_pdf", as: :export_pdf
+  post 'students/enter_mark' => "students#enter_mark", as: :enter_mark
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

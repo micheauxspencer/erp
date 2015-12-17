@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211021223) do
+ActiveRecord::Schema.define(version: 20151217033019) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -98,6 +98,24 @@ ActiveRecord::Schema.define(version: 20151211021223) do
 
   add_index "enrollments", ["term_id"], name: "index_enrollments_on_term_id"
 
+  create_table "evaluate_types", force: true do |t|
+    t.string   "name"
+    t.integer  "report_template_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "evaluate_types", ["report_template_id"], name: "index_evaluate_types_on_report_template_id"
+
+  create_table "evaluates", force: true do |t|
+    t.string   "name"
+    t.integer  "evaluate_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "evaluates", ["evaluate_type_id"], name: "index_evaluates_on_evaluate_type_id"
+
   create_table "fee_categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -168,6 +186,17 @@ ActiveRecord::Schema.define(version: 20151211021223) do
     t.datetime "updated_at"
     t.boolean  "status"
   end
+
+  create_table "student_evaluates", force: true do |t|
+    t.integer  "term_student_id"
+    t.integer  "evaluate_id"
+    t.integer  "mark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "student_evaluates", ["evaluate_id"], name: "index_student_evaluates_on_evaluate_id"
+  add_index "student_evaluates", ["term_student_id"], name: "index_student_evaluates_on_term_student_id"
 
   create_table "student_siblings", force: true do |t|
     t.integer  "student_id"

@@ -14,7 +14,13 @@ ReportTemplate.create!([
   {name: "g7_g8"}
 ])
 
-term = Term.create(name: "Term 3 - 2015", acedemic_year_id: nil)
+Term.create([
+  {name: "Term 1 - 2015", acedemic_year_id: nil},
+  {name: "Term 1 - 2015", acedemic_year_id: nil},
+  {name: "Term 3 - 2015", acedemic_year_id: nil}
+])
+
+term = Term.last
 
 fee = Fee.create(name: "Term Fee", amount: 150.0, fee_caregory_id: nil, category: nil, term_id: 1)
 

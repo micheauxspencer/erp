@@ -10,6 +10,7 @@
 
 class ReportTemplate < ActiveRecord::Base
   has_many :grades
+  has_many :evaluate_types
 
   NAME = ['js_jk', 'g1_g3', 'g4_g6', 'g7_g8']
 
