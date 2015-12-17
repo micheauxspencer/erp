@@ -163,6 +163,15 @@ class StudentsController < ApplicationController
     end
   end
 
+  def mark
+    @student = Student.find(params[:student_id])
+    @report_template = if @student.grade
+                        @student.grade.report_template
+                      else
+                        ReportTemplate.first
+                      end
+  end
+
   def enter_mark
     @student = Student.find(params[:student_id])
     term_student = TermStudent.find_or_create_by(student_id: params[:student_id], term_id: params[:term_id])
