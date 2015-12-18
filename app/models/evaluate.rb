@@ -8,6 +8,7 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #  report_template_id :integer
+#  mark_type          :integer
 #
 # Indexes
 #
@@ -19,4 +20,7 @@ class Evaluate < ActiveRecord::Base
   belongs_to :evaluate_type
   has_many :student_evaluates
   belongs_to :report_template
+
+  MARK_TYPE = { mark1_4: 0, mark_100: 1, mark_yes_no: 2 }
+
 end

@@ -16,7 +16,7 @@ ReportTemplate.create!([
 
 Term.create([
   {name: "Term 1 - 2015", acedemic_year_id: nil},
-  {name: "Term 1 - 2015", acedemic_year_id: nil},
+  {name: "Term 2 - 2015", acedemic_year_id: nil},
   {name: "Term 3 - 2015", acedemic_year_id: nil}
 ])
 

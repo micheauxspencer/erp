@@ -1,30 +1,140 @@
 <div id="enter_mark" class="row" >
+
+  <table width="100%" class="border table-magin-top">
+    <td style="padding: 5px 15px; width: 25%;">
+      <div class="info-left">
+        <div class="info1">
+          <label class="field-label">Student: </label> <label class="infolbl" style="text-align:left;">
+            <%= @student.name %>
+          </label>
+        </div>
+        <div class="info1">
+          <label class="field-label">Grade: </label> <label class="infolbl">
+            <%= @student.grade.name %>
+          </label>
+        </div>
+      </div>
+    </td>
+    <td style="padding: 5px 15px; width: 25%; vertical-align: bottom;">
+      <div class="info-left">
+        <div class="info1">
+          <label class="field-label"> </label>
+        </div>
+        <div class="info1">
+          <label class="field-label">Teachers: </label> <label class="infolbl">
+            <%= @student.name %>
+          </label>
+        </div>
+      </div>
+    </td>
+  </table>
+  <% if @report_template.name == ReportTemplate::NAME[0] || @report_template.name == ReportTemplate::NAME[1] %>
+    <table class="text-center border_no_top border" width="100%">
+      <tr>
+        <td>
+          <p style="pading: 0px, margin: 0px;" >In the Primary years, children are assessed and evaluated according to their individual progress. It is normal for young<br/>
+          children to acquire skills at differing rates and times.</p>
+          <h4 style="font-weight: bold; font-size: 11px; pading: 0px, margin: 0px;" >The following developmental scale is used to describe student progress:</h4>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table width="100%" >
+            <tr style="vertical-align: top; padding-bottom: 2px;">
+              <td>1 - Not yet within expectations </td>
+              <td style="padding-bottom: 2px;">2 - Meets expectations at a beginning<br/>level</td>
+              <td>3 - Meets expectations</td>
+              <td>4 - Exceeds expectations</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  <% else%>
+    <table class="set-mark border_no_top" width="100%">
+      <tr>
+        <td style="font-weight: bold; text-align: center;" width="15%">% Mark</td>
+        <td style="font-weight: bold;" width="85%">PERFORMANCE SCALE for subject areas in reference to Ministry of Education standards:</td>
+      </tr>
+      <tr>
+        <td align="center">80 - 100</td>
+        <td>4 - Displays strong performance (does work of high quality; has knowledge and understanding of subject)</td>
+      </tr>
+      <tr>
+        <td align="center">70 - 79</td>
+        <td>3 - Demonstrates appropriate development (does what is required; has a developing knowledge of the subject)</td>
+      </tr>
+      <tr>
+        <td align="center">60 - 69</td>
+        <td>2 - Has a beginning knowledge (needs support, practice and time)</td>
+      </tr>
+      <tr>
+        <td align="center">50 - 59</td>
+        <td>1 - Does not meet grade level expectations</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>N/A - Not Applicable at this time</td>
+      </tr>
+    </table>
+  <% end %>
+
   <%= form_tag('/students/save_mark', method: :post) do |f| %>
     <%= hidden_field_tag 'student_id', @student.id %>
     <%= hidden_field_tag "term_id", @term_id %>
-    <% @report_template.evaluate_types.all.each do |evaluate_type|%>
-      <table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
-        <tr class="table-header" style="font-weight: bold;">
-          <td class="fixed" width="76%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
-          <td width="8%" class="score" align="center">Report</td>
-        </tr>
-        <% evaluate_type.evaluates.each do |evaluate|%>
-           <tr class="tr">
-            <td class="padding-td"><%= evaluate.name %></td>
-            <td>
-              <input type="number" class="input-mark" max="4" min="1" name="evaluate[<%= evaluate.id %>]" 
-              value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
-            </td>
+    <% @report_template.evaluate_types.all.each_with_index do |evaluate_type, index |%>
+      <% if evaluate_type.mark_100? %>
+        <table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
+          <tr class="table-header" style="font-weight: bold;">
+            <td class="fixed" width="76%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
+            <td width="8%" class="score" align="center">Report</td>
           </tr>
-        <% end %>
-      </table>
+          <% evaluate_type.evaluates.each do |evaluate|%>
+             <tr class="tr">
+              <td class="padding-td"><%= evaluate.name %></td>
+              <td>
+                <input type="number" class="input-mark" max="100" min="0" name="evaluate[<%= evaluate.id %>]" 
+                value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
     <% end %>
+
+    <% if @report_template.name == ReportTemplate::NAME[2] || @report_template.name == ReportTemplate::NAME[3] %>
+      <div class="border table-magin-top" style="padding: 0px 5px; font-weight: bold;">
+      <p style="">PERFORMANCE SCALE for work habits and personal and social development:<br/>
+        4 - Always 3 - Usually 2 - Sometimes 1 - Seldom</p>
+      </div>
+    <% end %>
+    
+    <% @report_template.evaluate_types.all.each_with_index do |evaluate_type, index |%>
+      <% if evaluate_type.mark1_4? %>
+        <table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
+          <tr class="table-header" style="font-weight: bold;">
+            <td class="fixed" width="76%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
+            <td width="8%" class="score" align="center">Report</td>
+          </tr>
+          <% evaluate_type.evaluates.each do |evaluate|%>
+             <tr class="tr">
+              <td class="padding-td"><%= evaluate.name %></td>
+              <td>
+                <input type="number" class="input-mark" max="4" min="1" name="evaluate[<%= evaluate.id %>]" 
+                value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    <% end %>
+
     <table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
       <% @report_template.evaluates.each do |evaluate| %>
         <tr class="table-header">
           <td width="76%" class=" fixed padding-td"><%= evaluate.name %></td>
           <td width="8%" class="score">
-            <select name="evaluate[<%= evaluate.id %>]" >
+            <select class="select-mark"> name="evaluate[<%= evaluate.id %>]" >
               <option value="">Select</option>
               <option value="1" <% if StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) == 1 %>selected<% end %> >Yes</option>
               <option value="0" <% if StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) == 0 %>selected<% end %>>No</option>

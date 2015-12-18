@@ -5,12 +5,14 @@ namespace :import do
       js_jk: { 
         v1: {
           name: "PERSONAL PLANNING - Intellectual Development", 
+          mark_type: "0",
           evaluates: [ "Is able to make choices and carry out plans",
                        "Understands the importance of health and safety"
           ]
         },
         v2: {
-          name: "LANGUAGE ARTS -- Intellectual Development", 
+          name: "LANGUAGE ARTS -- Intellectual Development",
+          mark_type: "0", 
           evaluates: [ "Able to express thoughts and feelings orally",
                         "Contributes to discussions and lessons",
                         "Listens attentively",
@@ -28,6 +30,7 @@ namespace :import do
         },
         v3: {
           name: "MATHEMATICS - Intellectual Development", 
+          mark_type: "0",
           evaluates: [ "Is able to sort and classify",
                         "Is able to count objects",
                         "Recognizes basic geometric shapes",
@@ -38,11 +41,13 @@ namespace :import do
         },
         v4: {
           name: "SOCIAL STUDIES - Intellectual Development", 
+          mark_type: "0",
           evaluates: [ "Demonstrates interest in learning about the world around herself/himself"
           ]
         },
         v5: {
           name: "SCIENCE -- Intellectual Development", 
+          mark_type: "0",
           evaluates: [  "Demonstrates curiosity about the world of science",
                         "Understands simple scientific concepts",
                         "Discusses and records observations"
@@ -50,6 +55,7 @@ namespace :import do
         },
         v6: {
           name: "FINE ARTS -- Aesthetic and Artistic Development", 
+          mark_type: "0",
           evaluates: [ "Shows interest in art activities", 
                         "Shows interest in musical activities", 
                         "Shows interest in drama activities"
@@ -57,6 +63,7 @@ namespace :import do
         },
         v7: {
           name: "PHYSICAL EDUCATION -- Physical Development", 
+          mark_type: "0",
           evaluates: [ "Demonstrates small muscle control (such as with pencil, scissors, small manipulatives ...)",
                         "Participates in physical activities",
                         "Demonstrates good sportsmanship",
@@ -67,6 +74,7 @@ namespace :import do
         },
         v8: {
           name: "SOCIAL RESPONSIBILITY -- Social and Emotional Development", 
+          mark_type: "0",
           evaluates: [ "Is considerate and respectful of others",
                         "Demonstrates a positive self-concept",
                         "Accepts learning challenges",
@@ -85,6 +93,7 @@ namespace :import do
       g1_g3: { 
        v1: {
           name: "PERSONAL PLANNING - Intellectual Development", 
+          mark_type: "0",
           evaluates: [ "Is able to make choices and carry out plans",
                        "Is learning to set goals for personal growth",
                        "Is learning about the importance of healthy life choices and personal safety",
@@ -93,6 +102,7 @@ namespace :import do
         },
         v2: {
           name: "LANGUAGE ARTS -- Intellectual Development", 
+          mark_type: "0",
           evaluates: [ "Contributes to discussions and lessons",
                        "Expresses ideas clearly when speaking",
                        "Listens with understanding",
@@ -110,6 +120,7 @@ namespace :import do
         },
         v3: {
           name: "MATHEMATICS - Intellectual Development", 
+          mark_type: "0",
           evaluates: [ "Understands and applies new concepts (Fractions, Ratios, Percentage)",
                       "Understands numbers and the quantities they represent (Measurement, Decimals)",
                       "Recognizes, continues and creates patterns (Geometry)",
@@ -121,12 +132,14 @@ namespace :import do
         },
         v4: {
           name: "SOCIAL STUDIES - Intellectual Development", 
+          mark_type: "0",
           evaluates: [ "Demonstrates interest in learning about people, places and times",
                        "Understands concepts"
           ]
         },
         v5: {
           name: "SCIENCE -- Intellectual Development", 
+          mark_type: "0",
           evaluates: [  "Demonstrates curiosity",
                         "Understands concepts",
                         "Observes and records observations"
@@ -134,6 +147,7 @@ namespace :import do
         },
         v6: {
           name: "FINE ARTS -- Aesthetic and Artistic Development", 
+          mark_type: "0",
           evaluates: [ "Shows interest in art activities",
                        "Demonstrates growth in artistic skills",
                        "Shows interest in drama activities",
@@ -143,6 +157,7 @@ namespace :import do
         },
         v7: {
           name: "PHYSICAL EDUCATION -- Physical Development", 
+          mark_type: "0",
           evaluates: [ "Participates willingly in physical activities",
                         "Understands and follows rules of games",
                         "Considers the safety of self and others",
@@ -151,6 +166,7 @@ namespace :import do
         },
         v8: {
           name: "SOCIAL RESPONSIBILITY -- Social and Emotional Development", 
+          mark_type: "0",
           evaluates: [ "Is considerate and respectful of others",
                         "Demonstrates a positive self-concept",
                         "Accepts learning challenges",
@@ -170,6 +186,7 @@ namespace :import do
       g4_g6: { 
         v1: {
           name: "LANGUAGE ARTS", 
+          mark_type: "1",
           evaluates: [ "Reads with understanding",
                         "Uses the writing process for a variety of audiences and purposes",
                         "Effectively communicates oral information",
@@ -178,6 +195,7 @@ namespace :import do
         },
         v2: {
           name: "MATHEMATICS - Intellectual Development", 
+          mark_type: "1",
           evaluates: [ "Understands and applies new concepts (Fractions, Ratios, Percentage)",
                         "Understands numbers and the quantities they represent (Measurement, Decimals)",
                         "Recognizes, continues and creates patterns (Geometry)",
@@ -189,6 +207,7 @@ namespace :import do
         },
         v3: {
           name: "SOCIAL STUDIES", 
+          mark_type: "1",
           evaluates: [ "Understands concepts and facts in the content area",
                         "Acquires and evaluates information and ideas",
                         "Demonstrates skill with maps and diagrams" 
@@ -196,18 +215,21 @@ namespace :import do
         },
         v4: {
           name: "SCIENCE", 
+          mark_type: "1",
           evaluates: [ "Understands concepts of content area",
                         "Applies scientific principles" 
           ]
         },
         v5: {
           name: "ART / DRAMA", 
+          mark_type: "1",
           evaluates: [ "Demonstrates skill development",
                         "Participates in all activities"
           ]
         },
         v6: {
           name: "PHYSICAL EDUCATION", 
+          mark_type: "1",
           evaluates: [ "Demonstrates skill development",
                         "Participates in all activities",
                         "Demonstrates etiquette and fair play" 
@@ -215,21 +237,42 @@ namespace :import do
         },
         v7: {
           name: "FRENCH (CORE)", 
+          mark_type: "1",
           evaluates: [ "Recognizes, understands and uses vocabulary to communicate",
                         "Participates in all activities"
           ]
         },
         v8: {
           name: "PERSONAL PLANNING", 
+          mark_type: "1",
           evaluates: [ "Sets, monitors and evaluates personal goals",
                         "Demonstrates connections between own strengths, interests and career choices",
                         "Demonstrates an awareness of healthy life choices"
+          ]
+        },
+        v9: {
+          name: "WORK HABITS", 
+          mark_type: "0",
+          evaluates: [ "Organizes time",
+                        "Organizes materials and written work",
+                        "Completes assignments when due",
+                        "Produces legible and neat work",
+                        "Works independently"
+          ]
+        },
+        v10: {
+          name: "PERSONAL & SOCIAL DEVELOPMENT", 
+          mark_type: "0",
+          evaluates: [ "Demonstrates responsibility and reliability",
+                        "Interacts with others cooperatively",
+                        "Demonstrates appropriate behaviour"
           ]
         }
       },
       g7_g8: { 
         v1: {
           name: "LANGUAGE ARTS", 
+          mark_type: "1",
           evaluates: [ "Reads with understanding",
                         "Uses the writing process for a variety of audiences and purposes",
                         "Effectively communicates oral information",
@@ -238,6 +281,7 @@ namespace :import do
         },
         v2: {
           name: "MATHEMATICS - Intellectual Development", 
+          mark_type: "1",
           evaluates: [ "Understands and applies new concepts (Fractions, Ratios, Percentage)",
                         "Understands numbers and the quantities they represent (Measurement, Decimals)",
                         "Recognizes, continues and creates patterns (Geometry)",
@@ -249,24 +293,28 @@ namespace :import do
         },
         v3: {
           name: "HISTORY/GEOGRAPHY", 
+          mark_type: "1",
           evaluates: [ "Understands concepts of content area",
                        "Applies scientific principles" 
           ]
         },
         v4: {
           name: "SCIENCE", 
+          mark_type: "1",
           evaluates: [ "Understands concepts of content area",
                        "Applies scientific principles" 
           ]
         },
         v5: {
           name: "ART / DRAMA", 
+          mark_type: "1",
           evaluates: [ "Demonstrates skill development",
                        "Participates in all activities" 
           ]
         },
         v6: {
           name: "PHYSICAL EDUCATION", 
+          mark_type: "1",
           evaluates: [ "Demonstrates skill development",
                         "Participates in all activities",
                         "Demonstrates etiquette and fair play" 
@@ -274,15 +322,35 @@ namespace :import do
         },
         v7: {
           name: "FRENCH (CORE)", 
+          mark_type: "1",
           evaluates: [ "Recognizes, understands and uses vocabulary to communicate",
                         "Participates in all activities"
           ]
         },
         v8: {
           name: "PERSONAL PLANNING", 
+          mark_type: "1",
           evaluates: [ "Sets, monitors and evaluates personal goals",
                         "Demonstrates connections between own strengths, interests and career choices",
                         "Demonstrates an awareness of healthy life choices" 
+          ]
+        },
+        v9: {
+          name: "WORK HABITS", 
+          mark_type: "0",
+          evaluates: [ "Organizes time",
+                        "Organizes materials and written work",
+                        "Completes assignments when due",
+                        "Produces legible and neat work",
+                        "Works independently"
+          ]
+        },
+        v10: {
+          name: "PERSONAL & SOCIAL DEVELOPMENT", 
+          mark_type: "0",
+          evaluates: [ "Demonstrates responsibility and reliability",
+                        "Interacts with others cooperatively",
+                        "Demonstrates appropriate behaviour" 
           ]
         }
       }
@@ -294,7 +362,7 @@ namespace :import do
         value.each do |k,v|
           evaluate_type = EvaluateType.create!( name: v[:name].to_s, report_template_id: report_template.id)
           v[:evaluates].each do |evaluate_name|
-            Evaluate.create!(name: evaluate_name, evaluate_type_id: evaluate_type.id)
+            Evaluate.create!(name: evaluate_name, evaluate_type_id: evaluate_type.id, mark_type: v[:mark_type] )
           end
         end
       end
