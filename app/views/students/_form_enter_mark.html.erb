@@ -1,0 +1,38 @@
+<div id="enter_mark" class="row" >
+  <%= form_tag('/students/save_mark', method: :post) do |f| %>
+    <%= hidden_field_tag 'student_id', @student.id %>
+    <%= hidden_field_tag "term_id", @term_id %>
+    <% @report_template.evaluate_types.all.each do |evaluate_type|%>
+      <table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
+        <tr class="table-header" style="font-weight: bold;">
+          <td class="fixed" width="76%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
+          <td width="8%" class="score" align="center">Report</td>
+        </tr>
+        <% evaluate_type.evaluates.each do |evaluate|%>
+           <tr class="tr">
+            <td class="padding-td"><%= evaluate.name %></td>
+            <td>
+              <input type="number" class="input-mark" max="4" min="1" name="evaluate[<%= evaluate.id %>]" 
+              value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+    <table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
+      <% @report_template.evaluates.each do |evaluate| %>
+        <tr class="table-header">
+          <td width="76%" class=" fixed padding-td"><%= evaluate.name %></td>
+          <td width="8%" class="score">
+            <select name="evaluate[<%= evaluate.id %>]" >
+              <option value="">Select</option>
+              <option value="1" <% if StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) == 1 %>selected<% end %> >Yes</option>
+              <option value="0" <% if StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) == 0 %>selected<% end %>>No</option>
+            </select>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+      <%= submit_tag "Save Mark", class: "btn btn-primary save-mark" %>
+  <% end %>
+</div>

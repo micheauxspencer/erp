@@ -33,7 +33,6 @@ class StudentsController < ApplicationController
     @other_fees = Fee.where(term: current_term).where('id NOT IN (?)', student_fee_ids).order('amount asc')
 
     @route = @student.route
-
     @report_template = if @student.grade
                         @student.grade.report_template
                       else
@@ -134,19 +133,19 @@ class StudentsController < ApplicationController
 
   def export_pdf
     @student = Student.find(params[:student_id])
-    report_template = if @student.grade
+    @report_template = if @student.grade
                         @student.grade.report_template
                       else
                         ReportTemplate.first
                       end
-    @template_name = report_template ? report_template.name : 'No Template'
+    @template_name = @report_template ? @report_template.name : 'No Template'
 
     respond_to do |format|
       format.html
       format.pdf do
         render  pdf:  "report_student",
                 layout:      'pdf',
-                disposition: 'attachment',
+                # disposition: 'attachment',
                 title:       'Report Student',
                 template:    'students/export_pdf.pdf.erb',
                 layout:      'pdf.html.erb',
@@ -165,6 +164,16 @@ class StudentsController < ApplicationController
 
   def enter_mark
     @student = Student.find(params[:student_id])
+    @report_template = if @student.grade
+                        @student.grade.report_template
+                      else
+                        ReportTemplate.first
+                      end
+    @term_id = current_term
+  end
+
+  def save_mark
+    @student = Student.find(params[:student_id])
     term_student = TermStudent.find_or_create_by(student_id: params[:student_id], term_id: params[:term_id])
 
     params[:evaluate].each do |evaluate_id, mark|
@@ -172,7 +181,25 @@ class StudentsController < ApplicationController
       student_evaluate.update_attributes( mark: mark)
     end
 
-    redirect_to edit_student_path(@student)
+    redirect_to enter_mark_path(@student)
+  end
+
+  def select_term
+    Rails.logger.info "select_term"
+    @student = Student.find(params[:student_id])
+    term = Term.find(params[:term_id])
+    @term_id = term.id
+    @report_template = if @student.grade
+                        @student.grade.report_template
+                      else
+                        ReportTemplate.first
+                      end
+    respond_to do |format|
+      format.js do
+        @return_content = render_to_string(partial: 'students/form_enter_mark', locals: { student: @student, term_id: @term_id, report_template: @report_template })
+      end
+    end
+
   end
 
   private

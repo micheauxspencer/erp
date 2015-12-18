@@ -22,10 +22,8 @@ class StudentEvaluate < ActiveRecord::Base
   def self.get_mark(evaluate_id, student_id, term_id)
     term_student = TermStudent.where(student_id: student_id, term_id: term_id).first
     if term_student.present?
-      Rails.logger.info "co hehe"
       student_evaluate = StudentEvaluate.where(evaluate_id: evaluate_id, term_student_id: term_student.id).first
       if student_evaluate.present?
-        Rails.logger.info "co bebe"
         return student_evaluate.mark
       end
     end

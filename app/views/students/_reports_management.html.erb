@@ -1,8 +1,6 @@
 <div class="row" style="text-align: left;">
   <div class="col-md-4">
-    <div class="btn btn-default">
-      Enter Marks
-    </div>
+    <%= link_to "Enter Marks", enter_mark_path(@student), class: "btn btn-default" %>
   </div>
 
   <div class="col-md-4">
@@ -17,54 +15,6 @@
 
 </div>
 
-<div id="enter-mark" class="row" >
-  <%= form_tag('/students/enter_mark', method: :post) do |f| %>
-    <%= hidden_field_tag 'student_id', @student.id %>
-    <h3 >Select Term</h3>
-    <%= select_tag "term_id", options_from_collection_for_select(Term.all, "id", "name", current_term ), class: "form-control" %>
-    <% @report_template.evaluate_types.all.each do |evaluate_type|%>
-      <table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
-        <tr class="table-header" style="font-weight: bold;">
-          <td class="fixed" width="76%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
-          <td width="8%" class="score" align="center">Report</td>
-        </tr>
-        <% evaluate_type.evaluates.each do |evaluate|%>
-           <tr class="tr">
-            <td class="padding-td"><%= evaluate.name %></td>
-            <td>
-              <input type="number" class="input-mark" max="4" min="1" name="evaluate[<%= evaluate.id %>]" 
-              value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, current_term) %>">
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    <% end %>
-      <%= submit_tag "Save Mark", class: "btn btn-primary save-mark" %>
-  <% end %>
-</div>
-
 <div class="row">
   <%= render "student_cce_report_pdf" %>
 </div>
-
-<style type="text/css">
-#enter-mark {
-  max-width: 900px;
-  margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.table-magin-top {
-  margin-top: 5px;
-}
-.padding-td {
-  padding-left: 5px;
-}
-.input-mark {
-  width: 100%;
-  text-align: right;
-}
-.save-mark {
-  margin-top: 20px;
-}
-</style>

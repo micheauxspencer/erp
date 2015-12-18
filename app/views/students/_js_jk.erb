@@ -1,20 +1,20 @@
 <table id="pdf-table" width="100%" cellspacing="0">
   <%= render :partial => 'pdf_info' %>
   <tr>
-    <table width="100%" class="border_no_top" style="text-align: center">
+    <table class="text-center border_no_top" width="100%">
       <tr>
         <td>
-          <p>In the Primary years, children are assessed and evaluated according to their individual progress. It is normal for young<br/>
+          <p style="pading: 0px, margin: 0px;" >In the Primary years, children are assessed and evaluated according to their individual progress. It is normal for young<br/>
           children to acquire skills at differing rates and times.</p>
-          <h3 style="font-weight: bold; font-size: 11px; pading: 8px" >The following developmental scale is used to describe student progress:</h3>
+          <h4 style="font-weight: bold; font-size: 11px; pading: 0px, margin: 0px;" >The following developmental scale is used to describe student progress:</h4>
         </td>
       </tr>
       <tr>
         <td>
           <table width="100%" >
-            <tr height="20px">
+            <tr style="vertical-align: top; padding-bottom: 2px;">
               <td>1 - Not yet within expectations </td>
-              <td>2 - Meets expectations at a beginning level</td>
+              <td style="padding-bottom: 2px;">2 - Meets expectations at a beginning<br/>level</td>
               <td>3 - Meets expectations</td>
               <td>4 - Exceeds expectations</td>
             </tr>
@@ -25,347 +25,53 @@
   </tr>
 </table>
 
-<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
-  <tr class="table-header" style="font-weight: bold;">
-    <td class="fixed" width="76%" style="padding: 0px 5px;">PERSONAL PLANNING - Intellectual Development</td>
-    <td width="8%" class="score" align="center">Report 1</td>
-    <td width="8%" class="score" align="center">Report 2</td>
-    <td width="8%" class="score" align="center">Report 3</td>
-  </tr>
+<% @report_template.evaluate_types.all.each_with_index do |evaluate_type, index_type |%>
+  <table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
+    <tr class="table-header" style="font-weight: bold;">
+      <td class="fixed" width="76%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
+      <% Term.last(3).each_with_index do |term, index| %>
+        <td width="8%" class="score" align="center">
+          <% if index_type == 0 %>
+            Report <%= index + 1 %> 
+          <% end%>
+        </td>
+      <% end %>
+    </tr>
+    <% evaluate_type.evaluates.each do |evaluate|%>
+       <tr class="tr">
+        <td class="padding-td"><%= evaluate.name %></td>
+        <% Term.last(3).each do |term| %>
+          <td width="8%" class="score" align="center"><%= StudentEvaluate.get_mark(evaluate.id, @student.id, term.id) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <% if evaluate_type.name == "PHYSICAL EDUCATION -- Physical Development" %>
+    <div class="page-break"></div>
+      <div style="margin-top: 20px;">
+      <span style="padding-left: 20px"><label>Student: <%= @student.name %></label></span>
+      <span style="float: right; padding-right: 20px;"><label>Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label></span>
+    </div>
+  <% end %>
+<% end %>
 
-  <tr class="tr">
-    <td class="padding-td">Is able to make choices and carry out plans</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Understands the importance of health and safety</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
+<table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
+  <% @report_template.evaluates.each do |evaluate| %>
+    <tr class="table-header">
+      <td width="76%" class=" fixed padding-td"><%= evaluate.name %></td>
+      <% Term.last(3).each do |term| %>
+        <td width="8%" class="score" align="center">
+          <% if StudentEvaluate.get_mark(evaluate.id, @student.id, term.id ) == 1 %>
+          Yes
+          <% elsif StudentEvaluate.get_mark(evaluate.id, @student.id, term.id ) == 0 %>
+          No
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
 </table>
-<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
-  <tr class="table-header" style="font-weight: bold;">
-    <td class="fixed" width="76%" style="padding: 0px 5px;">LANGUAGE ARTS -- Intellectual Development</td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Able to express thoughts and feelings orally</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Contributes to discussions and lessons</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Listens attentively</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Displays a positive attitude towards books</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Applies a variety of early reading skills(such as picture clues,scans left-to-right,patterns,rhymes, sequence of events, retells stories)</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Draws pictures to convey meaning</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Shows an interest in writing</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Is able to print own name legibly</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Is able to print/write some letters and numbers legibly</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Responds to reading and viewing in a variety of ways, such as discussions, drawing, drama and painting</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Knows letter names</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Knows sounds of some letters</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
-  <tr class="table-header" style="font-weight: bold;">
-    <td class="fixed" width="76%" style="padding: 0px 5px;">MATHEMATICS - Intellectual Development</td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Is able to sort and classify</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Is able to count objects</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Recognizes basic geometric shapes</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Recognizes, continues and creates patterns</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Understands numerals and the quantity they represent</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Understands basic number operations (Numeracy)</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
-  <tr class="table-header" style="font-weight: bold;">
-    <td class="fixed" width="76%" style="padding: 0px 5px;">SOCIAL STUDIES - Intellectual Development</td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Demonstrates interest in learning about the world around herself/himself</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
-  <tr class="table-header" style="font-weight: bold;">
-    <td class="fixed" width="76%" style="padding: 0px 5px;">SCIENCE -- Intellectual Development</td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Demonstrates curiosity about the world of science</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Understands simple scientific concepts</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Discusses and records observations</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
-  <tr class="table-header" style="font-weight: bold;">
-    <td class="fixed" width="76%" style="padding: 0px 5px;">FINE ARTS -- Aesthetic and Artistic Development</td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Shows interest in art activities</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Shows interest in musical activities</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Shows interest in drama activities</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
-  <tr class="table-header" style="font-weight: bold;">
-    <td class="fixed" width="76%" style="padding: 0px 5px;">PHYSICAL EDUCATION -- Physical Development</td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Demonstrates small muscle control (such as with pencil, scissors, small manipulatives ...)</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Participates in physical activities</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Demonstrates good sportsmanship</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Demonstrates skill in activities (such as running, skipping, throwing, catching ?)</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Considers the safety of self and others</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Understands and follows rules of simple games</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-<!-- page braek -->
-<div class="page-break"></div>
-<div style="margin-top: 20px;">
-  <span style="padding-left: 20px"><label>Student: <%= @student.name %></label></span>
-  <span style="float: right; padding-right: 20px;"><label>Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label></span>
-</div>
-<table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0">
-  <tr class="table-header" style="font-weight: bold;">
-    <td class="fixed" width="76%" style="padding: 0px 5px;">SOCIAL RESPONSIBILITY -- Social and Emotional Development</td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-    <td width="8%" class="score" align="center"></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Is considerate and respectful of others</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Demonstrates a positive self-concept</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Accepts learning challenges</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Finds ways to resolve conflicts and solve problems</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Accepts responsibility for own actions</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Maintains focus during group activities</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Cares for personal and school property</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Identifies and practices effective work habits</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Works and plays cooperatively with others</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Works independently when necessary</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Follows classroom routines</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr class="tr">
-    <td class="padding-td">Participates in activities</td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
+
 <table class="pdf-table table-margin" width="100%" cellspacing="0" class="page" style="border: 1px solid #000000; margin-top: 5px">
   <tr style="border-bottom: 1px solid #000000;">
     <td style="border:0;">

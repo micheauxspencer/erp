@@ -300,6 +300,32 @@ namespace :import do
       end
     end
 
+    evaluate_no_types = {
+      js_jk: { 
+        evaluates: ["This student is meeting the expected level of development for his/her age range. (If No, see Comment)",
+                    "This student is on a modified program (If Yes, see Comment)"]
+      },
+      g1_g3: { 
+        evaluates: ["This student is on a modified program (Y/N If Yes, see Comment)"]
+      },
+      g4_g6: { 
+        evaluates: ["This student is on a modified program (Y/N If Yes, see Comment)"]
+      },
+      g7_g8: { 
+        evaluates: ["This student is on a modified program (Y/N If Yes, see Comment)"]
+      }
+    }
+
+    evaluate_no_types.each do |key, value|
+      report_template = ReportTemplate.where( name: key ).first
+      if report_template.present?
+        value[:evaluates].each do |evaluate_name|
+          Evaluate.create!(name: evaluate_name, report_template_id: report_template.id)
+        end
+      end
+    end
   end
 
 end
+
+
