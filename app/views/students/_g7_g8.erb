@@ -30,7 +30,7 @@
   </tr>
 </table>
 
-<% @report_template.evaluate_types.all.each_with_index do |evaluate_type, index_type |%>
+<% @report_template.evaluate_types.all.order('id ASC').each_with_index do |evaluate_type, index_type |%>
   <table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0" >
     <% if index_type == 0 %>
       <tr class="table-header" style="font-weight: bold;">
