@@ -145,7 +145,7 @@ class StudentsController < ApplicationController
       format.pdf do
         render  pdf:  "report_student",
                 layout:      'pdf',
-                # disposition: 'attachment',
+                disposition: 'attachment',
                 title:       'Report Student',
                 template:    'students/export_pdf.pdf.erb',
                 layout:      'pdf.html.erb',
@@ -169,26 +169,30 @@ class StudentsController < ApplicationController
                       else
                         ReportTemplate.first
                       end
-    @term_id = current_term
+    @term_id = params[:term].present? ? params[:term] : current_term
   end
 
   def save_mark
     @student = Student.find(params[:student_id])
     term_student = TermStudent.find_or_create_by(student_id: params[:student_id], term_id: params[:term_id])
-
-    params[:evaluate].each do |evaluate_id, mark|
-      student_evaluate = StudentEvaluate.find_or_create_by(term_student_id: term_student.id, evaluate_id: evaluate_id)
-      student_evaluate.update_attributes( mark: mark)
+    @term = Term.find(params[:term_id])
+    if @term.present?
+      params[:evaluate].each do |evaluate_id, mark|
+        student_evaluate = StudentEvaluate.find_or_create_by(term_student_id: term_student.id, evaluate_id: evaluate_id)
+        student_evaluate.update_attributes( mark: mark)
+      end
+      flash[:notice] = "Save mark success"
+      redirect_to "/students/#{@student.id}/enter_mark?term=#{@term.id}"
+    else
+      flash[:notice] = "Save mark errors"
+      redirect_to enter_mark_path(@student)
     end
-
-    redirect_to enter_mark_path(@student)
+    
   end
 
   def select_term
-    Rails.logger.info "select_term"
     @student = Student.find(params[:student_id])
     term = Term.find(params[:term_id])
-    @term_id = term.id
     @report_template = if @student.grade
                         @student.grade.report_template
                       else
@@ -196,7 +200,7 @@ class StudentsController < ApplicationController
                       end
     respond_to do |format|
       format.js do
-        @return_content = render_to_string(partial: 'students/form_enter_mark', locals: { student: @student, term_id: @term_id, report_template: @report_template })
+        @return_content = render_to_string(partial: 'students/form_enter_mark', locals: { student: @student, term_id: term.id, report_template: @report_template })
       end
     end
 
