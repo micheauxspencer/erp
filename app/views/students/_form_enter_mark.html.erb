@@ -50,7 +50,7 @@
         </td>
       </tr>
     </table>
-  <% else%>
+  <% else %>
     <table class="set-mark border_no_top" width="100%">
       <tr>
         <td style="font-weight: bold; text-align: center;" width="15%">% Mark</td>
@@ -134,7 +134,7 @@
         <tr class="table-header">
           <td width="76%" class=" fixed padding-td"><%= evaluate.name %></td>
           <td width="8%" class="score">
-            <select class="select-mark"> name="evaluate[<%= evaluate.id %>]" >
+            <select class="select-mark" name="evaluate[<%= evaluate.id %>]" >
               <option value="">Select</option>
               <option value="1" <% if StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) == 1 %>selected<% end %> >Yes</option>
               <option value="0" <% if StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) == 0 %>selected<% end %>>No</option>
@@ -143,6 +143,6 @@
         </tr>
       <% end %>
     </table>
-      <%= submit_tag "Save Mark", class: "btn btn-primary save-mark" %>
+    <%= submit_tag "Save Mark", class: "btn btn-primary save-mark" %>
   <% end %>
 </div>
