@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   post 'students/:student_id/payment' => "students#payment", as: :student_fee
 
   get 'students/export_pdf/:student_id' => "students#export_pdf", as: :export_pdf
+
   get 'students/:student_id/enter_mark' => "students#enter_mark", as: :enter_mark
   post 'students/save_mark' => "students#save_mark", as: :save_mark
   get 'students/:student_id/select_term' => "students#select_term", as: :select_term
