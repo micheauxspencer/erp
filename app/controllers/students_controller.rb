@@ -38,6 +38,8 @@ class StudentsController < ApplicationController
                       else
                         ReportTemplate.first
                       end
+    @siblings = @student.siblings
+    @not_siblings = Student.not_siblings(@student)
   end
 
   # POST /students
