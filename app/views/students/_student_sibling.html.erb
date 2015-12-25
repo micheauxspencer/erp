@@ -2,9 +2,7 @@
   <h2> Sibling </h2>
 </div>
 <% if current_user.role?("teacher") || current_user.role?("office") || current_user.role?("assistant") %>
-  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#add-sibling">
-    Add Sibling 
-  </button>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#add-sibling"> Add Sibling </button>
 <% end %>
 <%= render :partial => 'list_student_sibling' %>
 
@@ -37,7 +35,7 @@
 <script type="text/javascript">
   $(".js-select-siblings").select2();
 
-  $(".save-siblings").click(function(){
+  $(document).on("click",".save-siblings",function(){
     var student_id = "<%= @student.id %>";
     var url = "<%= create_sibling_path %>";
     var siblings = $(".js-select-siblings").select2("val");
@@ -54,25 +52,29 @@
     });
   });
 
-  $(".close-siblings").click(function(){
+  $(document).on("click",".close-siblings",function(){
     $(".js-select-siblings").select2("val", "");
   });
 
-  $(".delete_sibling").click(function(){
-    var student_id = "<%= @student.id %>";
-    var sibling_id = $(this).attr("sibling");
-    var url = "/student_siblings/delete";
-    $.ajax({
-      url: url,
-      type: "post",
-      dataType: "script",
-      data: "student_id=" + student_id + "&sibling_id=" + sibling_id,
-      asycn: true,
-      success: function(data) {
-      },
-      error: function(err){
-      }
-    });
+  $(document).on("click",".delete_student_sibling",function(){
+    if(confirm("Are you sure you want to delete this?")){
+      var student_id = "<%= @student.id %>";
+      var sibling_id = $(this).attr("sibling");
+      var url = "<%= delete_sibling_path %>";
+      $.ajax({
+        url: url,
+        type: "post",
+        dataType: "script",
+        data: "student_id=" + student_id + "&sibling_id=" + sibling_id,
+        success: function(data) {
+        },
+        error: function(err){
+        }
+      });
+    }
+    else{
+      return false;
+    }
   });
 
   
