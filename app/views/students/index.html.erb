@@ -24,7 +24,7 @@
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
         <td><%= student.fees.sum(:amount) %></td>
-        <td><%= student.medical_conditions ? '<span style="color: red">Yes</span>'.html_safe : 'No' %></td>
+        <td><%= student.medical_conditions %></td>
         <td><%= student.enrolled ? 'Yes' : 'No' %></td>
         <td>
           <% unless (current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:office])) %>

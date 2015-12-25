@@ -44,6 +44,7 @@
         <a href="#transportation" aria-controls="transportation" role="tab" data-toggle="tab">Transportation</a></li>
       <li role="presentation"><a href="#reports" aria-controls="reports" role="tab" data-toggle="tab">Reports</a></li>
       <li role="presentation"><a href="#term" aria-controls="settings" role="tab" data-toggle="tab">Term</a></li>
+      <li role="presentation"><a href="#sibling" aria-controls="sibling" role="tab" data-toggle="tab">Sibling</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -106,6 +107,12 @@
           </div>
           <div class="control-group">
             <div class="controls">
+               <%= f.input :grade_id, collection: Grade.all.map { |g| [g.name, g.id, {'data-type' => g.name}] }, prompt: "Select grade", :class => 'form-control' %>
+            </div>
+            <%#= error_span(@student[:sibling_id]) %>
+          </div>
+          <div class="control-group">
+            <div class="controls">
             </div>
             <%#= error_span(@student[:birthdate]) %>
           </div>
@@ -121,12 +128,12 @@
             </div>
             <%#= error_span(@student[:tax_rec_req]) %>
           </div>
-          <div class="control-group">
+          <!-- <div class="control-group">
             <div class="controls">
-              <%= f.association :siblings, label_method: :first_name, value_method: :id, :class => 'form-control' %>
+              <%#= f.association :siblings, label_method: :first_name, value_method: :id, :class => 'form-control' %>
             </div>
             <%#= error_span(@student[:sibling_id]) %>
-          </div>
+          </div> -->
         </div>
         <div class="col-md-6">
           <div class="control-group">
@@ -372,6 +379,10 @@
 
     <div role="tabpanel" class="tab-pane" id="term">
       <%= render 'student_term' %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="sibling">
+      <%= render 'student_sibling' %>
     </div>
 
     <br>

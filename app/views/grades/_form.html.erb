@@ -1,6 +1,6 @@
 <%= simple_form_for @grade, :html => { :class => 'form-horizontal' } do |f| %>
   <%= f.input :name %>
-  <%= error_span(@grade[:name]) %>
+  <%#= error_span(@grade[:name]) %>
 
   <%= f.input :term_id, as: :select, collection: Term.all, :selected=> Term.last %>
 

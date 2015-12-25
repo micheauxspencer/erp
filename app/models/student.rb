@@ -83,6 +83,8 @@ class Student < ActiveRecord::Base
   has_many :grade_students
   has_many :grades, through: :grade_students
 
+  scope :not_siblings, -> (student) { where('id NOT IN (?)', student.siblings.map(&:id) << student.id)}
+
   def grade_name
     grade.try(:name)
   end

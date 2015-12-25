@@ -1,0 +1,32 @@
+<table class="table table-striped" id="list_sibling" style="margin-top: 30px; margin-bottom: 50px;">
+  <thead>
+    <tr>
+      <th class="col-md-1">Id</th>
+      <th class="col-md-1">Name</th>
+      <th class="col-md-1">Phone</th>
+      <th class="col-md-1">Email</th>
+      <th class="col-md-1">Gender</th>
+      <th class="col-md-1">Street</th>
+      <th class="col-md-1">City</th>
+      <th class="col-md-1"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @siblings.each do |sibling| %>
+      <tr> 
+        <td><%= sibling.id %></td>
+        <td><%= sibling.name %></td>
+        <td><%= sibling.f_phone %></td>
+        <td><%= sibling.email %></td>
+        <td><%= sibling.gender %></td>
+        <td><%= sibling.street %></td>
+        <td><%= sibling.city %></td>
+        <td>
+        <% if current_user.role?("teacher") || current_user.role?("office") || current_user.role?("assistant") %>
+          <p class="btn btn-danger btn-sm delete_student_sibling" sibling="<%= sibling.id %>"> Delete </p>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

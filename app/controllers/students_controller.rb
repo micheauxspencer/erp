@@ -2,11 +2,12 @@ class StudentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_student, only: [:show, :edit, :update, :destroy]
 
+  before_action :check_permissions, only: [:new, :create]
+
   # GET /students
   # GET /students.json
   def index
     @students = Student.all
-
     # Example use of authorize using ability
     # authorize! :read, @students
   end
@@ -38,6 +39,8 @@ class StudentsController < ApplicationController
                       else
                         ReportTemplate.first
                       end
+    @siblings = @student.siblings
+    @not_siblings = Student.not_siblings(@student)
   end
 
   # POST /students
@@ -215,5 +218,9 @@ class StudentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
       params.require(:student).permit(:first_name, :middle_name, :last_name, :street, :city, :postal_code, :sin, :birthdate, :gender, :status, :trans_req, :tax_rec_req, :route_id, :route_fee, :pick_up, :drop_off, :last_shool_attended, :last_school_phone, {:sibling_ids => []}, {:fee_ids => []}, :f_first_name, :f_last_name, :f_phone, :f_cell, :f_work, :f_email, :m_first_name, :m_last_name, :m_phone, :m_cell, :m_work, :m_email, :custody, :emerg_1_name, :emerg_1_phone, :emerg_1_relation, :healthcard, :doctor_name, :doctor_phone, :grade_id, :enrolled, :medical_conditions)
+    end
+
+    def check_permissions
+      redirect_to root_path unless (current_user.role?("office") || current_user.role?("assistant"))
     end
 end

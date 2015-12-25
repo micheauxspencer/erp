@@ -15,6 +15,7 @@
  *= require bootstrap_and_overrides
  *= require bootstrap-datetimepicker
  *= require bootstrap-toggle
+ *= require select2
  */
 
   /* Sticky footer styles
@@ -61,4 +62,7 @@
     
       .container .credit {
         margin: 20px 0;
+      }
+      .js-select-siblings {
+        width: 100%;
       }
