@@ -4,7 +4,7 @@ class GradesController < ApplicationController
   # GET /grades
   # GET /grades.json
   def index
-    @grades = Grade.all
+    @grades = current_user.role?("teacher")? current_user.grades : Grade.all
   end
 
   # GET /grades/1

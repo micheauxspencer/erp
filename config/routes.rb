@@ -51,6 +51,9 @@ Rails.application.routes.draw do
   post 'students/save_mark' => "students#save_mark", as: :save_mark
   get 'students/:student_id/select_term' => "students#select_term", as: :select_term
 
+  post 'student_siblings/create' => "student_siblings#create", as: :create_sibling
+  post 'student_siblings/delete' => "student_siblings#destroy", as: :delete_sibling
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

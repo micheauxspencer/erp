@@ -49,3 +49,5 @@ gem "font-awesome-rails"
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'seed_dump'
+
+gem "select2-rails"
