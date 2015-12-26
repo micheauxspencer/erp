@@ -70,12 +70,9 @@
   </tbody>
 </table>
 
-
 <br>
 <br>
-<h2>
-  Other Fees
-</h2>
+<h2> Other Fees </h2>
 <table class="table table-striped" style="margin-top: 30px; margin-bottom: 50px;">
   <thead>
       <tr>
@@ -94,34 +91,36 @@
   </thead>
 
   <tbody>
-      <% @other_fees.each do |fee| %>
+    <% @other_fees.each do |fee| %>
 
-        <tr>
-          <div class="row">
-            <td class="col-md-1"><%= link_to fee.id, fee_path(fee) %></td>
+      <tr>
+        <div class="row">
+          <td class="col-md-1"><%= link_to fee.id, fee_path(fee) %></td>
 
-            <td class="col-md-1"><%= fee.name %></td>
+          <td class="col-md-1"><%= fee.name %></td>
 
-            <td class="col-md-1"><%= fee.amount %></td>
+          <td class="col-md-1"><%= fee.amount %></td>
 
-            <td class="col-md-1"><%= fee.term ? fee.term.name : ''%></td>
+          <td class="col-md-1"><%= fee.term ? fee.term.name : ''%></td>
 
-            <td class="col-md-1">
-              <% if @student.fees.include? fee %>
-                  <span class="grey-text">Assigned</span>
-              <% else %>
-                  <%= form_tag assign_fee_path, :method => :post do %>
-                      <%= hidden_field_tag 'fee_id', fee.id %>
-                      <%= hidden_field_tag 'student_id', @student.id %>
-                      <%= submit_tag 'Assign', class: 'btn btn-default' %>
-                  <% end %>
+          <td class="col-md-1">
+            <% if @student.fees.include? fee %>
+                <span class="grey-text">Assigned</span>
+            <% else %>
+                <%= form_tag( assign_fee_path, method: :post) do |f| %>
+                    <%= hidden_field_tag 'fee_id', fee.id %>
+                    <%= hidden_field_tag 'student_id', @student.id %>
+                    <%= submit_tag 'Assign', class: 'hide' %>
+                <% end %>
 
-                  <!--<div class="btn btn-default" id="fee_assign_<%= "#{@student.id}_#{fee.id}" %>" onclick='assignFee(<%= fee.id %>, <%= @student.id %>)'>Assign</div>-->
-              <% end %>
-            </td>
-          </div>
-        </tr>
-      <% end %>
+                <%= button_to "Assign", { action: "assign_fee", fee_id: fee.id, student_id: @student.id  },
+                                method: :post, class: 'btn btn-default' %>
+
+            <% end %>
+          </td>
+        </div>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 
