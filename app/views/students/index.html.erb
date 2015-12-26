@@ -45,6 +45,8 @@
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_student_path,
-            :class => 'btn btn-primary' %>
+<% if current_user && !current_user.role?("teacher") %>
+    <%= link_to t('.new', :default => t("helpers.links.new")),
+                new_student_path,
+                :class => 'btn btn-primary' %>
+<% end %>
