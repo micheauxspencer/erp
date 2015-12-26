@@ -26,13 +26,9 @@ class StudentsController < ApplicationController
 
   # GET /students/1/edit
   def edit
-    # @all_fees = Fee.where(term: current_term).order('amount asc')
-
     @fees = @student.fees.where(term: current_term).order('amount asc')
-    student_fee_ids = @fees.map {|f| f.id}
-
-    @other_fees = Fee.where(term: current_term).where('id NOT IN (?)', student_fee_ids).order('amount asc')
-
+    @other_fees = Fee.where(term: current_term).where.not(id: @fees.map(&:id)).order('amount asc')
+    
     @route = @student.route
     @report_template = if @student.grade
                         @student.grade.report_template
