@@ -59,7 +59,7 @@
         <td class="padding-td"><%= evaluate.name %></td>
         <% Term.last(3).each do |term| %>
           <td width="5%" class="score" align="center"><%= StudentEvaluate.get_mark(evaluate.id, @student.id, term.id) %></td>
-          <td align="center" width="5%" style="font-size: 9px;"></td>
+          <td width="5%" class="score" align="center"><%= StudentEvaluate.get_avg(evaluate.id, @student.id, term.id) %></td>
         <% end %>
       </tr>
     <% end %>

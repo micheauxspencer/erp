@@ -8,6 +8,7 @@
 #  mark            :integer
 #  created_at      :datetime
 #  updated_at      :datetime
+#  avg             :integer
 #
 # Indexes
 #
@@ -25,4 +26,12 @@ class StudentEvaluate < ActiveRecord::Base
     student_evaluate = StudentEvaluate.find_by(evaluate_id: evaluate_id, term_student_id: term_student.id)
     return student_evaluate.present? ? student_evaluate.mark : nil
   end
+
+  def self.get_avg(evaluate_id, student_id, term_id)
+    term_student = TermStudent.find_by(student_id: student_id, term_id: term_id)
+    return nil unless term_student.present?
+    student_evaluate = StudentEvaluate.find_by(evaluate_id: evaluate_id, term_student_id: term_student.id)
+    return student_evaluate.present? ? student_evaluate.avg : nil
+  end
+
 end

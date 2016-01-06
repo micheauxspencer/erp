@@ -87,15 +87,31 @@
         <table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
           <tr class="table-header" style="font-weight: bold;">
             <td class="fixed" width="76%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
-            <td width="8%" class="score" align="center">Report</td>
+            <% if @report_template.name == ReportTemplate::NAME[3] %>
+              <td width="6%" class="score" align="center">Report</td>
+              <td width="6%" class="score" align="center">Avg</td>
+            <% else %>
+              <td width="8%" class="score" align="center">Report</td>
+            <% end %>
           </tr>
           <% evaluate_type.evaluates.each do |evaluate|%>
              <tr class="tr">
               <td class="padding-td"><%= evaluate.name %></td>
-              <td>
-                <input type="number" class="input-mark" max="100" min="0" name="evaluate[<%= evaluate.id %>]" 
-                value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
-              </td>
+              <% if @report_template.name == ReportTemplate::NAME[3] %>
+                <td>
+                  <input type="number" class="input-mark" max="100" min="50" name="evaluate_mark[<%= evaluate.id %>]" 
+                  value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+                </td>
+                <td>
+                  <input type="number" class="input-mark" max="100" min="50" name="evaluate_avg[<%= evaluate.id %>]" 
+                  value = "<%= StudentEvaluate.get_avg(evaluate.id, @student.id, @term_id) %>">
+                </td>
+              <% else %>
+                <td>
+                  <input type="number" class="input-mark" max="100" min="50" name="evaluate[<%= evaluate.id %>]" 
+                  value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+                </td>
+              <% end %>
             </tr>
           <% end %>
         </table>
@@ -114,15 +130,31 @@
         <table class="pdf-table table-magin-top" width="100%" border="1" cellspacing="0" >
           <tr class="table-header" style="font-weight: bold;">
             <td class="fixed" width="76%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
-            <td width="8%" class="score" align="center">Report</td>
+            <% if @report_template.name == ReportTemplate::NAME[3] %>
+              <td width="6%" class="score" align="center">Report</td>
+              <td width="6%" class="score" align="center">Avg</td>
+            <% else %>
+              <td width="8%" class="score" align="center">Report</td>
+            <% end %>
           </tr>
           <% evaluate_type.evaluates.each do |evaluate|%>
              <tr class="tr">
               <td class="padding-td"><%= evaluate.name %></td>
-              <td>
-                <input type="number" class="input-mark" max="4" min="1" name="evaluate[<%= evaluate.id %>]" 
-                value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
-              </td>
+              <% if @report_template.name == ReportTemplate::NAME[3] %>
+                <td>
+                  <input type="number" class="input-mark" max="4" min="1" name="evaluate_mark[<%= evaluate.id %>]" 
+                  value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+                </td>
+                <td>
+                  <input type="number" class="input-mark" max="4" min="1" name="evaluate_avg[<%= evaluate.id %>]" 
+                  value = "<%= StudentEvaluate.get_avg(evaluate.id, @student.id, @term_id) %>">
+                </td>
+              <% else %>
+                <td>
+                  <input type="number" class="input-mark" max="4" min="1" name="evaluate[<%= evaluate.id %>]" 
+                  value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+                </td>
+              <% end %>
             </tr>
           <% end %>
         </table>
@@ -134,7 +166,7 @@
         <tr class="table-header">
           <td width="76%" class=" fixed padding-td"><%= evaluate.name %></td>
           <td width="8%" class="score">
-            <select class="select-mark" name="evaluate[<%= evaluate.id %>]" >
+            <select class="select-mark" name="evaluate_mark[<%= evaluate.id %>]" >
               <option value="">Select</option>
               <option value="1" <% if StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) == 1 %>selected<% end %> >Yes</option>
               <option value="0" <% if StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) == 0 %>selected<% end %>>No</option>
