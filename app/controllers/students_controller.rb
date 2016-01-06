@@ -197,7 +197,12 @@ class StudentsController < ApplicationController
   def select_term
     @student = Student.find(params[:student_id])
     @term = Term.find(params[:term_id])
+<<<<<<< HEAD
     @term_id = @term.id if @term.present?
+=======
+    redirect_to root_path unless @term
+    @term_id = @term.id
+>>>>>>> master
     @report_template = if @student.grade
                         @student.grade.report_template
                       else
