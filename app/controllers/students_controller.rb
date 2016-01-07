@@ -176,9 +176,15 @@ class StudentsController < ApplicationController
     term_student = TermStudent.find_or_create_by(student_id: params[:student_id], term_id: params[:term_id])
     @term = Term.find(params[:term_id])
     if @term.present?
-      params[:evaluate].each do |evaluate_id, mark|
+      params[:evaluate_mark].each do |evaluate_id, mark|
         student_evaluate = StudentEvaluate.find_or_create_by(term_student_id: term_student.id, evaluate_id: evaluate_id)
         student_evaluate.update_attributes( mark: mark)
+      end
+      if params[:evaluate_avg].present?
+        params[:evaluate_avg].each do |evaluate_id, avg|
+          student_evaluate = StudentEvaluate.find_or_create_by(term_student_id: term_student.id, evaluate_id: evaluate_id)
+          student_evaluate.update_attributes( avg: avg)
+        end
       end
       flash[:notice] = "Save mark success"
       redirect_to "/students/#{@student.id}/enter_mark?term=#{@term.id}"
@@ -186,12 +192,13 @@ class StudentsController < ApplicationController
       flash[:notice] = "Save mark errors"
       redirect_to enter_mark_path(@student)
     end
-    
   end
 
   def select_term
     @student = Student.find(params[:student_id])
-    term = Term.find(params[:term_id])
+    @term = Term.find(params[:term_id])
+    redirect_to root_path unless @term
+    @term_id = @term.id
     @report_template = if @student.grade
                         @student.grade.report_template
                       else
@@ -199,7 +206,7 @@ class StudentsController < ApplicationController
                       end
     respond_to do |format|
       format.js do
-        @return_content = render_to_string(partial: 'students/form_enter_mark', locals: { student: @student, term_id: term.id, report_template: @report_template })
+        @return_content = render_to_string(partial: 'students/form_enter_mark', locals: { student: @student, term_id: @term_id, report_template: @report_template })
       end
     end
 
