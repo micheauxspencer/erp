@@ -100,16 +100,16 @@
               <% if @report_template.name == ReportTemplate::NAME[3] %>
                 <td>
                   <input type="number" class="input-mark" max="100" min="50" name="evaluate_mark[<%= evaluate.id %>]" 
-                  value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+                  value = "<%= StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "mark") %>">
                 </td>
                 <td>
                   <input type="number" class="input-mark" max="100" min="50" name="evaluate_avg[<%= evaluate.id %>]" 
-                  value = "<%= StudentEvaluate.get_avg(evaluate.id, @student.id, @term_id) %>">
+                  value = "<%= StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "avg") %>">
                 </td>
               <% else %>
                 <td>
-                  <input type="number" class="input-mark" max="100" min="50" name="evaluate[<%= evaluate.id %>]" 
-                  value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+                  <input type="number" class="input-mark" max="100" min="50" name="evaluate_mark[<%= evaluate.id %>]" 
+                  value = "<%= StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "mark") %>">
                 </td>
               <% end %>
             </tr>
@@ -143,16 +143,16 @@
               <% if @report_template.name == ReportTemplate::NAME[3] %>
                 <td>
                   <input type="number" class="input-mark" max="4" min="1" name="evaluate_mark[<%= evaluate.id %>]" 
-                  value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+                  value = "<%= StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "mark") %>">
                 </td>
                 <td>
                   <input type="number" class="input-mark" max="4" min="1" name="evaluate_avg[<%= evaluate.id %>]" 
-                  value = "<%= StudentEvaluate.get_avg(evaluate.id, @student.id, @term_id) %>">
+                  value = "<%= StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "avg") %>">
                 </td>
               <% else %>
                 <td>
-                  <input type="number" class="input-mark" max="4" min="1" name="evaluate[<%= evaluate.id %>]" 
-                  value = "<%= StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) %>">
+                  <input type="number" class="input-mark" max="4" min="1" name="evaluate_mark[<%= evaluate.id %>]" 
+                  value = "<%= StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "mark") %>">
                 </td>
               <% end %>
             </tr>
@@ -168,8 +168,8 @@
           <td width="8%" class="score">
             <select class="select-mark" name="evaluate_mark[<%= evaluate.id %>]" >
               <option value="">Select</option>
-              <option value="1" <% if StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) == 1 %>selected<% end %> >Yes</option>
-              <option value="0" <% if StudentEvaluate.get_mark(evaluate.id, @student.id, @term_id) == 0 %>selected<% end %>>No</option>
+              <option value="1" <% if StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "mark") == 1 %>selected<% end %> >Yes</option>
+              <option value="0" <% if StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "mark") == 0 %>selected<% end %>>No</option>
             </select>
           </td>
         </tr>

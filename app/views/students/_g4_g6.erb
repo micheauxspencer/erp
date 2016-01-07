@@ -46,7 +46,7 @@
        <tr class="tr">
         <td class="padding-td"><%= evaluate.name %></td>
         <% Term.last(3).each do |term| %>
-          <td width="8%" class="score" align="center"><%= StudentEvaluate.get_mark(evaluate.id, @student.id, term.id) %></td>
+          <td width="8%" class="score" align="center"><%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") %></td>
         <% end %>
       </tr>
     <% end %>
@@ -70,9 +70,9 @@
       <td width="76%" class=" fixed padding-td"><%= evaluate.name %></td>
       <% Term.last(3).each do |term| %>
         <td width="8%" class="score" align="center">
-          <% if StudentEvaluate.get_mark(evaluate.id, @student.id, term.id ) == 1 %>
+          <% if StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 1 %>
           Yes
-          <% elsif StudentEvaluate.get_mark(evaluate.id, @student.id, term.id ) == 0 %>
+          <% elsif StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 0 %>
           No
           <% end %>
         </td>

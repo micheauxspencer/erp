@@ -20,18 +20,19 @@ class StudentEvaluate < ActiveRecord::Base
   belongs_to :evaluate_type
   belongs_to :term_student
 
-  def self.get_mark(evaluate_id, student_id, term_id)
+  def self.get_value(evaluate_id, student_id, term_id, type)
     term_student = TermStudent.find_by(student_id: student_id, term_id: term_id)
     return nil unless term_student.present?
     student_evaluate = StudentEvaluate.find_by(evaluate_id: evaluate_id, term_student_id: term_student.id)
-    return student_evaluate.present? ? student_evaluate.mark : nil
-  end
-
-  def self.get_avg(evaluate_id, student_id, term_id)
-    term_student = TermStudent.find_by(student_id: student_id, term_id: term_id)
-    return nil unless term_student.present?
-    student_evaluate = StudentEvaluate.find_by(evaluate_id: evaluate_id, term_student_id: term_student.id)
-    return student_evaluate.present? ? student_evaluate.avg : nil
+    if student_evaluate.present?
+      if type == "mark"
+        return student_evaluate.mark
+      elsif type == "avg"
+        return student_evaluate.avg
+      end
+    else
+      return nil
+    end
   end
 
 end
