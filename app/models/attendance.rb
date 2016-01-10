@@ -2,15 +2,14 @@
 #
 # Table name: attendances
 #
-#  id         :integer          not null, primary key
-#  absence    :boolean          default(FALSE)
-#  teacher_id :integer
-#  student_id :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  term_id    :integer
-#  is_late    :boolean          default(FALSE)
-#  grade_id   :integer
+#  id          :integer          not null, primary key
+#  teacher_id  :integer
+#  student_id  :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#  term_id     :integer
+#  grade_id    :integer
+#  type_action :string(255)
 #
 # Indexes
 #
@@ -25,5 +24,4 @@ class Attendance < ActiveRecord::Base
 
   belongs_to :term
 
-  validates :student_id, presence: true
 end
