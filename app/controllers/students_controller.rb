@@ -144,7 +144,7 @@ class StudentsController < ApplicationController
       format.pdf do
         render  pdf:  "report_student",
                 layout:      'pdf',
-                disposition: 'attachment',
+                # disposition: 'attachment',
                 title:       'Report Student',
                 template:    'students/export_pdf.pdf.erb',
                 layout:      'pdf.html.erb',
@@ -186,6 +186,9 @@ class StudentsController < ApplicationController
           student_evaluate.update_attributes( avg: avg)
         end
       end
+
+      Comment.find_or_create_by(term_student_id: term_student.id).update_attributes(content: params[:comment])
+
       flash[:notice] = "Save mark success"
       redirect_to "/students/#{@student.id}/enter_mark?term=#{@term.id}"
     else
