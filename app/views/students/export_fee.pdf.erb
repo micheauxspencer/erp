@@ -1,0 +1,40 @@
+<h2> Student's Fees </h2>
+<table class="table table-striped" style="margin-top: 30px; margin-bottom: 50px;">
+  <thead>
+  <tr>
+    <div class="row">
+        <th class="col-md-1">Id</th>
+        <th class="col-md-1">Name</th>
+        <th class="col-md-1">Amount</th>
+        <th class="col-md-1">Term</th>
+        <th class="col-md-1">Completion</th>
+        <th class="col-md-1">Paid Amount</th>
+    </div>
+  </tr>
+  </thead>
+
+  <tbody>
+    <% @fees.each do |fee| %>
+        <% charge = Charge.where(student_id: @student.id, fee_id: fee.id).first %>
+
+        <tr>
+          <div class="row">
+            <td class="col-md-1"><%= fee.id %></td>
+            <td class="col-md-1"><%= fee.name %></td>
+            <td class="col-md-1"><%= fee.amount %></td>
+            <td class="col-md-1"><%= fee.term ? fee.term.name : ''%></td>
+            <td class="col-md-1">
+              <%
+                 fee_status = 'Unpaid'
+                 fee_status = 'Paid' if charge && charge.is_completed
+                 fee_status = 'Partial' if charge && !charge.is_completed && charge.amount.to_i > 0
+              %>
+              <span id="charge_status_<%= "#{@student.id}_#{fee.id}"%>"><%= fee_status %></span>
+            </td>
+            <td><%= charge ? charge.amount.to_i : 0 %></td>
+          </div>
+
+        </tr>
+    <% end %>
+  </tbody>
+</table>

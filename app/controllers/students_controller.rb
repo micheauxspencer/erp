@@ -144,7 +144,7 @@ class StudentsController < ApplicationController
       format.pdf do
         render  pdf:  "report_student",
                 layout:      'pdf',
-                # disposition: 'attachment',
+                disposition: 'attachment',
                 title:       'Report Student',
                 template:    'students/export_pdf.pdf.erb',
                 layout:      'pdf.html.erb',
@@ -157,6 +157,27 @@ class StudentsController < ApplicationController
                 save_as_htm: true,
                 header:      { html: { template: 'students/header.pdf.erb' }},
                 footer:      { html: { template: 'students/footer.pdf.erb' }}
+      end
+    end
+  end
+
+  def export_fee
+    @student = Student.find(params[:student_id])
+    @fees = @student.fees.where(term: current_term).order('amount asc')
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf:  "report_student",
+                layout:      'pdf',
+                disposition: 'attachment',
+                title:       'Report Student',
+                template:    'students/export_fee.pdf.erb',
+                layout:      'pdf.html.erb',
+                page_size:   'A4',
+                show_as_html: params.key?('debug'),
+                save_as_htm: true
+
       end
     end
   end
