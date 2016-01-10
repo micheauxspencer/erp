@@ -1,0 +1,56 @@
+<h2>Profile</h2>
+
+<%= simple_form_for @user, url: update_profile_path(@user), :html => { menthod: :post, :class => "form-horizontal student"} do |f| %>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.input :email, as: :email, :class => 'form-control', :disabled => true %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.input :user_name, :class => 'form-control', :disabled => true %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.input :role, :class => 'form-control', :disabled => true %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.input :first_name, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.input :last_name, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.input :birth_date, as: :date_picker, :class => 'form-controll' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.input :address, as: :tel, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.input :phone, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>

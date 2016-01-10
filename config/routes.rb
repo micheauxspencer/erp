@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  get 'profile' => 'users#profile', as: :profile
+  patch 'users/update_profile' => 'users#update_profile', as: :update_profile
+
   resources :acedemic_years
 
   resources :fee_categories
