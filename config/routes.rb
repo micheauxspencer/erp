@@ -35,7 +35,8 @@ Rails.application.routes.draw do
   resource :attendances
 
 
-  get '/grades/:grade_id/attendance' => "attendances#index", as: :grade_attendance
+  get '/grades/:grade_id/student_attendance' => "attendances#student_attendance", as: :grade_student_attendance
+  get '/grades/:grade_id/teacher_attendance' => "attendances#teacher_attendance", as: :grade_teacher_attendance
 
   get '/classes' => 'class_names#index', as: :class_list
 

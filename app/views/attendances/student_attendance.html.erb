@@ -1,6 +1,6 @@
 <div class="row">
 
-    <%= simple_form_for Attendance.new, :url => grade_attendance_path, method: :get, :html => {:class => "form-horizontal student"} do |f| %>
+    <%= simple_form_for Attendance.new, :url => grade_student_attendance_path, method: :get, :html => {:class => "form-horizontal student"} do |f| %>
       <div class="col-md-3">
         <div style="margin-left: 25px !important;"> <%= f.input :created_at, as: :date_picker, :class => 'form-control',
                                                                 :input_html => { value: params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at] : Time.now.strftime("%d/%m/%Y") } %></div>
@@ -34,7 +34,6 @@
         <td>
           <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "student_#{student.id}_attendance_form") do %>
               <%= hidden_field_tag :student_id, student.id %>
-              <%= label_tag 'late' %>
               <% start_of_the_day = params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at].to_date.beginning_of_day : Time.now.beginning_of_day %>
               <% end_of_the_day = params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at].to_date.end_of_day : Time.now.end_of_day %>
               <% attendance = Attendance.where(
@@ -44,10 +43,11 @@
                       end_of_the_day,
                       start_of_the_day
               ).first %>
-             <%= check_box_tag 'late', 1, attendance ? attendance.is_late : false, style: 'top: 2px; position: relative; margin-right: 15px;' %>
 
-              <%= label_tag 'absence' %>
-              <%= check_box_tag 'absence', 1, attendance ? attendance.absence : false, style: 'top: 2px; position: relative' %>
+              <% [ 'late', 'absence' ].each do |type_action| %>
+                <%= radio_button_tag 'type_action', type_action, (attendance && attendance.type_action == type_action) %>
+                <%= type_action.humanize %>
+              <% end %>
           <% end %>
         </td>
       </tr>
@@ -57,8 +57,8 @@
 
 <script>
   $(document).ready(function(){
-      $("input[type=checkbox]").click(function () {
-          $(this).parent().submit();
-      })
+    $("input[name=type_action]").click(function () {
+      $(this).parent().submit();
+    })
   });
 </script>
