@@ -170,7 +170,7 @@ class StudentsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render  pdf:  "student_name_receipts",
+        render  pdf:  "#{@student.first_name}_#{@student.last_name}_receipts",
                 layout:      'pdf',
                 disposition: 'attachment',
                 title:       'Report Student',
