@@ -175,6 +175,11 @@
         </tr>
       <% end %>
     </table>
+    <div>
+      <h3>Comment</h3>
+      <textarea class="form-control" placeholer="Message" name="comment" style="height: 120px;"><%= Comment.get_comment(@student.id, @term_id) %></textarea>
+    </div>
+
     <%= submit_tag "Save Mark", class: "btn btn-primary save-mark" %>
   <% end %>
 </div>

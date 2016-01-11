@@ -161,6 +161,27 @@ class StudentsController < ApplicationController
     end
   end
 
+  def export_fee
+    @student = Student.find(params[:student_id])
+    @fees = @student.fees.where(term: current_term).order('amount asc')
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf:  "report_student",
+                layout:      'pdf',
+                disposition: 'attachment',
+                title:       'Report Student',
+                template:    'students/export_fee.pdf.erb',
+                layout:      'pdf.html.erb',
+                page_size:   'A4',
+                show_as_html: params.key?('debug'),
+                save_as_htm: true
+
+      end
+    end
+  end
+
   def enter_mark
     @student = Student.find(params[:student_id])
     @report_template = if @student.grade
@@ -186,6 +207,9 @@ class StudentsController < ApplicationController
           student_evaluate.update_attributes( avg: avg)
         end
       end
+
+      Comment.find_or_create_by(term_student_id: term_student.id).update_attributes(content: params[:comment])
+
       flash[:notice] = "Save mark success"
       redirect_to "/students/#{@student.id}/enter_mark?term=#{@term.id}"
     else
