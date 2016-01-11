@@ -1,9 +1,20 @@
-<h2> Student's Fees </h2>
+<h2> Student Name Receipts </h2>
+
+<div class="info1">
+  <label class="field-label">Student: </label> <label class="infolbl" style="text-align:left;">
+    <%= @student.name %>
+  </label>
+</div>
+<div class="info1">
+  <label class="field-label">Grade: </label> <label class="infolbl">
+    <%= @student.grade.name %>
+  </label>
+</div>
+
 <table class="table table-striped" style="margin-top: 30px; margin-bottom: 50px;">
   <thead>
   <tr>
     <div class="row">
-        <th class="col-md-1">Id</th>
         <th class="col-md-1">Name</th>
         <th class="col-md-1">Amount</th>
         <th class="col-md-1">Term</th>
@@ -19,7 +30,6 @@
 
         <tr>
           <div class="row">
-            <td class="col-md-1"><%= fee.id %></td>
             <td class="col-md-1"><%= fee.name %></td>
             <td class="col-md-1"><%= fee.amount %></td>
             <td class="col-md-1"><%= fee.term ? fee.term.name : ''%></td>
