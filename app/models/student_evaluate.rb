@@ -34,5 +34,5 @@ class StudentEvaluate < ActiveRecord::Base
       return nil
     end
   end
-  
+
 end
