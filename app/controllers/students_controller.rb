@@ -22,6 +22,8 @@ class StudentsController < ApplicationController
   # GET /students/new
   def new
     @student = Student.new
+    @siblings = []
+    @not_siblings = []
   end
 
   # GET /students/1/edit
@@ -248,6 +250,6 @@ class StudentsController < ApplicationController
     end
 
     def check_permissions
-      redirect_to root_path unless (current_user.role?("office") || current_user.role?("assistant"))
+      redirect_to root_path unless current_user.role?("office")
     end
 end

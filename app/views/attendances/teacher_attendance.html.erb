@@ -1,0 +1,61 @@
+<%= @teacher.name %>
+<div class="row">
+
+    <%= simple_form_for Attendance.new, :url => grade_teacher_attendance_path, method: :get, :html => {:class => "form-horizontal student"} do |f| %>
+      <div class="col-md-3">
+        <div style="margin-left: 25px !important;"> <%= f.input :created_at, as: :date_picker, :class => 'form-control',
+                                                                :input_html => { value: params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at] : Time.now.strftime("%d/%m/%Y") } %></div>
+      </div>
+      <div class="col-md-9" style="margin-top: 26px;">
+        <%= f.submit 'Check', :class => 'btn btn-default', style: 'margin-left: 10px;' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<br>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th><%= User.human_attribute_name(:id) %></th>
+    <th><%= User.human_attribute_name(:name) %></th>
+    <th><%= User.human_attribute_name(:grade_id) %></th>
+    <th><%=t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @teacher.id %></td>
+      <td><%= @teacher.last_name %><%= @teacher.first_name %></td>
+      <td><%= @grade.id %></td>
+      <td>
+        <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "teacher_#{@teacher.id}_attendance_form") do %>
+          <%= hidden_field_tag :teacher_id, @teacher.id %>
+          <% start_of_the_day = params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at].to_date.beginning_of_day : Time.now.beginning_of_day %>
+          <% end_of_the_day = params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at].to_date.end_of_day : Time.now.end_of_day %>
+          <% attendance = Attendance.where(
+                  "teacher_id = ? AND term_id = ? AND ? >= created_at AND created_at >= ?",
+                  @teacher.id,
+                  current_term,
+                  end_of_the_day,
+                  start_of_the_day
+          ).first %>
+
+          <% [ 'late', 'half day', 'early dismissal'].each do |type_action| %>
+            <%= radio_button_tag 'type_action', type_action, (attendance && attendance.type_action == type_action), id: type_action, class: "radio-action" %>
+            <label for="<%= type_action %>" class="label-radio-action"><%= type_action.humanize %></label>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function(){
+      $("input[name=type_action]").click(function () {
+          $(this).parent().submit();
+      })
+  });
+</script>

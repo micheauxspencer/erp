@@ -2,5 +2,5 @@
 $('[data-toggle="dropdown"]').parent().removeClass('open');
 $("#grade-name").html("<%= @grade.name if @grade%>");
 $("#teacher-name").html("<%= @grade.teacher.name if @grade %>");
-$("#total-late").html("<%= Attendance.where(student_id: @student.id, term_id: @term.id, is_late: true).count %>");
-$("#total-absence").html("<%= Attendance.where(student_id: @student.id, term_id: @term, absence: true).count %>");
+$("#total-late").html("<%= Attendance.where(student_id: @student.id, term_id: @term.id, type_action: 'late').count %>");
+$("#total-absence").html("<%= Attendance.where(student_id: @student.id, term_id: @term, type_action: 'absence').count %>");
