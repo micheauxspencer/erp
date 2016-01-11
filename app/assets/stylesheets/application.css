@@ -66,3 +66,11 @@
       .js-select-siblings {
         width: 100%;
       }
+      .radio-action {
+        cursor: pointer;
+      }
+      .label-radio-action {
+        margin-right: 10px;
+        font-weight: normal;
+        cursor: pointer;
+      }

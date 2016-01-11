@@ -45,8 +45,8 @@
               ).first %>
 
               <% [ 'late', 'absence' ].each do |type_action| %>
-                <%= radio_button_tag 'type_action', type_action, (attendance && attendance.type_action == type_action), id: type_action %>
-                <label for="<%= type_action %>" style="margin-right: 10px;"><%= type_action.humanize %></label>
+                <%= radio_button_tag 'type_action', type_action, (attendance && attendance.type_action == type_action), id: type_action, class: "radio-action" %>
+                <label for="<%= type_action %>" class="label-radio-action"><%= type_action.humanize %></label>
               <% end %>
           <% end %>
         </td>
