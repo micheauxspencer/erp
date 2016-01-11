@@ -36,10 +36,10 @@
 
     <div class="sub-content">
       <br>
-      <b>Late:</b> <span id="total-late"><%= Attendance.where(student_id: @student.id, term_id: current_term, is_late: true).count %></span>
+      <b>Late:</b> <span id="total-late"><%= Attendance.where(student_id: @student.id, term_id: current_term, type_action: "late").count %></span>
       <br>
       <br>
-      <b>Absence:</b> <span id="total-absence"><%= Attendance.where(student_id: @student.id, term_id: current_term, absence: true).count %></span>
+      <b>Absence:</b> <span id="total-absence"><%= Attendance.where(student_id: @student.id, term_id: current_term, type_action: "absence").count %></span>
     </div>
     <hr>
   </div>

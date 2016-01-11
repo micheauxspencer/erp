@@ -33,8 +33,7 @@ class User < ActiveRecord::Base
 
   ROLE = {
       teacher: 'teacher',
-      office: 'office',
-      assistant: 'assistant'
+      office: 'office'
   }
 
   # Include default devise modules. Others available are:
