@@ -74,3 +74,6 @@
         font-weight: normal;
         cursor: pointer;
       }
+      .btn-import {
+        margin-top: 10px;
+      }
