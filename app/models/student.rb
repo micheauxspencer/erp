@@ -56,6 +56,12 @@
 #  medication           :string(255)
 #  grade_id             :integer
 #  route_id             :integer
+#  state                :string(255)
+#  nationality          :string(255)
+#  category             :string(255)
+#  country              :string(255)
+#  immediate_contact    :string(255)
+#  biometric            :string(255)
 #
 # Indexes
 #
@@ -96,4 +102,53 @@ class Student < ActiveRecord::Base
   def name
     return first_name + ' ' + last_name
   end
+
+  def self.import(file)
+    import_total = 0
+    import_success = 0
+    begin
+      spreadsheet = open_spreadsheet(file)
+      header = spreadsheet.row(1)
+      import_total = spreadsheet.last_row - 1
+      (2..spreadsheet.last_row).each do |i|
+        begin
+          row = Hash[[header, spreadsheet.row(i)].transpose]
+          student =  Student.new(
+            first_name: row["Student name"].split(" ")[0..-2].join(" "),
+            last_name: row["Student name"].split(" ").last,
+            birthdate: row["Date of birth"],
+            gender: row["Gender"] == "f" ? "Male" : "Female",
+            nationality: row["Nationality"],
+            category: row["Category"],
+            street: row["Address"],
+            city: row["City"],
+            state: row["State"],
+            postal_code: row["Pin code"],
+            country: row["Country"],
+            f_phone: row["Phone"],
+            m_phone: row["Mobile"],
+            immediate_contact: row["Immediate contact"],
+            biometric: row["Biometric"]
+            # : row["All siblings"]
+          )
+          if student.valid? && student.save!
+            import_success = import_success + 1
+          end
+        rescue
+        end
+      end
+    rescue
+    end
+    return [import_success, import_total - import_success]
+  end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.original_filename)
+    when ".csv" then Roo::Csv.new(file.path, packed: nil, file_warning: :ignore)
+    when ".xls" then Roo::Excel.new(file.path, packed: nil, file_warning: :ignore)
+    when ".xlsx" then Roo::Excelx.new(file.path, packed: nil, file_warning: :ignore)
+    else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
+
 end
