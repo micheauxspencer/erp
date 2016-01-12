@@ -1,8 +1,8 @@
 class StudentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_student, only: [:show, :edit, :update, :destroy]
+  before_action :set_student, only: [:show, :edit, :update, :destroy], except: [:import]
 
-  before_action :check_permissions, only: [:new, :create]
+  before_action :check_permissions, only: [:new, :create, :import]
 
   # GET /students
   # GET /students.json
@@ -238,6 +238,25 @@ class StudentsController < ApplicationController
 
   end
 
+  def import
+    
+  end
+
+  def save_import_student
+    array_import = Student.import(params[:file])
+    import_success = array_import[0]
+    import_error = array_import[1]
+
+    if import_success > 0
+      flash[:notice] = import_error > 0 ? "Student import success: #{import_success} and errors: #{import_error}" : "Student import success: #{import_success}"
+      redirect_to root_path
+    else
+      flash[:alert] = import_error == 0 ? "Student import errors: #{import_success}" : "File errors"
+      redirect_to import_student_path
+    end
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
@@ -246,7 +265,7 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:first_name, :middle_name, :last_name, :street, :city, :postal_code, :sin, :birthdate, :gender, :status, :trans_req, :tax_rec_req, :route_id, :route_fee, :pick_up, :drop_off, :last_shool_attended, :last_school_phone, {:sibling_ids => []}, {:fee_ids => []}, :f_first_name, :f_last_name, :f_phone, :f_cell, :f_work, :f_email, :m_first_name, :m_last_name, :m_phone, :m_cell, :m_work, :m_email, :custody, :emerg_1_name, :emerg_1_phone, :emerg_1_relation, :healthcard, :doctor_name, :doctor_phone, :grade_id, :enrolled, :medical_conditions)
+      params.require(:student).permit(:first_name, :middle_name, :last_name, :street, :city, :postal_code, :sin, :birthdate, :gender, :status, :trans_req, :tax_rec_req, :route_id, :route_fee, :pick_up, :drop_off, :last_shool_attended, :last_school_phone, {:sibling_ids => []}, {:fee_ids => []}, :f_first_name, :f_last_name, :f_phone, :f_cell, :f_work, :f_email, :m_first_name, :m_last_name, :m_phone, :m_cell, :m_work, :m_email, :custody, :emerg_1_name, :emerg_1_phone, :emerg_1_relation, :healthcard, :doctor_name, :doctor_phone, :grade_id, :enrolled, :medical_conditions, :state, :nationality, :category, :country, :immediate_contact, :biometric)
     end
 
     def check_permissions
