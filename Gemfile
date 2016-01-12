@@ -51,3 +51,6 @@ gem 'wkhtmltopdf-binary'
 gem 'seed_dump'
 
 gem "select2-rails"
+
+# import file
+gem 'roo'

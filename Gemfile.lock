@@ -161,6 +161,12 @@ GEM
     remotipart (1.2.1)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
+    roo (1.13.2)
+      nokogiri
+      rubyzip
+      spreadsheet (> 0.6.4)
+    ruby-ole (1.2.11.8)
+    rubyzip (1.1.7)
     safe_yaml (1.0.4)
     sass (3.2.19)
     sass-rails (4.0.5)
@@ -177,6 +183,8 @@ GEM
       actionpack (~> 4.0)
       activemodel (~> 4.0)
     slop (3.6.0)
+    spreadsheet (1.0.3)
+      ruby-ole (>= 1.0)
     sprockets (2.12.4)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -229,6 +237,7 @@ DEPENDENCIES
   rails4-autocomplete
   rails_12factor
   rails_admin
+  roo
   sass-rails (~> 4.0.3)
   seed_dump
   select2-rails

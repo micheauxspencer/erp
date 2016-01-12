@@ -1,0 +1,13 @@
+<div class="portlet">
+  <h3>Import Sutudent</h3>
+  <br/>
+  <h4>Download example file: <%= link_to "Excel", '/download/import_student_example.xlsx' %></h4>
+
+  <h4>Import from XLS file</h4>
+  <p>Upload a file</p>
+  <%= form_tag save_import_student_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Upload List", :class => "btn btn-primary btn-import" %>
+  <% end %>
+
+</div>
