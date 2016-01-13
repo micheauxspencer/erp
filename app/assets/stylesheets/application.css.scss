@@ -80,7 +80,8 @@
       /*pagination*/
       .data_paginate .pagination a, 
       .data_paginate .pagination .disabled,
-      .data_paginate .pagination .current {
+      .data_paginate .pagination .current,
+      .data_paginate .pagination .gap {
         display: block;
         margin: 0px;
         position: relative;
