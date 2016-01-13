@@ -1,4 +1,6 @@
 class StudentsController < ApplicationController
+  helper_method :sort_column, :sort_direction
+
   before_action :authenticate_user!
   before_action :set_student, only: [:show, :edit, :update, :destroy], except: [:import]
 
@@ -7,7 +9,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @students = Student.all
+    @students = Student.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 15)
     # Example use of authorize using ability
     # authorize! :read, @students
   end
@@ -270,5 +272,12 @@ class StudentsController < ApplicationController
 
     def check_permissions
       redirect_to root_path unless current_user.role?("office")
+    end
+    def sort_column
+      Student.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+    
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
     end
 end

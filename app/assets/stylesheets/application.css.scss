@@ -77,3 +77,47 @@
       .btn-import {
         margin-top: 10px;
       }
+      /*pagination*/
+      .data_paginate .pagination a, 
+      .data_paginate .pagination .disabled,
+      .data_paginate .pagination .current {
+        display: block;
+        margin: 0px;
+        position: relative;
+        float: left;
+        padding: 6px 12px;
+        margin-left: -1px;
+        line-height: 1.42857143;
+        color: #337ab7;
+        text-decoration: none;
+        background: #fff;
+        border: 1px solid #ddd;
+        font-style: inherit;
+      }
+      .data_paginate .pagination a:hover,
+      .data_paginate .pagination .current {
+        background: #eee;
+        border-color: #dddddd;
+        color: #333;
+      }
+      .data_paginate .pagination .disabled {
+        color: #dddddd;
+      }
+
+      .table-student th .current {
+        display: block;
+        padding-right: 12px;
+        padding-right: 12px;
+        background-repeat: no-repeat;
+        background-position: right center;
+      }
+
+      .table-student th .asc {
+        background-image: image-url("up.png");
+        background-size: 20px;
+      }
+
+      .table-student th .desc {
+        background-image: image-url("down.png");
+        background-size: 20px;
+      }
