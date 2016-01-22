@@ -62,6 +62,23 @@
 #  country              :string(255)
 #  immediate_contact    :string(255)
 #  biometric            :string(255)
+#  admission_date       :datetime
+#  c_first_name         :string(255)
+#  c_last_name          :string(255)
+#  c_relation           :string(255)
+#  c_office_address     :string(255)
+#  c_city               :string(255)
+#  c_state              :string(255)
+#  c_office_phone       :string(255)
+#  c_mobile_phone       :string(255)
+#  f_office_address     :string(255)
+#  f_city               :string(255)
+#  f_state              :string(255)
+#  m_office_address     :string(255)
+#  m_city               :string(255)
+#  m_state              :string(255)
+#  phone                :string(255)
+#  mobile               :string(255)
 #
 # Indexes
 #
@@ -110,29 +127,80 @@ class Student < ActiveRecord::Base
       spreadsheet = open_spreadsheet(file)
       header = spreadsheet.row(1)
       import_total = spreadsheet.last_row - 1
+      student = Student.new
       (2..spreadsheet.last_row).each do |i|
         begin
           row = Hash[[header, spreadsheet.row(i)].transpose]
-          student =  Student.new(
-            first_name: row["Student name"].split(" ")[0..-2].join(" "),
-            last_name: row["Student name"].split(" ").last,
-            birthdate: row["Date of birth"],
-            gender: row["Gender"] == "f" ? "Male" : "Female",
-            nationality: row["Nationality"],
-            category: row["Category"],
-            street: row["Address"],
-            city: row["City"],
-            state: row["State"],
-            postal_code: row["Pin code"],
-            country: row["Country"],
-            f_phone: row["Phone"],
-            m_phone: row["Mobile"],
-            immediate_contact: row["Immediate contact"],
-            biometric: row["Biometric"]
-            # : row["All siblings"]
-          )
-          if student.valid? && student.save!
-            import_success = import_success + 1
+          term = Term.find_or_create_by(name: row["Batch"]) if row["Batch"] != nil
+
+          if row["Sl. no."].present? && row["Sl. no."].to_s.gsub(' ', '') != ""
+            student = Student.new(
+              admission_date: row["Admission Date"],
+              birthdate: row["Date of birth"],
+              first_name: row["First Name"],
+              last_name: row["Last Name"],
+              middle_name: row["Middle Name"],
+              gender: row["Gender"] == "f" ? "Male" : "Female",
+              street: row["Address Line 1"],
+              city: row["City"],
+              state: row["State"],
+              postal_code: row["Pin code"],
+              country: row["Country"],
+              phone: row["Phone"],
+              mobile: row["Mobile"],
+
+              c_first_name: row["Immediate contact first name"],
+              c_last_name: row["Immediate contact last name"],
+              c_relation: row["Immediate contact relation"],
+              c_office_address: row["Immediate contact office address 1"],
+              c_city: row["Immediate contact city"],
+              c_state: row["Immediate contact state"],
+              c_office_phone: row["Immediate contact office phone"],
+              c_mobile_phone: row["Immediate contact mobile phone"],
+
+              f_first_name: row["Parents relation"] = "father" ? row["Parents first name"] : nil,
+              f_last_name: row["Parents relation"] = "father" ? row["Parents last name"] : nil,
+              f_office_address: row["Parents relation"] = "father" ? row["Parents office address 1"] : nil,
+              f_city: row["Parents relation"] = "father" ? row["Parents city"] : nil,
+              f_state: row["Parents relation"] = "father" ? row["Parents state"] : nil,
+              f_phone: row["Parents relation"] = "father" ? row["Parents office phone"] : nil,
+              f_work:  row["Parents relation"] = "father" ? row["Parents mobile phone"] : nil,
+
+              m_first_name: row["Parents relation"] = "mother" ? row["Parents first name"] : nil,
+              m_last_name: row["Parents relation"] = "mother" ? row["Parents last name"] : nil,
+              m_office_address: row["Parents relation"] = "mother" ? row["Parents office address 1"] : nil,
+              m_city: row["Parents relation"] = "mother" ? row["Parents city"] : nil,
+              m_state: row["Parents relation"] = "mother" ? row["Parents state"] : nil,
+              m_phone: row["Parents relation"] = "mother" ? row["Parents office phone"] : nil,
+              m_work:  row["Parents relation"] = "mother" ? row["Parents mobile phone"] : nil,
+
+              category: row["Student category"]
+            )
+            if student.valid? && student.save!
+              TermStudent.create(student: student, term: term) if term.present?
+              import_success = import_success + 1
+            end
+            student = student
+          else
+            if row["Parents relation"].present?
+              student.update_attributes(
+                f_first_name: row["Parents relation"] = "father" ? row["Parents first name"] : nil,
+                f_last_name: row["Parents relation"] = "father" ? row["Parents last name"] : nil,
+                f_office_address: row["Parents relation"] = "father" ? row["Parents office address 1"] : nil,
+                f_city: row["Parents relation"] = "father" ? row["Parents city"] : nil,
+                f_state: row["Parents relation"] = "father" ? row["Parents state"] : nil,
+                f_phone: row["Parents relation"] = "father" ? row["Parents office phone"] : nil,
+                f_work:  row["Parents relation"] = "father" ? row["Parents mobile phone"] : nil,
+
+                m_first_name: row["Parents relation"] = "mother" ? row["Parents first name"] : nil,
+                m_last_name: row["Parents relation"] = "mother" ? row["Parents last name"] : nil,
+                m_office_address: row["Parents relation"] = "mother" ? row["Parents office address 1"] : nil,
+                m_city: row["Parents relation"] = "mother" ? row["Parents city"] : nil,
+                m_state: row["Parents relation"] = "mother" ? row["Parents state"] : nil,
+                m_phone: row["Parents relation"] = "mother" ? row["Parents office phone"] : nil,
+                m_work:  row["Parents relation"] = "mother" ? row["Parents mobile phone"] : nil
+              )
+            end
           end
         rescue
         end

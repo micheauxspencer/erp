@@ -48,6 +48,9 @@ en:
         f_cell: Cell Phone
         f_work: Work Phone
         f_email: Email Address
+        f_office_address: Office address
+        f_city: City
+        f_state: State
         m_first_name: Mother's First Name
         m_last_name: Mother's Last Name
         m_street: Street Address
@@ -58,6 +61,9 @@ en:
         m_cell: Cell Phone
         m_work: Work Phone
         m_email: Email Address
+        m_office_address: Office address
+        m_city: City
+        m_state: State
         emerg_1_name: Name
         emerg_1_phone: Phone
         emerg_1_relation: Relation
@@ -67,3 +73,11 @@ en:
         healthcard: Ontario Health Card Number
         doctor_name: Doctor's Name
         doctor_phone: Phone
+        c_first_name: First name
+        c_last_name: Last name
+        c_relation: Relation
+        c_office_address: Office address
+        c_city: City
+        c_state: State
+        c_office_phone: Office phone
+        c_mobile_phone: Mobile phone
