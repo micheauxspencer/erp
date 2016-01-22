@@ -136,7 +136,7 @@ class Student < ActiveRecord::Base
           if row["Sl. no."].present? && row["Sl. no."].to_s.gsub(' ', '') != ""
             student = Student.new(
               admission_date: row["Admission Date"],
-              birthdate: row["Date of birth"],
+              birthdate: row["Date of Birth"],
               first_name: row["First Name"],
               last_name: row["Last Name"],
               middle_name: row["Middle Name"],
