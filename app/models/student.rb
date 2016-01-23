@@ -127,6 +127,7 @@ class Student < ActiveRecord::Base
       spreadsheet = open_spreadsheet(file)
       header = spreadsheet.row(1)
       student = Student.new
+      
       (2..spreadsheet.last_row).each do |i|
         begin
           row = Hash[[header, spreadsheet.row(i)].transpose]
