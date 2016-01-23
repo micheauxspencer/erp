@@ -176,12 +176,11 @@ class Student < ActiveRecord::Base
               category: row["Student category"]
             )
             if student.valid? && student.save!
-              a = TermStudent.create(student: student, term: term) if term.present?
+              TermStudent.create(student: student, term: term) if term.present?
               import_success = import_success + 1
             end
             student = student
           else
-            student = Student.last
             if row["Parents relation"].present?
               if row["Parents relation"] == "father"
                 student.update_attributes(

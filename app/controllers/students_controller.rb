@@ -333,7 +333,7 @@ class StudentsController < ApplicationController
         :m_state,
         :phone,
         :mobile
-        )
+      )
     end
 
     def check_permissions
