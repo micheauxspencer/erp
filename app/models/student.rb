@@ -124,10 +124,6 @@ class Student < ActiveRecord::Base
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
 
-        grade = Grade.find_or_create_by(name: row["Grade"]) if row["Grade"] != nil
-
-        Rails.logger.info "FFFFFFFFFFFFFFFF #{row["Student Number"].class == String}" 
-
         if row["Student Number"].present? && row["Student Number"].to_s.gsub(' ', '') != ""
           import_total = import_total + 1
           
@@ -148,6 +144,7 @@ class Student < ActiveRecord::Base
               mobile: row["Mobile"]
             )
 
+            grade = Grade.find_or_create_by(name: row["Grade"].to_s) if row["Grade"] != nil
             GradeStudent.create(student: student, grade: grade) if grade.present?
             import_success = import_success + 1 if 
 
