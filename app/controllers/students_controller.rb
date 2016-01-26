@@ -250,9 +250,9 @@ class StudentsController < ApplicationController
     if format
       import_success = array_import[1]
       import_error = array_import[2]
-
+      errors = array_import[3]
       if import_success > 0
-        flash[:notice] = import_error > 0 ? "Student import success: #{import_success} and errors: #{import_error}" : "Student import success: #{import_success}"
+        flash[:notice] = import_error > 0 ? "Student import success: #{import_success} and errors: #{import_error} in rows #{errors}" : "Student import success: #{import_success}"
         redirect_to root_path
       else
         flash[:alert] = import_error == 0 ? "Student import errors: #{import_success}" : "File errors"

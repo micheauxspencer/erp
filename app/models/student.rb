@@ -116,6 +116,7 @@ class Student < ActiveRecord::Base
     begin
       import_total = 0
       import_success = 0
+      errors = []
       spreadsheet = open_spreadsheet(file)
       header = spreadsheet.row(1)
       student = nil
@@ -152,6 +153,7 @@ class Student < ActiveRecord::Base
 
             student = student
           else
+            errors << i
             student = nil
           end
           
@@ -181,7 +183,7 @@ class Student < ActiveRecord::Base
         end
       end
 
-      return [true, import_success, import_total - import_success]
+      return [true, import_success, import_total - import_success, errors]
     rescue
       return [false]
     end
