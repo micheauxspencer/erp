@@ -38,8 +38,6 @@
       <li role="presentation">
         <a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">Parent / Guardian Information</a></li>
       <li role="presentation">
-        <a href="#immediate_contact" aria-controls="immediate_contact" role="tab" data-toggle="tab">Immediate contact</a></li>
-      <li role="presentation">
         <a href="#health" aria-controls="heatlh" role="tab" data-toggle="tab">Health Information</a></li>
       <li role="presentation"><a href="#fees" aria-controls="fees" role="tab" data-toggle="tab">Fees</a></li>
       <li role="presentation">
@@ -279,7 +277,7 @@
           </div>
           <div class="control-group">
             <div class="controls">
-              <%= f.input :f_office_address, :class => 'form-control' %>
+              <%= f.input :f_home_address, :class => 'form-control' %>
             </div>
             <%#= error_span(@student[:f_cell]) %>
           </div>
@@ -337,7 +335,7 @@
           </div>
           <div class="control-group">
             <div class="controls">
-              <%= f.input :m_office_address, :class => 'form-control' %>
+              <%= f.input :m_home_address, :class => 'form-control' %>
             </div>
             <%#= error_span(@student[:f_cell]) %>
           </div>
@@ -370,59 +368,6 @@
       <%= link_to 'Cancel',
                   students_path, :class => 'btn btn-default' %>
     </div> <!-- End second tab panel -->
-
-    <div role="tabpanel" class="tab-pane" id="immediate_contact">
-      <div class="row">
-        <div class="col-md-6">
-          <!-- <h3>Emergency Contacts</h3> -->
-
-          <div class="control-group">
-            <div class="controls">
-              <%= f.input :c_first_name, :class => 'form-control' %>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <%= f.input :c_last_name, :class => 'form-control' %>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <%= f.input :c_relation, :class => 'form-control' %>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <%= f.input :c_office_address, :class => 'form-control' %>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6" >
-          <div class="control-group">
-            <div class="controls">
-              <%= f.input :c_city, :class => 'form-control' %>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <%= f.input :c_state, :class => 'form-control' %>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <%= f.input :c_office_phone, :class => 'form-control' %>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <%= f.input :c_mobile_phone, :class => 'form-control' %>
-            </div>
-          </div>
-        </div>
-      </div>
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', students_path, :class => 'btn btn-default' %>
-    </div><!-- End second tab panel -->
 
     <div role="tabpanel" class="tab-pane" id="health">
 

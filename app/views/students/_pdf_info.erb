@@ -21,7 +21,7 @@
         </div>
         <div class="info1">
           <label class="field-label">Teachers: </label> <label class="infolbl">
-            <%= @student.name %>
+            <%= @student.grade.teacher.name if @student.grade.teacher %>
           </label>
         </div>
       </div>

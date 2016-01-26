@@ -34,7 +34,7 @@ class StudentsController < ApplicationController
     @other_fees = Fee.where(term: current_term).where.not(id: @fees.map(&:id)).order('amount asc')
     
     @route = @student.route
-    @report_template = if @student.grade
+    @report_template = if @student.grade.report_template
                         @student.grade.report_template
                       else
                         ReportTemplate.first
@@ -136,7 +136,7 @@ class StudentsController < ApplicationController
 
   def export_pdf
     @student = Student.find(params[:student_id])
-    @report_template = if @student.grade
+    @report_template = if @student.grade.report_template
                         @student.grade.report_template
                       else
                         ReportTemplate.first
@@ -188,7 +188,7 @@ class StudentsController < ApplicationController
 
   def enter_mark
     @student = Student.find(params[:student_id])
-    @report_template = if @student.grade
+    @report_template = if @student.grade.report_template
                         @student.grade.report_template
                       else
                         ReportTemplate.first
@@ -227,7 +227,7 @@ class StudentsController < ApplicationController
     @term = Term.find(params[:term_id])
     redirect_to root_path unless @term
     @term_id = @term.id
-    @report_template = if @student.grade
+    @report_template = if @student.grade.report_template
                         @student.grade.report_template
                       else
                         ReportTemplate.first
@@ -246,17 +246,32 @@ class StudentsController < ApplicationController
 
   def save_import_student
     array_import = Student.import(params[:file])
-    import_success = array_import[0]
-    import_error = array_import[1]
+    format = array_import[0]
+    if format
+      import_success = array_import[1]
+      import_error = array_import[2]
 
-    if import_success > 0
-      flash[:notice] = import_error > 0 ? "Student import success: #{import_success} and errors: #{import_error}" : "Student import success: #{import_success}"
-      redirect_to root_path
+      if import_success > 0
+        flash[:notice] = import_error > 0 ? "Student import success: #{import_success} and errors: #{import_error}" : "Student import success: #{import_success}"
+        redirect_to root_path
+      else
+        flash[:alert] = import_error == 0 ? "Student import errors: #{import_success}" : "File errors"
+        redirect_to import_student_path
+      end
     else
-      flash[:alert] = import_error == 0 ? "Student import errors: #{import_success}" : "File errors"
+      flash[:alert] = "File errors format"
       redirect_to import_student_path
     end
+    
+  end
 
+  def delete_all
+    if Student.destroy_all
+      flash[:notice] = ' All students was successfully destroyed.'
+    else
+      flash[:alert] = "Delele errors"
+    end
+    redirect_to root_path
   end
 
   private
@@ -314,21 +329,13 @@ class StudentsController < ApplicationController
         :nationality, 
         :category, 
         :country, 
-        :immediate_contact, 
+        :immediate_contact,
         :biometric,
         :admission_date,
-        :c_first_name, 
-        :c_last_name,
-        :c_relation,
-        :c_office_address,
-        :c_city,
-        :c_state,
-        :c_office_phone,
-        :c_mobile_phone,
-        :f_office_address,
+        :f_home_address,
         :f_city,
         :f_state,
-        :m_office_address,
+        :m_home_address,
         :m_city,
         :m_state,
         :phone,

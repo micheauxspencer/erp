@@ -63,18 +63,10 @@
 #  immediate_contact    :string(255)
 #  biometric            :string(255)
 #  admission_date       :datetime
-#  c_first_name         :string(255)
-#  c_last_name          :string(255)
-#  c_relation           :string(255)
-#  c_office_address     :string(255)
-#  c_city               :string(255)
-#  c_state              :string(255)
-#  c_office_phone       :string(255)
-#  c_mobile_phone       :string(255)
-#  f_office_address     :string(255)
+#  f_home_address       :string(255)
 #  f_city               :string(255)
 #  f_state              :string(255)
-#  m_office_address     :string(255)
+#  m_home_address       :string(255)
 #  m_city               :string(255)
 #  m_state              :string(255)
 #  phone                :string(255)
@@ -121,20 +113,26 @@ class Student < ActiveRecord::Base
   end
 
   def self.import(file)
-    import_total = 0
-    import_success = 0
     begin
+      import_total = 0
+      import_success = 0
       spreadsheet = open_spreadsheet(file)
       header = spreadsheet.row(1)
-      student = Student.new
+      student = nil
       
       (2..spreadsheet.last_row).each do |i|
-        begin
-          row = Hash[[header, spreadsheet.row(i)].transpose]
-          term = Term.find_or_create_by(name: row["Batch"]) if row["Batch"] != nil
-          if row["Sl. no."].present? && row["Sl. no."].to_s.gsub(' ', '') != ""
-            import_total = import_total + 1
-            student = Student.new(
+        row = Hash[[header, spreadsheet.row(i)].transpose]
+
+        grade = Grade.find_or_create_by(name: row["Grade"]) if row["Grade"] != nil
+
+        Rails.logger.info "FFFFFFFFFFFFFFFF #{row["Student Number"].class == String}" 
+
+        if row["Student Number"].present? && row["Student Number"].to_s.gsub(' ', '') != ""
+          import_total = import_total + 1
+          
+          unless row["Student Number"].class == String
+            student = Student.find_or_create_by(id: row["Student Number"])
+            student.update_attributes(
               admission_date: row["Admission Date"],
               birthdate: row["Date of Birth"],
               first_name: row["First Name"],
@@ -144,74 +142,50 @@ class Student < ActiveRecord::Base
               street: row["Address Line 1"],
               city: row["City"],
               state: row["State"],
-              postal_code: row["Pin code"],
-              country: row["Country"],
+              postal_code: row["Postal Code"],
               phone: row["Phone"],
-              mobile: row["Mobile"],
-
-              c_first_name: row["Immediate contact first name"],
-              c_last_name: row["Immediate contact last name"],
-              c_relation: row["Immediate contact relation"],
-              c_office_address: row["Immediate contact office address 1"],
-              c_city: row["Immediate contact city"],
-              c_state: row["Immediate contact state"],
-              c_office_phone: row["Immediate contact office phone"],
-              c_mobile_phone: row["Immediate contact mobile phone"],
-
-              f_first_name: row["Parents relation"] == "father" ? row["Parents first name"] : nil,
-              f_last_name: row["Parents relation"] == "father" ? row["Parents last name"] : nil,
-              f_office_address: row["Parents relation"] == "father" ? row["Parents office address 1"] : nil,
-              f_city: row["Parents relation"] == "father" ? row["Parents city"] : nil,
-              f_state: row["Parents relation"] == "father" ? row["Parents state"] : nil,
-              f_phone: row["Parents relation"] == "father" ? row["Parents office phone"] : nil,
-              f_work:  row["Parents relation"] == "father" ? row["Parents mobile phone"] : nil,
-
-              m_first_name: row["Parents relation"] == "mother" ? row["Parents first name"] : nil,
-              m_last_name: row["Parents relation"] == "mother" ? row["Parents last name"] : nil,
-              m_office_address: row["Parents relation"] == "mother" ? row["Parents office address 1"] : nil,
-              m_city: row["Parents relation"] == "mother" ? row["Parents city"] : nil,
-              m_state: row["Parents relation"] == "mother" ? row["Parents state"] : nil,
-              m_phone: row["Parents relation"] == "mother" ? row["Parents office phone"] : nil,
-              m_work:  row["Parents relation"] == "mother" ? row["Parents mobile phone"] : nil,
-
-              category: row["Student category"]
+              mobile: row["Mobile"]
             )
-            if student.valid? && student.save!
-              TermStudent.create(student: student, term: term) if term.present?
-              import_success = import_success + 1
-            end
+
+            GradeStudent.create(student: student, grade: grade) if grade.present?
+            import_success = import_success + 1 if 
+
             student = student
           else
-            if row["Parents relation"].present?
-              if row["Parents relation"] == "father"
-                student.update_attributes(
-                  f_first_name: row["Parents first name"],
-                  f_last_name: row["Parents last name"],
-                  f_office_address: row["Parents office address 1"],
-                  f_city: row["Parents city"],
-                  f_state: row["Parents state"],
-                  f_phone: row["Parents office phone"],
-                  f_work:  row["Parents mobile phone"]
-                )
-              elsif row["Parents relation"] == "mother"
-                student.update_attributes(
-                  m_first_name: row["Parents first name"],
-                  m_last_name: row["Parents last name"],
-                  m_office_address: row["Parents office address 1"],
-                  m_city: row["Parents city"],
-                  m_state: row["Parents state"],
-                  m_phone: row["Parents office phone"],
-                  m_work:  row["Parents mobile phone"]
-                )
-              end
-            end
+            student = nil
           end
-        rescue
+          
+        end
+        if row["Parents relation"].present? && student.present?
+          if row["Parents relation"] == "father"
+            student.update_attributes(
+              f_first_name: row["Parents first name"],
+              f_last_name: row["Parents last name"],
+              f_home_address: row["Parents home address 1"],
+              f_city: row["Parents city"],
+              f_state: row["Parents state"],
+              f_phone: row["Parents home phone"],
+              f_work:  row["Parents mobile phone"]
+            )
+          elsif row["Parents relation"] == "mother"
+            student.update_attributes(
+              m_first_name: row["Parents first name"],
+              m_last_name: row["Parents last name"],
+              m_home_address: row["Parents home address 1"],
+              m_city: row["Parents city"],
+              m_state: row["Parents state"],
+              m_phone: row["Parents home phone"],
+              m_work:  row["Parents mobile phone"]
+            )
+          end
         end
       end
+
+      return [true, import_success, import_total - import_success]
     rescue
+      return [false]
     end
-    return [import_success, import_total - import_success]
+    
   end
 
   def self.open_spreadsheet(file)
