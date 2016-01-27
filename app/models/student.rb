@@ -123,12 +123,11 @@ class Student < ActiveRecord::Base
       
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
-
-        if row["Student Number"].present? && row["Student Number"].to_s.gsub(' ', '') != ""
+        if row["Student Number"].present? && row["Student Number"] != nil
           import_total = import_total + 1
           
           unless row["Student Number"].class == String
-            student = Student.find_or_create_by(id: row["Student Number"])
+            student = Student.find_or_initialize_by(id: row["Student Number"])
             student.update_attributes(
               admission_date: row["Admission Date"],
               birthdate: row["Date of Birth"],
@@ -146,7 +145,7 @@ class Student < ActiveRecord::Base
 
             grade = Grade.find_or_create_by(name: row["Grade"].to_s) if row["Grade"] != nil
             GradeStudent.create(student: student, grade: grade) if grade.present?
-            import_success = import_success + 1 if 
+            import_success = import_success + 1
 
             student = student
           else
@@ -156,7 +155,7 @@ class Student < ActiveRecord::Base
           
         end
         if row["Parents relation"].present? && student.present?
-          if row["Parents relation"] == "father"
+          if row["Parents relation"].downcase == "father"
             student.update_attributes(
               f_first_name: row["Parents first name"],
               f_last_name: row["Parents last name"],
@@ -166,7 +165,7 @@ class Student < ActiveRecord::Base
               f_phone: row["Parents home phone"],
               f_work:  row["Parents mobile phone"]
             )
-          elsif row["Parents relation"] == "mother"
+          elsif row["Parents relation"].downcase == "mother"
             student.update_attributes(
               m_first_name: row["Parents first name"],
               m_last_name: row["Parents last name"],
