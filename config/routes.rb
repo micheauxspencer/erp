@@ -58,6 +58,7 @@ Rails.application.routes.draw do
   
   post 'save_import_student' => "students#save_import_student", as: :save_import_student
   get 'import_student' => "students#import", as: :import_student
+  post 'students/delete_all' => "students#delete_all", as: :delete_all_student
 
   post 'student_siblings/create' => "student_siblings#create", as: :create_sibling
   post 'student_siblings/delete' => "student_siblings#destroy", as: :delete_sibling

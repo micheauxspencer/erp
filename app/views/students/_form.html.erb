@@ -52,7 +52,6 @@
 
     <div role="tabpanel" class="tab-pane active" id="home">
 
-
       <div class="row">
         <div class="col-md-6">
           <div class="control-group">
@@ -92,6 +91,29 @@
             </div>
           </div>
 
+          <div class="row">
+            <div class="col-md-6">
+              <div class="control-group">
+                <div class="controls">
+                  <%= f.input :phone, :class => 'form-control' %>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="control-group">
+                <div class="controls">
+                 <%= f.input :mobile, :class => 'form-control' %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="controls">
+              <%= f.input :admission_date, as: :date_picker, :class => 'form-controll' %>
+            </div>
+          </div>
+
           <div class="control-group">
             <div class="controls">
 
@@ -119,11 +141,6 @@
           <div class="control-group">
             <div class="controls">
               <%= f.input :nationality, :class => 'form-control' %>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <%= f.input :category, :class => 'form-control' %>
             </div>
           </div>
           <div class="control-group">
@@ -175,6 +192,11 @@
           <div class="control-group">
             <div class="controls">
               <%= f.input :biometric, :class => 'form-control' %>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <%= f.input :category, :class => 'form-control' %>
             </div>
           </div>
           <div class="control-group">
@@ -253,6 +275,24 @@
             </div>
             <%#= error_span(@student[:f_email]) %>
           </div>
+          <div class="control-group">
+            <div class="controls">
+              <%= f.input :f_home_address, :class => 'form-control' %>
+            </div>
+            <%#= error_span(@student[:f_cell]) %>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <%= f.input :f_city, :class => 'form-control' %>
+            </div>
+            <%#= error_span(@student[:f_work]) %>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <%= f.input :f_state, :class => 'form-control' %>
+            </div>
+            <%#= error_span(@student[:f_email]) %>
+          </div>
         </div>
         <div class="col-md-6">
           <h3>Mother</h3>
@@ -293,6 +333,24 @@
             </div>
             <%#= error_span(@student[:m_email]) %>
           </div>
+          <div class="control-group">
+            <div class="controls">
+              <%= f.input :m_home_address, :class => 'form-control' %>
+            </div>
+            <%#= error_span(@student[:f_cell]) %>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <%= f.input :m_city, :class => 'form-control' %>
+            </div>
+            <%#= error_span(@student[:f_work]) %>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <%= f.input :m_state, :class => 'form-control' %>
+            </div>
+            <%#= error_span(@student[:f_email]) %>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -310,7 +368,6 @@
       <%= link_to 'Cancel',
                   students_path, :class => 'btn btn-default' %>
     </div> <!-- End second tab panel -->
-
 
     <div role="tabpanel" class="tab-pane" id="health">
 
@@ -384,23 +441,18 @@
               <%#= error_span(@student[:healthcard]) %>
             </div>
         </div>
-
       </div>
-
 
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to 'Cancel',
                   students_path, :class => 'btn btn-default' %>
     </div> <!--  End third tab panel  -->
 
-
-
     <div role="tabpanel" class="tab-pane" id="fees">
       <% if params[:action] == 'edit' && params[:controller] == 'students' %>
           <%= render 'fee_management' %>
       <% end %>
     </div>
-
 
     <div role="tabpanel" class="tab-pane" id="term">
       <%= render 'student_term' %>
@@ -412,8 +464,6 @@
 
     <br>
     <br>
-
-
 <% end %>
 
 
