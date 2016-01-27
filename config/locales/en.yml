@@ -48,6 +48,9 @@ en:
         f_cell: Cell Phone
         f_work: Work Phone
         f_email: Email Address
+        f_home_address: Home address
+        f_city: City
+        f_state: State
         m_first_name: Mother's First Name
         m_last_name: Mother's Last Name
         m_street: Street Address
@@ -58,6 +61,9 @@ en:
         m_cell: Cell Phone
         m_work: Work Phone
         m_email: Email Address
+        m_home_address: Home address
+        m_city: City
+        m_state: State
         emerg_1_name: Name
         emerg_1_phone: Phone
         emerg_1_relation: Relation

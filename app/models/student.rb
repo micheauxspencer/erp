@@ -62,6 +62,15 @@
 #  country              :string(255)
 #  immediate_contact    :string(255)
 #  biometric            :string(255)
+#  admission_date       :datetime
+#  f_home_address       :string(255)
+#  f_city               :string(255)
+#  f_state              :string(255)
+#  m_home_address       :string(255)
+#  m_city               :string(255)
+#  m_state              :string(255)
+#  phone                :string(255)
+#  mobile               :string(255)
 #
 # Indexes
 #
@@ -104,42 +113,77 @@ class Student < ActiveRecord::Base
   end
 
   def self.import(file)
-    import_total = 0
-    import_success = 0
     begin
+      import_total = 0
+      import_success = 0
+      errors = []
       spreadsheet = open_spreadsheet(file)
       header = spreadsheet.row(1)
-      import_total = spreadsheet.last_row - 1
+      student = nil
+      
       (2..spreadsheet.last_row).each do |i|
-        begin
-          row = Hash[[header, spreadsheet.row(i)].transpose]
-          student =  Student.new(
-            first_name: row["Student name"].split(" ")[0..-2].join(" "),
-            last_name: row["Student name"].split(" ").last,
-            birthdate: row["Date of birth"],
-            gender: row["Gender"] == "f" ? "Male" : "Female",
-            nationality: row["Nationality"],
-            category: row["Category"],
-            street: row["Address"],
-            city: row["City"],
-            state: row["State"],
-            postal_code: row["Pin code"],
-            country: row["Country"],
-            f_phone: row["Phone"],
-            m_phone: row["Mobile"],
-            immediate_contact: row["Immediate contact"],
-            biometric: row["Biometric"]
-            # : row["All siblings"]
-          )
-          if student.valid? && student.save!
+        row = Hash[[header, spreadsheet.row(i)].transpose]
+        if row["Student Number"].present? && row["Student Number"] != nil
+          import_total = import_total + 1
+          
+          unless row["Student Number"].class == String
+            student = Student.find_or_initialize_by(id: row["Student Number"])
+            student.update_attributes(
+              admission_date: row["Admission Date"],
+              birthdate: row["Date of Birth"],
+              first_name: row["First Name"],
+              last_name: row["Last Name"],
+              middle_name: row["Middle Name"],
+              gender: row["Gender"] == "f" ? "Male" : "Female",
+              street: row["Address Line 1"],
+              city: row["City"],
+              state: row["State"],
+              postal_code: row["Postal Code"],
+              phone: row["Phone"],
+              mobile: row["Mobile"]
+            )
+
+            grade = Grade.find_or_create_by(name: row["Grade"].to_s) if row["Grade"] != nil
+            GradeStudent.create(student: student, grade: grade) if grade.present?
             import_success = import_success + 1
+
+            student = student
+          else
+            errors << i
+            student = nil
           end
-        rescue
+          
+        end
+        if row["Parents relation"].present? && student.present?
+          if row["Parents relation"].downcase == "father"
+            student.update_attributes(
+              f_first_name: row["Parents first name"],
+              f_last_name: row["Parents last name"],
+              f_home_address: row["Parents home address 1"],
+              f_city: row["Parents city"],
+              f_state: row["Parents state"],
+              f_phone: row["Parents home phone"],
+              f_work:  row["Parents mobile phone"]
+            )
+          elsif row["Parents relation"].downcase == "mother"
+            student.update_attributes(
+              m_first_name: row["Parents first name"],
+              m_last_name: row["Parents last name"],
+              m_home_address: row["Parents home address 1"],
+              m_city: row["Parents city"],
+              m_state: row["Parents state"],
+              m_phone: row["Parents home phone"],
+              m_work:  row["Parents mobile phone"]
+            )
+          end
         end
       end
+
+      return [true, import_success, import_total - import_success, errors]
     rescue
+      return [false]
     end
-    return [import_success, import_total - import_success]
+    
   end
 
   def self.open_spreadsheet(file)
