@@ -245,23 +245,25 @@ class StudentsController < ApplicationController
   end
 
   def save_import_student
-    array_import = Student.import(params[:file])
-    format = array_import[0]
-    if format
-      import_success = array_import[1]
-      import_error = array_import[2]
-      errors = array_import[3]
-      if import_success > 0
-        flash[:notice] = import_error > 0 ? "Student import success: #{import_success} and errors: #{import_error} in rows #{errors}" : "Student import success: #{import_success}"
-        redirect_to root_path
-      else
-        flash[:alert] = import_error == 0 ? "Student import errors: #{import_success}" : "File errors"
-        redirect_to import_student_path
-      end
-    else
-      flash[:alert] = "File errors format"
-      redirect_to import_student_path
-    end
+    array_import = Student.delay.import(params[:file])
+    flash[:notice] = "Import students may take a few minutes"
+    redirect_to import_student_path
+    # format = array_import[0]
+    # if format
+    #   import_success = array_import[1]
+    #   import_error = array_import[2]
+    #   errors = array_import[3]
+    #   if import_success > 0
+    #     flash[:notice] = import_error > 0 ? "Student import success: #{import_success} and errors: #{import_error} in rows #{errors}" : "Student import success: #{import_success}"
+    #     redirect_to root_path
+    #   else
+    #     flash[:alert] = import_error == 0 ? "Student import errors: #{import_success}" : "File errors"
+    #     redirect_to import_student_path
+    #   end
+    # else
+    #   flash[:alert] = "File errors format"
+    #   redirect_to import_student_path
+    # end
     
   end
 
