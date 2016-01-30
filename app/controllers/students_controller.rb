@@ -34,7 +34,7 @@ class StudentsController < ApplicationController
     @other_fees = Fee.where(term: current_term).where.not(id: @fees.map(&:id)).order('amount asc')
     
     @route = @student.route
-    @report_template = if @student.grade.report_template
+    @report_template = if @student.grade && @student.grade.report_template
                         @student.grade.report_template
                       else
                         ReportTemplate.first
@@ -136,7 +136,7 @@ class StudentsController < ApplicationController
 
   def export_pdf
     @student = Student.find(params[:student_id])
-    @report_template = if @student.grade.report_template
+    @report_template = if @student.grade && @student.grade.report_template
                         @student.grade.report_template
                       else
                         ReportTemplate.first
@@ -227,7 +227,7 @@ class StudentsController < ApplicationController
     @term = Term.find(params[:term_id])
     redirect_to root_path unless @term
     @term_id = @term.id
-    @report_template = if @student.grade.report_template
+    @report_template = if @student.grade && @student.grade.report_template
                         @student.grade.report_template
                       else
                         ReportTemplate.first

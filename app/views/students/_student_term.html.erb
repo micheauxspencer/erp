@@ -25,7 +25,7 @@
     </div>
     <br>
     <div class="sub-title">
-      <strong>Teacher:</strong> <span id="teacher-name"><%= @student.grade.teacher.name if @student.grade.teacher %></span>
+      <strong>Teacher:</strong> <span id="teacher-name"><%= @student.grade.teacher.name if @student.grade && @student.grade.teacher %></span>
     </div>
     <br>
 
