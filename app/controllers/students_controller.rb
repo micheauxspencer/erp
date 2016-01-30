@@ -34,11 +34,7 @@ class StudentsController < ApplicationController
     @other_fees = Fee.where(term: current_term).where.not(id: @fees.map(&:id)).order('amount asc')
     
     @route = @student.route
-    @report_template = if @student.grade && @student.grade.report_template
-                        @student.grade.report_template
-                      else
-                        ReportTemplate.first
-                      end
+    @report_template = @student.get_report_template
     @siblings = @student.siblings
     @not_siblings = Student.not_siblings(@student)
   end
@@ -136,11 +132,7 @@ class StudentsController < ApplicationController
 
   def export_pdf
     @student = Student.find(params[:student_id])
-    @report_template = if @student.grade && @student.grade.report_template
-                        @student.grade.report_template
-                      else
-                        ReportTemplate.first
-                      end
+    @report_template = @student.get_report_template
     @template_name = @report_template ? @report_template.name : 'No Template'
 
     respond_to do |format|
@@ -188,11 +180,7 @@ class StudentsController < ApplicationController
 
   def enter_mark
     @student = Student.find(params[:student_id])
-    @report_template = if @student.grade.report_template
-                        @student.grade.report_template
-                      else
-                        ReportTemplate.first
-                      end
+    @report_template = @student.get_report_template
     @term_id = params[:term].present? ? params[:term] : current_term
   end
 
@@ -227,11 +215,7 @@ class StudentsController < ApplicationController
     @term = Term.find(params[:term_id])
     redirect_to root_path unless @term
     @term_id = @term.id
-    @report_template = if @student.grade && @student.grade.report_template
-                        @student.grade.report_template
-                      else
-                        ReportTemplate.first
-                      end
+    @report_template = @student.get_report_template
     respond_to do |format|
       format.js do
         @return_content = render_to_string(partial: 'students/form_enter_mark', locals: { student: @student, term_id: @term_id, report_template: @report_template })
@@ -245,7 +229,7 @@ class StudentsController < ApplicationController
   end
 
   def save_import_student
-    array_import = Student.delay.import(params[:file])
+    Student.delay.import(params[:file])
     flash[:notice] = "Import students may take a few minutes"
     redirect_to import_student_path
     # format = array_import[0]
