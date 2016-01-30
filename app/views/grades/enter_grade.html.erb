@@ -13,7 +13,8 @@
       <tr>
         <td class="col-md-1"><center><%= index + 1 %></td>
         <td class="col-md-9"><center><%= grade.name %></center></td>
-        <td class="col-md-2"><center><%= select_tag "report_template_id", options_from_collection_for_select(ReportTemplate.all, "id", "name", grade.report_template.id), class: "form-control add_grade_to_template", grade_id: grade.id %></center></td>
+        <td class="col-md-2"><center>
+        <%= select_tag "report_template_id", options_from_collection_for_select(ReportTemplate.all, "id", "name", grade.get_id_report_template ), class: "form-control add_grade_to_template", grade_id: grade.id %></center></td>
       </tr>
       <% end %>
     </tbody>

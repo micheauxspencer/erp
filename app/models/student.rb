@@ -112,6 +112,14 @@ class Student < ActiveRecord::Base
     return first_name + ' ' + last_name
   end
 
+  def get_report_template
+    if self.grade && self.grade.report_template
+      self.grade.report_template
+    else
+      ReportTemplate.first
+    end
+  end
+
   def self.import(file)
     begin
       import_total = 0
