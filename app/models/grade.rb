@@ -33,4 +33,8 @@ class Grade < ActiveRecord::Base
   validates :name, presence: true
 
  	accepts_nested_attributes_for :year_grades, :graduations
+
+  def get_id_report_template
+    self.report_template.present? ? self.report_template.id : nil
+  end
 end
