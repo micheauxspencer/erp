@@ -229,9 +229,9 @@ class StudentsController < ApplicationController
   end
 
   def save_import_student
-    Student.delay.import(params[:file])
+    Student.import_csv(params[:file])
     flash[:notice] = "Import students may take a few minutes"
-    redirect_to import_student_path
+    redirect_to root_path
     # format = array_import[0]
     # if format
     #   import_success = array_import[1]
@@ -252,7 +252,7 @@ class StudentsController < ApplicationController
   end
 
   def delete_all
-    if Student.destroy_all
+    if Student.delete_all
       flash[:notice] = ' All students was successfully destroyed.'
     else
       flash[:alert] = "Delele errors"

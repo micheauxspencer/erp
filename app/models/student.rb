@@ -120,23 +120,31 @@ class Student < ActiveRecord::Base
     end
   end
 
-  def self.import(file)
+  def self.import_csv(file)
     begin
       import_total = 0
       import_success = 0
       errors = []
+
       spreadsheet = open_spreadsheet(file)
       header = spreadsheet.row(1)
-      student = nil
-      
+
+      arr_student_ids = Student.pluck(:id)
+
+      students = []
+      grade_students = []
+      grades = {}
+
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
-        if row["Student Number"].present? && row["Student Number"] != nil
+
+        if row["Student Number"].present?
+          next if arr_student_ids.include? row["Student Number"]
+
           import_total = import_total + 1
-          
-          unless row["Student Number"].class == String
-            student = Student.find_or_initialize_by(id: row["Student Number"])
-            student.update_attributes(
+
+          params = {
+              id: row["Student Number"],
               admission_date: row["Admission Date"],
               birthdate: row["Date of Birth"],
               first_name: row["First Name"],
@@ -149,43 +157,48 @@ class Student < ActiveRecord::Base
               postal_code: row["Postal Code"],
               phone: row["Phone"],
               mobile: row["Mobile"]
-            )
-
-            grade = Grade.find_or_create_by(name: row["Grade"].to_s) if row["Grade"] != nil
-            GradeStudent.create(student: student, grade: grade) if grade.present?
-            import_success = import_success + 1
-
-            student = student
-          else
-            errors << i
-            student = nil
+          }
+          if row["Parents relation"].present?
+            if row["Parents relation"].downcase == "father"
+              params.merge!(
+                  f_first_name: row["Parents first name"],
+                  f_last_name: row["Parents last name"],
+                  f_home_address: row["Parents home address 1"],
+                  f_city: row["Parents city"],
+                  f_state: row["Parents state"],
+                  f_phone: row["Parents home phone"],
+                  f_work:  row["Parents mobile phone"]
+              )
+            elsif row["Parents relation"].downcase == "mother"
+              params.merge!(
+                  m_first_name: row["Parents first name"],
+                  m_last_name: row["Parents last name"],
+                  m_home_address: row["Parents home address 1"],
+                  m_city: row["Parents city"],
+                  m_state: row["Parents state"],
+                  m_phone: row["Parents home phone"],
+                  m_work:  row["Parents mobile phone"]
+              )
+            end
           end
-          
-        end
-        if row["Parents relation"].present? && student.present?
-          if row["Parents relation"].downcase == "father"
-            student.update_attributes(
-              f_first_name: row["Parents first name"],
-              f_last_name: row["Parents last name"],
-              f_home_address: row["Parents home address 1"],
-              f_city: row["Parents city"],
-              f_state: row["Parents state"],
-              f_phone: row["Parents home phone"],
-              f_work:  row["Parents mobile phone"]
-            )
-          elsif row["Parents relation"].downcase == "mother"
-            student.update_attributes(
-              m_first_name: row["Parents first name"],
-              m_last_name: row["Parents last name"],
-              m_home_address: row["Parents home address 1"],
-              m_city: row["Parents city"],
-              m_state: row["Parents state"],
-              m_phone: row["Parents home phone"],
-              m_work:  row["Parents mobile phone"]
-            )
+
+          students << Student.new(params)
+
+          # import_success = import_success + 1
+
+          if row["Grade"]
+            unless grades[row["Grade"].to_s]
+              grade = Grade.find_or_create_by(name: row["Grade"].to_s)
+              grades[row["Grade"].to_s] = grade.id
+            end
+
+            grade_students << GradeStudent.new(student_id: row["Student Number"].to_i, grade_id: grades[row["Grade"].to_s])
           end
         end
-      end
+      end # end student loops
+
+      Student.import(students)
+      GradeStudent.import(grade_students)
 
       return [true, import_success, import_total - import_success, errors]
     rescue

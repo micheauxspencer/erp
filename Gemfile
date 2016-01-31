@@ -58,3 +58,5 @@ gem "select2-rails"
 gem 'roo'
 
 gem 'delayed_job_active_record'
+
+gem 'activerecord-import'
