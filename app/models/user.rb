@@ -32,6 +32,7 @@
 class User < ActiveRecord::Base
 
   ROLE = {
+      accounting: "accounting",
       teacher: 'teacher',
       office: 'office'
   }

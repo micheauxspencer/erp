@@ -22,7 +22,7 @@
         <td><%= sibling.street %></td>
         <td><%= sibling.city %></td>
         <td>
-        <% if current_user.role?("teacher") || current_user.role?("office") %>
+        <% if current_user.role?("teacher") || current_user.role?("accounting") %>
           <p class="btn btn-danger btn-sm delete_student_sibling" sibling="<%= sibling.id %>"> Delete </p>
         <% end %>
         </td>

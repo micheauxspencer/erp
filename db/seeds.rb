@@ -3,7 +3,7 @@ AdminUser.create!(email: 'admin@example.com', password: 'password', password_con
 
 User.create!([
   {email: "office@example.com", password: "password", password_confirmation: "password", first_name: "Dao", last_name: "Colin", role: "office", user_name: "office"},
-  {email: "assistant@example.com", password: "password", password_confirmation: "password", first_name: "Dao", last_name: "Colin", role: "assistant", user_name: "assistant"},
+  {email: "accounting@example.com", password: "password", password_confirmation: "password", first_name: "Dao", last_name: "Colin", role: "accounting", user_name: "accounting"},
   {email: "teacher@example.com", password: "password", password_confirmation: "password", first_name: "Dao", last_name: "Colin", role: "teacher", user_name: "teacher"},
 ])
 

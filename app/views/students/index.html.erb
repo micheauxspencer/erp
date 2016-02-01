@@ -8,8 +8,10 @@
 </div>
 <div class="clearfix"></div>
 <br />
-<% if current_user && !current_user.role?("teacher") %>
+<% if current_user.role?(User::ROLE[:accounting]) || current_user.role?(User::ROLE[:teacher]) %>
   <%= link_to t('.new', :default => t("helpers.links.new")), new_student_path, :class => 'btn btn-primary' %>
+<% end %>
+<% if current_user.role?(User::ROLE[:accounting]) %>
   <%= link_to 'Import', import_student_path, :class => 'btn btn-primary' %>
   <%= link_to 'Delete All',
                       delete_all_student_path,
@@ -43,18 +45,16 @@
         <td><%= get_health_issue(student).html_safe %></td>
         <td><%= get_enrolled(student).html_safe %></td>
         <td>
-          <% unless (current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:office])) %>
-              <%= link_to 'Show',
-                          student_path(student), :class => 'btn btn-default btn-xs' %>
-          <% end %>
-
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_student_path(student), :class => 'btn btn-default btn-xs',:data => { :reload => true } %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+          <%= link_to 'Show', student_path(student), :class => 'btn btn-default btn-xs' %>
+          <% if (current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:accounting])) %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_student_path(student), :class => 'btn btn-default btn-xs',:data => { :reload => true } %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       student_path(student),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-xs btn-danger' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

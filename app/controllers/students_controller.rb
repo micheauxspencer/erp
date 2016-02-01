@@ -4,7 +4,8 @@ class StudentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_student, only: [:show, :edit, :update, :destroy], except: [:import]
 
-  before_action :check_permissions, only: [:new, :create, :import]
+  before_action :check_permissions, only: [:new, :create, :edit, :update, :destroy]
+  before_action :check_accounting, only: [:import, :save_import_student, :delete_all]
 
   # GET /students
   # GET /students.json
@@ -24,8 +25,7 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
-    return redirect_to root_path if current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:office])
-
+    
   end
 
   # GET /students/new
@@ -236,31 +236,19 @@ class StudentsController < ApplicationController
   end
 
   def save_import_student
-    Student.import_csv(params[:file])
-    flash[:notice] = "Import students may take a few minutes"
-    redirect_to root_path
-    # format = array_import[0]
-    # if format
-    #   import_success = array_import[1]
-    #   import_error = array_import[2]
-    #   errors = array_import[3]
-    #   if import_success > 0
-    #     flash[:notice] = import_error > 0 ? "Student import success: #{import_success} and errors: #{import_error} in rows #{errors}" : "Student import success: #{import_success}"
-    #     redirect_to root_path
-    #   else
-    #     flash[:alert] = import_error == 0 ? "Student import errors: #{import_success}" : "File errors"
-    #     redirect_to import_student_path
-    #   end
-    # else
-    #   flash[:alert] = "File errors format"
-    #   redirect_to import_student_path
-    # end
+    if  Student.import_csv(params[:file])
+      flash[:notice] = "Student import success."
+      redirect_to root_path
+    else
+      flash[:alert] = "Student import errors."
+      redirect_to import_student_path
+    end
 
   end
 
   def delete_all
     if Student.delete_all
-      flash[:notice] = ' All students was successfully destroyed.'
+      flash[:notice] = 'All students was successfully destroyed.'
     else
       flash[:alert] = "Delele errors"
     end
@@ -337,8 +325,13 @@ class StudentsController < ApplicationController
     end
 
     def check_permissions
-      redirect_to root_path unless current_user.role?("office")
+      redirect_to root_path unless current_user.role?("accounting") || current_user.role?("teacher")
     end
+
+    def check_accounting
+      redirect_to root_path unless current_user.role?("accounting")
+    end
+
     def sort_column
       Student.column_names.include?(params[:sort]) ? params[:sort] : "id"
     end

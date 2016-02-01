@@ -1,6 +1,8 @@
 class FeesController < ApplicationController
   before_action :set_fee, only: [:show, :edit, :update, :destroy]
 
+  before_action :check_permissions, only: [:edit, :update, :create, :update, :destroy]
+
   # GET /fees
   # GET /fees.json
   def index
@@ -70,5 +72,9 @@ class FeesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def fee_params
       params.require(:fee).permit(:name, :amount, :term_id)
+    end
+
+    def check_permissions
+      redirect_to root_path unless current_user.role?("accounting")
     end
 end
