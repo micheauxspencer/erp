@@ -9,9 +9,16 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @students = current_user.students.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
-    # Example use of authorize using ability
-    # authorize! :read, @students
+    if current_user.role?('teacher')
+      @grades =  current_user.grades
+      @grade = params[:grade_id] ? current_user.grades.find(params[:grade_id]) : current_user.grades.first
+    else
+      @grades = Grade.all
+      @grade = params[:grade_id] ? Grade.find(params[:grade_id]) : Grade.all.first
+    end
+
+    redirect_to root_path if current_user.role?('teacher') && !current_user.grades.include?(@grade)
+    @students = @grade.students.all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /students/1

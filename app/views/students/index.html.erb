@@ -2,6 +2,12 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
+<label class="pull-left" style="line-height: 30px">Grade: </label>
+<div class="col-md-2">
+  <%= select_tag "select_grade", options_for_select(@grades.collect{ |u| [u.name, u.id]}, :selected => params[:grade_id]), {:class =>"form-control"} %>
+</div>
+<div class="clearfix"></div>
+<br />
 <% if current_user && !current_user.role?("teacher") %>
   <%= link_to t('.new', :default => t("helpers.links.new")), new_student_path, :class => 'btn btn-primary' %>
   <%= link_to 'Import', import_student_path, :class => 'btn btn-primary' %>
@@ -17,7 +23,6 @@
       <th><%= sortable "id" %></th>
       <th><%= sortable "first_name" %></th>
       <th><%= sortable "last_name" %></th>
-      <th>Grade</th>
       <th><%= sortable "gender" %></th>
       <th><%= sortable "birthdate" %></th>
       <th>Fees Amount</th>
@@ -32,8 +37,6 @@
         <td><%= link_to student.id, edit_student_path(student) %></td>
         <td><%= link_to student.first_name, edit_student_path(student) %></td>
         <td><%= link_to student.last_name, edit_student_path(student) %></td>
-        <td><%= student.grade ? student.grade.name : '' %></td>
-
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
         <td><%= student.fees.sum(:amount) %></td>
