@@ -42,6 +42,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:user_name]
 
   has_many :grades, foreign_key: :teacher_id
+  has_many :students, through: :grades
 
   validates :user_name, :presence => true, uniqueness: {
       :case_sensitive => false
