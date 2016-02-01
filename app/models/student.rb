@@ -122,10 +122,7 @@ class Student < ActiveRecord::Base
 
   def self.import_csv(file)
     begin
-      import_total = 0
-      import_success = 0
-      errors = []
-
+      
       spreadsheet = open_spreadsheet(file)
       header = spreadsheet.row(1)
 
@@ -141,8 +138,6 @@ class Student < ActiveRecord::Base
         if row["Student Number"].present?
           next if arr_student_ids.include? row["Student Number"]
 
-          import_total = import_total + 1
-
           params = {
               id: row["Student Number"],
               admission_date: row["Admission Date"],
@@ -150,7 +145,7 @@ class Student < ActiveRecord::Base
               first_name: row["First Name"],
               last_name: row["Last Name"],
               middle_name: row["Middle Name"],
-              gender: row["Gender"] == "f" ? "Male" : "Female",
+              gender: row["Gender"] == "m" ? "Male" : "Female",
               street: row["Address Line 1"],
               city: row["City"],
               state: row["State"],
@@ -184,8 +179,6 @@ class Student < ActiveRecord::Base
 
           students << Student.new(params)
 
-          # import_success = import_success + 1
-
           if row["Grade"]
             unless grades[row["Grade"].to_s]
               grade = Grade.find_or_create_by(name: row["Grade"].to_s)
@@ -200,9 +193,9 @@ class Student < ActiveRecord::Base
       Student.import(students)
       GradeStudent.import(grade_students)
 
-      return [true, import_success, import_total - import_success, errors]
+      return true
     rescue
-      return [false]
+      return false
     end
     
   end

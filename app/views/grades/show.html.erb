@@ -41,7 +41,8 @@
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= model_class.human_attribute_name(:gender) %></th>
+      <th><%= model_class.human_attribute_name(:birthdate) %></th>
       <th><%= t "grade.current_grade" %></th>
     </tr>
   </thead>
@@ -50,7 +51,8 @@
       <tr>
         <td><%= link_to student.id, student_path(student) %></td>
         <td><%= student.last_name %>, <%= student.first_name %> <%= student.middle_name %></td>
-        <td><%=l student.created_at %></td>
+        <td><%= student.gender %></td>
+        <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
         <td><%= student.grade_name %></td>
       </tr>
     <% end %>
