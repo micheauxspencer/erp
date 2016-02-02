@@ -6,6 +6,7 @@
 <div class="col-md-2">
   <%= select_tag "select_grade", options_for_select(@grades.collect{ |u| [u.name, u.id]}, :selected => params[:grade_id]), {:class =>"form-control"} %>
 </div>
+<span style="line-height: 30px;">Student count: <%= @students.count %></span>
 <div class="clearfix"></div>
 <br />
 <% if current_user.role?(User::ROLE[:accounting]) || current_user.role?(User::ROLE[:teacher]) %>
