@@ -9,7 +9,7 @@
   <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
   <dd><%= @student.first_name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:grade) %>:</strong></dt>
-  <dd><%#= @student.grade ? @student.grade.name : '' %></dd>
+  <dd><%= @student.grade ? @student.grade.name : '' %></dd>
   <dt><strong><%= model_class.human_attribute_name(:sin) %>:</strong></dt>
   <dd><%= @student.sin %></dd>
   <dt><strong><%= model_class.human_attribute_name(:birthdate) %>:</strong></dt>
