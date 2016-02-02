@@ -129,7 +129,7 @@
           </div>
           <div class="control-group">
             <div class="controls">
-              <%= f.input :grade_id, collection: Grade.all.map { |g| [g.name, g.id, {'data-type' => g.name}] }, prompt: "Select grade", :class => 'form-control' %>
+              <%= f.input :grade_id, collection: Grade.all.map { |g| [g.name, g.id, {'data-type' => g.name}] }, prompt: "Select grade", :class => 'form-control', selected: @student.grade.id %>
             </div>
             <%#= error_span(@student[:sibling_id]) %>
           </div>
