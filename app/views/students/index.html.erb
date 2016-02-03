@@ -4,7 +4,7 @@
 </div>
 <label class="pull-left" style="line-height: 30px">Grade: </label>
 <div class="col-md-2">
-  <%= select_tag "select_grade", options_for_select(@grades.collect{ |u| [u.name, u.id]}, :selected => params[:grade_id]), {:class =>"form-control"} %>
+  <%= select_tag "select_grade", options_for_select(@grades.collect{ |u| [u.name, u.id]}.unshift(["Select a grade",0]), :selected => params[:grade_id]), {:class =>"form-control"} %>
 </div>
 <span style="line-height: 30px;">Students total: <%= @students.count %></span>
 <div class="clearfix"></div>

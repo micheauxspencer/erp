@@ -12,14 +12,23 @@ class StudentsController < ApplicationController
   def index
     if current_user.role?('teacher')
       @grades =  current_user.grades
-      @grade = params[:grade_id] ? current_user.grades.find(params[:grade_id]) : current_user.grades.first
+      @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? current_user.grades.find(params[:grade_id]) : nil
     else
       @grades = Grade.all
-      @grade = params[:grade_id] ? Grade.find(params[:grade_id]) : Grade.all.first
+      @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? Grade.find(params[:grade_id]) : nil
     end
 
-    redirect_to root_path if current_user.role?('teacher') && !current_user.grades.include?(@grade)
-    @students = @grade.students.all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
+    redirect_to root_path if current_user.role?('teacher') && @grade && !current_user.grades.include?(@grade) 
+    if @grade
+      @students = @grade.students.all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
+    else
+      if current_user.role?('teacher')
+        @students = current_user.students(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
+      else
+        @students = Student.all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
+      end
+    end
+    
   end
 
   # GET /students/1
