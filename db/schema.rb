@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160129080358) do
+ActiveRecord::Schema.define(version: 20160204025823) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -371,7 +371,7 @@ ActiveRecord::Schema.define(version: 20160129080358) do
     t.string   "last_name"
     t.string   "address"
     t.datetime "birth_date"
-    t.integer  "phone"
+    t.string   "phone"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

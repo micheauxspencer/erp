@@ -21,7 +21,7 @@
 #  last_name              :string(255)
 #  address                :string(255)
 #  birth_date             :datetime
-#  phone                  :integer
+#  phone                  :string(255)
 #
 # Indexes
 #
