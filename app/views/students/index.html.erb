@@ -58,6 +58,9 @@
                       :class => 'btn btn-xs btn-danger' %>
               <% end %>
           <% end %>
+          <% if current_user.role?(User::ROLE[:office]) %>
+            <%= link_to "Export Reciept", export_fee_path(student, :format => :pdf), class: 'btn btn-primary btn-xs' %>
+          <% end %>
         </td>
       </tr>
     <% end %>
