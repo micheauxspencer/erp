@@ -4,8 +4,8 @@ class StudentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_student, only: [:show, :edit, :update, :destroy], except: [:import]
 
-  before_action :check_permissions, only: [:new, :create, :edit, :update, :destroy]
-  before_action :check_accounting, only: [:import, :save_import_student, :delete_all]
+  before_action :check_permissions, only: [:edit, :update, :enter_mark]
+  before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all]
 
   # GET /students
   # GET /students.json

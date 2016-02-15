@@ -64,9 +64,11 @@
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
               students_path, :class => 'btn btn-default'  %>
-<% if current_user.role?(User::ROLE[:accounting]) || current_user.role?(User::ROLE[:teacher]) %>
+<% if current_user.role?("accounting") || current_user.role?("teacher") %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                 edit_student_path(@student), :class => 'btn btn-default' %>
+<% end %>
+<% if current_user.role?("accounting") %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               student_path(@student),
               :method => 'delete',
