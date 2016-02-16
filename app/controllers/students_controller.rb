@@ -264,6 +264,15 @@ class StudentsController < ApplicationController
     redirect_to root_path
   end
 
+  def enroll
+    student = Student.find(params[:student_id])
+    if student.present? && student.update_attributes(:enrolled => params[:enrolled])
+      render :json => { :result => "success"}
+    else
+      render :json => { :result => "not-success", :massage => student.errors.full_messages }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student

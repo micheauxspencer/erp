@@ -16,18 +16,15 @@
         </div>
     <% end %>
     <% if current_user.role?("accounting") %>
-      <!--<div class="control-group">-->
-        <!--<div class="controls">-->
-          <strong>Enrolled: </strong><br><br>
-          <input type="checkbox" checked data-toggle="toggle" id="enroll-checkbox" data-on="Yes" data-off="No">
-          <div style="height: 30px"></div>
-
-          <%= f.hidden_field :enrolled %>
-
-        <!--</div>-->
-        <%#= error_span(@student[:statud_id]) %>
-      <!--</div>-->
+      <strong>Enrolled: </strong><br><br>
+      <input type="checkbox" <%= "checked" if @student.enrolled %> data-toggle="toggle" id="enroll-checkbox" data-on="Yes" data-off="No">
+      <div style="height: 30px"></div>
+      <%= f.hidden_field :enrolled %>
+    <% else %>
+      <strong>Enrolled: </strong> <%= @student.enrolled ? "Yes" : "No" %>
     <% end %>
+    <div style="height: 30px"></div>
+
     <div class="row">
     <div class="col-md-12">
     <div role="tabpanel">
@@ -496,10 +493,25 @@
 
 <script>
   $(document).ready(function(){
-      $('#enroll-checkbox').change(function() {
-          $("input[name='student[enrolled]']").val($(this).prop('checked'));
-          console.log($("input[name=enrolled]"));
-          console.log($(this).prop('checked'));
-      })
+    $('#enroll-checkbox').change(function() {
+      $("input[name='student[enrolled]']").val($(this).prop('checked'));
+      console.log($("input[name=enrolled]"));
+      var enrolled = $(this).prop('checked') ;
+      var url = "<%= enroll_student_path(@student) %>"
+      $.ajax({
+        url : url,
+        type : "POST",
+        data : 'enrolled=' + enrolled,
+        dataType : "json",
+        context: this,
+        success : function(data) {
+          if (data.result == "success"){
+            
+          }else{
+            alert(data.massage);
+          }
+        }
+      });
+    })
   })
 </script>
