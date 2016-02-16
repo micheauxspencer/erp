@@ -25,26 +25,30 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Adminsitration <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <% if (current_user && current_user.role?("accounting")) %>
-              <li><%= link_to 'New Admission', new_student_path %></li>
-            <% end %>
-            <li><%= link_to 'Student List', students_path %></li>
-          </ul>
-        </li>
-      </ul>
-
+      <% if current_user && current_user.role?("accounting")  %>
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Adminsitration <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <% if current_user && current_user.role?("accounting") %>
+                <li><%= link_to 'New Admission', new_student_path %></li>
+              <% end %>
+              <li><%= link_to 'Student List', students_path %></li>
+            </ul>
+          </li>
+        </ul>
+      <% end %>
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <% if current_user && current_user.role?('teacher') %>
+      <% if current_user && (current_user.role?('teacher') || current_user.role?("accounting")) %>
           <ul class="nav navbar-nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Teacher Management <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
+                <% if current_user.role?("teacher") %>
+                  <li><%= link_to 'Student List', students_path %></li>
+                <% end %>
                 <li><%= link_to "Grades", grades_path %></li>
-                <% if (current_user && current_user.role?("accounting")) %>
+                <% if current_user.role?("accounting") %>
                   <li><%= link_to "Enter Grades", enter_grade_grades_path %></li>
                 <% end %>
               </ul>
@@ -53,7 +57,7 @@
       <% end %>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <% if current_user && (current_user.role?("accounting") || current_user.role?("office"))  %>
+      <% if current_user && current_user.role?("accounting") %>
           <ul class="nav navbar-nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Office Management <span class="caret"></span></a>
@@ -63,7 +67,6 @@
                 <li><%= link_to 'Students', students_path %></li>
                 <li><%= link_to "Grades", grades_path %></li>
                 <li><%= link_to "Enter Grades", enter_grade_grades_path %></li>
-
               </ul>
             </li>
           </ul>

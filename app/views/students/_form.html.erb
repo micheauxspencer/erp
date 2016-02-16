@@ -15,18 +15,19 @@
           </div>
         </div>
     <% end %>
-    <!--<div class="control-group">-->
-      <!--<div class="controls">-->
-        <strong>Enrolled: </strong><br><br>
-        <input type="checkbox" checked data-toggle="toggle" id="enroll-checkbox" data-on="Yes" data-off="No">
-        <div style="height: 30px"></div>
+    <% if current_user.role?("accounting") %>
+      <!--<div class="control-group">-->
+        <!--<div class="controls">-->
+          <strong>Enrolled: </strong><br><br>
+          <input type="checkbox" checked data-toggle="toggle" id="enroll-checkbox" data-on="Yes" data-off="No">
+          <div style="height: 30px"></div>
 
-        <%= f.hidden_field :enrolled %>
+          <%= f.hidden_field :enrolled %>
 
+        <!--</div>-->
+        <%#= error_span(@student[:statud_id]) %>
       <!--</div>-->
-      <%#= error_span(@student[:statud_id]) %>
-    <!--</div>-->
-
+    <% end %>
     <div class="row">
     <div class="col-md-12">
     <div role="tabpanel">
@@ -230,10 +231,11 @@
 
         </div>
       </div>
-
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel',
-                  students_path, :class => 'btn btn-default' %>
+      <% if current_user.role?("accounting") %>
+        <%= f.submit nil, :class => 'btn btn-primary' %>
+        <%= link_to 'Cancel',
+                    students_path, :class => 'btn btn-default' %>
+      <% end %>
     </div> <!-- End first tab panel -->
 
 
@@ -368,9 +370,11 @@
         </div>
       </div>
 
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel',
-                  students_path, :class => 'btn btn-default' %>
+      <% if current_user.role?("accounting") %>
+        <%= f.submit nil, :class => 'btn btn-primary' %>
+        <%= link_to 'Cancel',
+                    students_path, :class => 'btn btn-default' %>
+      <% end %>
     </div> <!-- End second tab panel -->
 
     <div role="tabpanel" class="tab-pane" id="health">
@@ -447,9 +451,11 @@
         </div>
       </div>
 
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel',
-                  students_path, :class => 'btn btn-default' %>
+      <% if current_user.role?("accounting") %>
+        <%= f.submit nil, :class => 'btn btn-primary' %>
+        <%= link_to 'Cancel',
+                    students_path, :class => 'btn btn-default' %>
+      <% end %>
     </div> <!--  End third tab panel  -->
 
     <div role="tabpanel" class="tab-pane" id="fees">

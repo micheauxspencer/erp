@@ -1,7 +1,7 @@
 class FeesController < ApplicationController
   before_action :set_fee, only: [:show, :edit, :update, :destroy]
 
-  before_action :check_permissions, only: [:edit, :update, :create, :update, :destroy]
+  before_action :check_permissions
 
   # GET /fees
   # GET /fees.json
