@@ -28,7 +28,9 @@
       <th><%= sortable "last_name" %></th>
       <th><%= sortable "gender" %></th>
       <th><%= sortable "birthdate" %></th>
-      <th>Fees Amount</th>
+      <% unless current_user.role?('teacher') %>
+        <th>Fees Amount</th>
+      <% end %>
       <th>Health Issues</th>
       <th>Enrolled</th>
       <th>Actions</th>
@@ -42,7 +44,9 @@
         <td><%= link_to student.last_name, edit_student_path(student) %></td>
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
-        <td><%= student.fees.sum(:amount) %></td>
+        <% unless current_user.role?('teacher') %>
+          <td><%= student.fees.sum(:amount) %></td>
+        <% end %>
         <td><%= get_health_issue(student).html_safe %></td>
         <td><%= get_enrolled(student).html_safe %></td>
         <td>
