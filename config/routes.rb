@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   get 'students/:student_id/enter_mark' => "students#enter_mark", as: :enter_mark
   post 'students/save_mark' => "students#save_mark", as: :save_mark
   get 'students/:student_id/select_term' => "students#select_term", as: :select_term
+  post 'students/:student_id/enroll' => "students#enroll", as: :enroll_student
   
   post 'save_import_student' => "students#save_import_student", as: :save_import_student
   get 'import_student' => "students#import", as: :import_student

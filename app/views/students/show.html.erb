@@ -2,7 +2,7 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.titleize %>: <%= @student.first_name + @student.last_name %></h1>
 </div>
-
+  
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
   <dd style="padding-top: 10px"><%= @student.last_name %></dd>
@@ -10,6 +10,8 @@
   <dd><%= @student.first_name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:grade) %>:</strong></dt>
   <dd><%= @student.grade ? @student.grade.name : '' %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:enrolled) %>:</strong></dt>
+  <dd><%= @student.enrolled ? "Yes" : "No" %></dd>
   <dt><strong><%= model_class.human_attribute_name(:sin) %>:</strong></dt>
   <dd><%= @student.sin %></dd>
   <dt><strong><%= model_class.human_attribute_name(:birthdate) %>:</strong></dt>
@@ -64,9 +66,11 @@
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
               students_path, :class => 'btn btn-default'  %>
-<% if current_user.role?(User::ROLE[:accounting]) || current_user.role?(User::ROLE[:teacher]) %>
+<% if current_user.role?("accounting") || current_user.role?("teacher") %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                 edit_student_path(@student), :class => 'btn btn-default' %>
+<% end %>
+<% if current_user.role?("accounting") %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               student_path(@student),
               :method => 'delete',
