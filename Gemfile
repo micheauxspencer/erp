@@ -10,7 +10,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'pg'
+  gem 'mysql2', '~> 0.3.13'
   gem 'rails_12factor'
 end
 
@@ -60,3 +60,4 @@ gem 'roo'
 gem 'delayed_job_active_record'
 
 gem 'activerecord-import'
+gem 'passenger'
