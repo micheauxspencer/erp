@@ -28,9 +28,9 @@
 <% @report_template.evaluate_types.all.order('id ASC').each_with_index do |evaluate_type, index_type |%>
   <table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0" >
     <tr class="table-header" style="font-weight: bold;">
-      <td class="fixed" width="77.5%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
+      <td class="fixed" width="76%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
       <% Term.last(3).each_with_index do |term, index| %>
-        <td width="7,5%" class="score" align="center">
+        <td width="8%" class="score" align="center">
           <% if index_type == 0 %>
             Report <%= index + 1 %> 
           <% end%>
@@ -41,7 +41,7 @@
        <tr class="tr">
         <td class="padding-td"><%= evaluate.name %></td>
         <% Term.last(3).each do |term| %>
-          <td width="7,5%" class="score" align="center"><%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") %></td>
+          <td width="8%" class="score" align="center"><%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") %></td>
         <% end %>
       </tr>
     <% end %>
@@ -58,9 +58,9 @@
 <table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0" >
   <% @report_template.evaluates.each do |evaluate| %>
     <tr class="table-header">
-      <td width="77.5%" class=" fixed padding-td"><%= evaluate.name %></td>
+      <td width="76%" class=" fixed padding-td"><%= evaluate.name %></td>
       <% Term.last(3).each do |term| %>
-        <td width="7,5%" class="score" align="center">
+        <td width="8%" class="score" align="center">
           <% if StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 1 %>
           Yes
           <% elsif StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 0 %>

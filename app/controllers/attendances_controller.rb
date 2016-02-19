@@ -11,7 +11,7 @@ class AttendancesController < ApplicationController
 
   def teacher_attendance
     @grade = Grade.find(params[:grade_id].to_i)
-    @teacher = @grade.teacher
+    @teacher = @grade.teacher 
   end
 
 
