@@ -19,7 +19,7 @@
   <tr>
     <th><%= Student.human_attribute_name(:id) %></th>
     <th><%= Student.human_attribute_name(:name) %></th>
-    <th><%= Student.human_attribute_name(:grade_id) %></th>
+    <th>Grade ID</th>
     <th><%= Student.human_attribute_name(:gender) %></th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
   </tr>
@@ -29,7 +29,7 @@
       <tr>
         <td><%= link_to student.id, student_path(student) %></td>
         <td><%= student.last_name %> <%= student.first_name %> <%= student.middle_name %></td>
-        <td><%= student.grade_id %></td>
+        <td><%= student.grade.id if student.grade %></td>
         <td><%= student.gender %></td>
         <td>
           <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "student_#{student.id}_attendance_form") do %>

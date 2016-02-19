@@ -167,14 +167,17 @@
           <table width="100%" width="100%" cellspacing="0" class="border" >
             <tr>
               <td class="padding-td" width="15%"><label style="line-height: 20px; padding: 8px 10px 0px 10px">Student:</label></td>
-              <td class="padding-td" width="35%"><label style="line-height: 20px;"><%= @student.name %></label></td>
+              <td class="padding-td" width="35%"><label style="line-height: 20px; padding: 8px 0px 0px 0px"><%= @student.name %></label></td>
               <td class="padding-td" width="25%"><label style="line-height: 20px; padding: 8px 10px 0px 0px">Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label> </td>
-              <td class="padding-td" width="25%"><label style="line-height: 20px;">Date: <%= Time.now.strftime("%m/%d/%Y") %></label></td>
+              <td class="padding-td" width="25%"><label style="line-height: 20px; padding: 8px 0px 0px 0px">Date: <%= Time.now.strftime("%m/%d/%Y") %></label></td>
             </tr>
             <tr>
               <td class="padding-td"><label class="field-label" style="line-height: 20px;padding-left: 10px">School:</label> </td>
               <td class="padding-td"><label class="infolbl" style="line-height: 20px;">KHALSA COMMUNITY SCHOOL</label> </td>
-              <td class="padding-td" colspan="2"><label class="infolbl" style="line-height: 20px;">Homeroom Teachers: </label></td>
+              <td class="padding-td"><label class="infolbl" style="line-height: 20px;">Homeroom Teachers: </label></td>
+              <td class="padding-td"><label class="infolbl" style="line-height: 20px;">
+                <%=  @student.grade.teacher.name if @student.grade && @student.grade.teacher %></label>
+              </td>
             </tr>
           </table>
         </td>

@@ -26,6 +26,7 @@
       <th><%= sortable "id" %></th>
       <th><%= sortable "first_name" %></th>
       <th><%= sortable "last_name" %></th>
+      <th>Grade</th>
       <th><%= sortable "gender" %></th>
       <th><%= sortable "birthdate" %></th>
       <% unless current_user.role?('teacher') %>
@@ -42,6 +43,7 @@
         <td><%= link_to student.id, edit_student_path(student) %></td>
         <td><%= link_to student.first_name, edit_student_path(student) %></td>
         <td><%= link_to student.last_name, edit_student_path(student) %></td>
+        <td><%= student.grade.name if student.grade %></td>
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
         <% unless current_user.role?('teacher') %>
@@ -51,7 +53,7 @@
         <td><%= get_enrolled(student).html_safe %></td>
         <td>
           <%= link_to 'Show', student_path(student), :class => 'btn btn-default btn-xs' %>
-          <% if (current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:accounting])) %>
+          <% if (current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:accounting]) || current_user.role?(User::ROLE[:office]) ) %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         edit_student_path(student), :class => 'btn btn-default btn-xs',:data => { :reload => true } %>
             <% if current_user.role?(User::ROLE[:accounting]) %>

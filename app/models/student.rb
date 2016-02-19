@@ -108,6 +108,10 @@ class Student < ActiveRecord::Base
     return self.grades.last
   end
 
+  def get_grade_id
+    self.grade.present? ? self.grade.id : nil
+  end
+
   def name
     return first_name + ' ' + last_name
   end
@@ -137,19 +141,20 @@ class Student < ActiveRecord::Base
         if row["Student Number"].present?
           next if arr_student_ids.include? row["Student Number"]
           params = {
-              id: row["Student Number"],
-              admission_date: row["Admission Date"],
-              birthdate: row["Date of Birth"],
-              first_name: row["First Name"],
-              last_name: row["Last Name"],
-              middle_name: row["Middle Name"],
-              gender: row["Gender"] == "m" ? "Male" : "Female",
-              street: row["Address Line 1"],
-              city: row["City"],
-              state: row["State"],
-              postal_code: row["Postal Code"],
-              phone: row["Phone"],
-              mobile: row["Mobile"]
+            id: row["Student Number"],
+            admission_date: row["Admission Date"],
+            birthdate: row["Date of Birth"],
+            first_name: row["First Name"],
+            last_name: row["Last Name"],
+            middle_name: row["Middle Name"],
+            gender: row["Gender"] == "m" ? "Male" : "Female",
+            street: row["Address Line 1"],
+            city: row["City"],
+            state: row["State"],
+            postal_code: row["Postal Code"],
+            phone: row["Phone"],
+            mobile: row["Mobile"],
+            enrolled: true
           }
 
           if row["Parents relation"].present?

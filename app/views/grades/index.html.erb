@@ -2,6 +2,11 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
+<% if current_user.role?(User::ROLE[:accounting]) %>
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+            new_grade_path,
+            :class => 'btn btn-primary' %>
+<% end %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -38,7 +43,3 @@
     <% end %>
   </tbody>
 </table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_grade_path,
-            :class => 'btn btn-primary' %>

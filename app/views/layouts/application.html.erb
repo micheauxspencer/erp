@@ -39,12 +39,12 @@
         </ul>
       <% end %>
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <% if current_user && (current_user.role?('teacher') || current_user.role?("accounting")) %>
+      <% if current_user && (current_user.role?('teacher') || current_user.role?("accounting") || current_user.role?("office")) %>
           <ul class="nav navbar-nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Teacher Management <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <% if current_user.role?("teacher") %>
+                <% if current_user.role?("teacher") || current_user.role?("office") %>
                   <li><%= link_to 'Student List', students_path %></li>
                 <% end %>
                 <li><%= link_to "Grades", grades_path %></li>

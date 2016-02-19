@@ -5,7 +5,8 @@ class AttendancesController < ApplicationController
   FALSE = '0'
 
   def student_attendance
-    @students = Student.where(grade_id: params[:grade_id].to_i)
+    grade = Grade.find(params[:grade_id].to_i)
+    @students = grade.students
   end
 
   def teacher_attendance

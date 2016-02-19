@@ -23,6 +23,7 @@
     <% else %>
       <strong>Enrolled: </strong> <%= @student.enrolled ? "Yes" : "No" %>
     <% end %>
+
     <div style="height: 30px"></div>
 
     <div class="row">
@@ -38,7 +39,11 @@
           <a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">Parent / Guardian Information</a></li>
         <li role="presentation">
           <a href="#health" aria-controls="heatlh" role="tab" data-toggle="tab">Health Information</a></li>
+      <% end %>
+      <% if current_user.role?("accounting") || current_user.role?("office") %>
         <li role="presentation"><a href="#fees" aria-controls="fees" role="tab" data-toggle="tab">Fees</a></li>
+      <% end %>
+      <% if current_user.role?("accounting") %>
         <li role="presentation">
           <a href="#transportation" aria-controls="transportation" role="tab" data-toggle="tab">Transportation</a></li>
       <% end %>
@@ -131,7 +136,7 @@
           </div>
           <div class="control-group">
             <div class="controls">
-              <%= f.input :grade_id, collection: Grade.all.map { |g| [g.name, g.id, {'data-type' => g.name}] }, prompt: "Select grade", :class => 'form-control', selected: @student.grade.id %>
+              <%= f.input :grade_id, collection: Grade.all.map { |g| [g.name, g.id, {'data-type' => g.name}] }, prompt: "Select grade", :class => 'form-control', selected: @student.get_grade_id %>
             </div>
             <%#= error_span(@student[:sibling_id]) %>
           </div>
@@ -497,21 +502,24 @@
       $("input[name='student[enrolled]']").val($(this).prop('checked'));
       console.log($("input[name=enrolled]"));
       var enrolled = $(this).prop('checked') ;
-      var url = "<%= enroll_student_path(@student) %>"
-      $.ajax({
-        url : url,
-        type : "POST",
-        data : 'enrolled=' + enrolled,
-        dataType : "json",
-        context: this,
-        success : function(data) {
-          if (data.result == "success"){
-            
-          }else{
-            alert(data.massage);
+      <% if action_name == "edit" %>
+        var url = "<%= enroll_student_path(@student) %>"
+        $.ajax({
+          url : url,
+          type : "POST",
+          data : 'enrolled=' + enrolled,
+          dataType : "json",
+          context: this,
+          success : function(data) {
+            if (data.result == "success"){
+              
+            }else{
+              alert(data.massage);
+            }
           }
-        }
-      });
+        });
+      <% end %>
     })
   })
 </script>
+

@@ -1,8 +1,10 @@
 <div class="row" style="text-align: left;">
-  <div class="col-md-4">
-    <%= link_to "Enter Marks", enter_mark_path(@student), class: "btn btn-default" %>
-  </div>
 
+  <% if current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:accounting]) %>
+    <div class="col-md-4">
+      <%= link_to "Enter Marks", enter_mark_path(@student), class: "btn btn-default" %>
+    </div>
+  <% end %>
   <div class="col-md-4">
     <%= link_to "Export PDF", export_pdf_path(@student, :format => :pdf), class: "btn btn-default" %>
   </div>

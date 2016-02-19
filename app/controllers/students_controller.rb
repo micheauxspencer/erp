@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_student, only: [:show, :edit, :update, :destroy], except: [:import]
 
-  before_action :check_permissions, only: [:edit, :update, :enter_mark]
+  before_action :check_permissions, only: [:update, :enter_mark]
   before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all]
 
   # GET /students
@@ -62,6 +62,7 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
+        grade_student = GradeStudent.create(student: @student, grade_id: student_params[:grade_id])
         format.html { redirect_to @student, notice: 'Student was successfully created.' }
         format.json { render :show, status: :created, location: @student }
       else
@@ -74,8 +75,14 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
+
     respond_to do |format|
       if @student.update(student_params)
+        if @student.grade && @student.grade.id != student_params[:grade_id]
+          @student.grade_students.last.update_attributes(grade_id: student_params[:grade_id])
+        else
+          GradeStudent.create(student: @student, grade_id: student_params[:grade_id])
+        end
         format.html { redirect_to students_path, notice: 'Student was successfully updated.' }
         format.json { render :show, status: :ok, location: @student }
       else
@@ -156,7 +163,7 @@ class StudentsController < ApplicationController
       format.pdf do
         render  pdf:  "report_student",
                 layout:      'pdf',
-                disposition: 'attachment',
+                # disposition: 'attachment',
                 title:       'Report Student',
                 template:    'students/export_pdf.pdf.erb',
                 layout:      'pdf.html.erb',
@@ -302,6 +309,9 @@ class StudentsController < ApplicationController
         :last_school_phone,
         {:sibling_ids => []},
         {:fee_ids => []},
+        :emerg_2_name, 
+        :emerg_2_phone, 
+        :emerg_2_relation,
         :f_first_name,
         :f_last_name,
         :f_phone,
@@ -351,10 +361,10 @@ class StudentsController < ApplicationController
     end
 
     def sort_column
-      Student.column_names.include?(params[:sort]) ? params[:sort] : "id"
+      Student.column_names.include?(params[:sort]) ? params[:sort] : "last_name"
     end
 
     def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end
