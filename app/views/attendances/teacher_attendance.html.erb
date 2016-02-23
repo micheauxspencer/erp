@@ -43,9 +43,11 @@
                     start_of_the_day
             ).first %>
 
-            <% [ 'late', 'half day', 'early dismissal'].each do |type_action| %>
-              <%= radio_button_tag 'type_action', type_action, (attendance && attendance.type_action == type_action), id: type_action, class: "radio-action" %>
-              <label for="<%= type_action %>" class="label-radio-action"><%= type_action.humanize %></label>
+            <%= hidden_field_tag :type_action, @teacher.id, id: "type_attendance" %>
+
+            <% [ 'late', 'half day', 'early dismissal' ].each do |type_action| %>
+              <label class="label-radio-action"><%= type_action.humanize %></label>
+              <%= check_box_tag "type_action", type_action, attendance && attendance.type_action == type_action, class: type_action, style: 'top: 2px; position: relative', data_type: type_action, name: "action" %>
             <% end %>
           <% end %>
         </td>
@@ -56,8 +58,26 @@
 
 <script>
   $(document).ready(function(){
-      $("input[name=type_action]").click(function () {
-          $(this).parent().submit();
-      })
+    $("input[name=action]").click(function () {
+      if ($(this).is(':checked')) {
+        var type = $(this).attr("data_type");
+        $(this).parent().find('#type_attendance').val(type);
+      }else{
+        $(this).parent().find('#type_attendance').val("none");
+      }
+
+      $(this).parent().submit();
+
+      if ($(this).attr("data_type") == "late" ){
+        $(this).parent().find('.early').removeAttr('checked')
+        $(this).parent().find('.half').removeAttr('checked')
+      }else if ($(this).attr("data_type") == "half" ){
+        $(this).parent().find('.late').removeAttr('checked')
+        $(this).parent().find('.early').removeAttr('checked')
+      }else{
+        $(this).parent().find('.late').removeAttr('checked')
+        $(this).parent().find('.half').removeAttr('checked')
+      }
+    })
   });
 </script>

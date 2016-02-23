@@ -391,6 +391,13 @@ namespace :import do
         end
       end
     end
+
+  end
+
+  task update_db_report_46: :environment do
+    report_template = ReportTemplate.find_by_name("g4_g6")
+    evaluates = Evaluate.where("evaluate_type_id IN (?)", report_template.evaluate_types.map(&:id)).where(mark_type: 1)
+    evaluates.each { |evaluate| evaluate.update_attributes({ mark_type: 0 })}
   end
 
 end

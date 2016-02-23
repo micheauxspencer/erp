@@ -22,13 +22,13 @@
         </div>
         <div class="info1">
           <label class="field-label">Teachers: </label> <label class="infolbl">
-            <%= @student.name %>
+            <%= @student.grade.teacher.name if @student.grade && @student.grade.teacher %>
           </label>
         </div>
       </div>
     </td>
   </table>
-  <% if @report_template.name == ReportTemplate::NAME[0] || @report_template.name == ReportTemplate::NAME[1] %>
+  <% if @report_template.name == ReportTemplate::NAME[2] || @report_template.name == ReportTemplate::NAME[1] || @report_template.name == ReportTemplate::NAME[3] %>
     <table class="text-center border_no_top border" width="100%">
       <tr>
         <td>
@@ -99,16 +99,16 @@
               <td class="padding-td"><%= evaluate.name %></td>
               <% if @report_template.name == ReportTemplate::NAME[3] %>
                 <td>
-                  <input type="number" class="input-mark" max="100" min="50" name="evaluate_mark[<%= evaluate.id %>]" 
+                  <input type="number" class="input-mark" max="100" min="0" name="evaluate_mark[<%= evaluate.id %>]" 
                   value = "<%= StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "mark") %>">
                 </td>
                 <td>
-                  <input type="number" class="input-mark" max="100" min="50" name="evaluate_avg[<%= evaluate.id %>]" 
+                  <input type="number" class="input-mark" max="100" min="0" name="evaluate_avg[<%= evaluate.id %>]" 
                   value = "<%= StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "avg") %>">
                 </td>
               <% else %>
                 <td>
-                  <input type="number" class="input-mark" max="100" min="50" name="evaluate_mark[<%= evaluate.id %>]" 
+                  <input type="number" class="input-mark" max="100" min="0" name="evaluate_mark[<%= evaluate.id %>]" 
                   value = "<%= StudentEvaluate.get_value(evaluate.id, @student.id, @term_id, "mark") %>">
                 </td>
               <% end %>
@@ -118,7 +118,7 @@
       <% end %>
     <% end %>
 
-    <% if @report_template.name == ReportTemplate::NAME[2] || @report_template.name == ReportTemplate::NAME[3] %>
+    <% if @report_template.name == ReportTemplate::NAME[3] %>
       <div class="border table-magin-top" style="padding: 0px 5px; font-weight: bold;">
       <p style="">PERFORMANCE SCALE for work habits and personal and social development:<br/>
         4 - Always 3 - Usually 2 - Sometimes 1 - Seldom</p>

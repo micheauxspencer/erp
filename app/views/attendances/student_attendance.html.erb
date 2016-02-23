@@ -43,10 +43,11 @@
                       end_of_the_day,
                       start_of_the_day
               ).first %>
+              <%= hidden_field_tag :type_action, student.id, id: "type_attendance" %>
 
               <% [ 'late', 'absence' ].each do |type_action| %>
-                <%= radio_button_tag 'type_action', type_action, (attendance && attendance.type_action == type_action), id: type_action, class: "radio-action" %>
-                <label for="<%= type_action %>" class="label-radio-action"><%= type_action.humanize %></label>
+                <label class="label-radio-action"><%= type_action.humanize %></label>
+                <%= check_box_tag "type_action", type_action, attendance && attendance.type_action == type_action, class: type_action, style: 'top: 2px; position: relative', data_type: type_action, name: "action" %>
               <% end %>
           <% end %>
         </td>
@@ -57,8 +58,21 @@
 
 <script>
   $(document).ready(function(){
-    $("input[name=type_action]").click(function () {
+    $("input[name=action]").click(function () {
+      if ($(this).is(':checked')) {
+        var type = $(this).attr("data_type");
+        $(this).parent().find('#type_attendance').val(type);
+      }else{
+        $(this).parent().find('#type_attendance').val("none");
+      }
+
       $(this).parent().submit();
+
+      if ($(this).attr("data_type") == "late" ){
+        $(this).parent().find('.absence').removeAttr('checked')
+      }else{
+        $(this).parent().find('.late').removeAttr('checked')
+      }
     })
   });
 </script>
