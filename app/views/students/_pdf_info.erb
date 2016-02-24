@@ -33,7 +33,7 @@
         </div>
         <div class="info1">
           <label class="field-label2">Times Late: </label>
-          <label class="infolbl"> </label>
+          <label class="infolbl"></label>
         </div>
       </div>
     </td>
@@ -41,11 +41,11 @@
       <div class="info-left">
         <div class="info1">
           <label class="field-label2">Total Days Absent: </label>
-          <label class="infolbl"></label>
+          <label class="infolbl"><%= @student.get_total_days_absent %></label>
         </div>
         <div class="info1">
           <label class="field-label">Total Times Late: </label>
-          <label class="infolbl"></label>
+          <label class="infolbl"><%= @student.get_total_times_late %></label>
         </div>
       </div>
     </td>

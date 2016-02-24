@@ -97,6 +97,7 @@ class Student < ActiveRecord::Base
 
   has_many :grade_students
   has_many :grades, through: :grade_students
+  has_many :attendances
 
   scope :not_siblings, -> (student) { where('id NOT IN (?)', student.siblings.map(&:id) << student.id)}
 
@@ -122,6 +123,14 @@ class Student < ActiveRecord::Base
     else
       ReportTemplate.first
     end
+  end
+
+  def get_total_days_absent
+    self.attendances.where(type_action: "absence").count
+  end
+
+  def get_total_times_late
+    self.attendances.where(type_action: "late").count
   end
 
   def self.import_csv(file)

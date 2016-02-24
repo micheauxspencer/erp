@@ -176,8 +176,9 @@
       <% end %>
     </table>
     <div>
-      <h3>Comment</h3>
-      <textarea class="form-control" placeholer="Message" name="comment" style="height: 120px;"><%= Comment.get_comment(@student.id, @term_id) %></textarea>
+      <h3 style="display: -webkit-inline-box;">Comment</h3> 
+      <span> (Length should not exceed 2000 characters!) </span>
+      <textarea class="form-control" placeholer="Message" name="comment" maxlength="2000" style="height: 120px;"><%= Comment.get_comment(@student.id, @term_id) %></textarea>
     </div>
 
     <%= submit_tag "Save Mark", class: "btn btn-primary save-mark" %>

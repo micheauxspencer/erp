@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204025823) do
+ActiveRecord::Schema.define(version: 20160224042630) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20160204025823) do
 
   create_table "comments", force: true do |t|
     t.integer  "term_student_id"
-    t.string   "content"
+    t.string   "content",         limit: 2000
     t.datetime "created_at"
     t.datetime "updated_at"
   end

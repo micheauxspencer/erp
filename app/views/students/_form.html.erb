@@ -47,7 +47,9 @@
         <li role="presentation">
           <a href="#transportation" aria-controls="transportation" role="tab" data-toggle="tab">Transportation</a></li>
       <% end %>
-      <li role="presentation"><a href="#reports" aria-controls="reports" role="tab" data-toggle="tab">Reports</a></li>
+      <% if current_user.role?("accounting") || current_user.role?("teacher") %>
+        <li role="presentation"><a href="#reports" aria-controls="reports" role="tab" data-toggle="tab">Reports</a></li>
+      <% end %>
       <% if current_user.role?("accounting") %>
         <li role="presentation"><a href="#term" aria-controls="settings" role="tab" data-toggle="tab">Term</a></li>
         <li role="presentation"><a href="#sibling" aria-controls="sibling" role="tab" data-toggle="tab">Sibling</a></li>

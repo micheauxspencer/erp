@@ -4,7 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  term_student_id :integer
-#  content         :string(255)
+#  content         :string(2000)
 #  created_at      :datetime
 #  updated_at      :datetime
 #

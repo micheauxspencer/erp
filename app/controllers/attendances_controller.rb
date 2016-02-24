@@ -6,7 +6,7 @@ class AttendancesController < ApplicationController
 
   def student_attendance
     grade = Grade.find(params[:grade_id].to_i)
-    @students = grade.students
+    @students = grade.students.order(:last_name)
   end
 
   def teacher_attendance
