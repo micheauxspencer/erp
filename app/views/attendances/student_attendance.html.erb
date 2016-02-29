@@ -2,8 +2,8 @@
 
     <%= simple_form_for Attendance.new, :url => grade_student_attendance_path, method: :get, :html => {:class => "form-horizontal student"} do |f| %>
       <div class="col-md-3">
-        <div style="margin-left: 25px !important;"> <%= f.input :created_at, as: :date_picker, :class => 'form-control',
-                                                                :input_html => { value: params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at] : Time.now.strftime("%d/%m/%Y") } %></div>
+        <div style="margin-left: 25px !important;"> <%= f.input :attendanced_at, as: :date_picker, :class => 'form-control',
+                                                                :input_html => { value: params[:attendance] && params[:attendance][:attendanced_at] ? params[:attendance][:attendanced_at] : Time.now.strftime("%d/%m/%Y") } %></div>
       </div>
       <div class="col-md-9" style="margin-top: 26px;">
         <%= f.submit 'Check', :class => 'btn btn-default', style: 'margin-left: 10px;' %>
@@ -14,11 +14,12 @@
 
 <br>
 
-<table class="table table-striped">
+<table class="table table-striped table-student">
   <thead>
   <tr>
     <th><%= Student.human_attribute_name(:id) %></th>
-    <th><%= Student.human_attribute_name(:name) %></th>
+    <th><%= sortable_attendance "first_name" %></th>
+    <th><%= sortable_attendance "last_name" %></th>
     <th><%= Student.human_attribute_name(:grade) %></th>
     <th><%= Student.human_attribute_name(:gender) %></th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -28,21 +29,22 @@
   <% @students.each do |student| %>
       <tr>
         <td><%= link_to student.id, student_path(student) %></td>
-        <td><%= student.last_name %> <%= student.first_name %> <%= student.middle_name %></td>
+        <td><%= student.first_name %></td>
+        <td><%= student.last_name %></td>
         <td><%= student.grade.name if student.grade %></td>
         <td><%= student.gender %></td>
         <td>
           <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "student_#{student.id}_attendance_form") do %>
               <%= hidden_field_tag :student_id, student.id %>
-              <% start_of_the_day = params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at].to_date.beginning_of_day : Time.now.beginning_of_day %>
-              <% end_of_the_day = params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at].to_date.end_of_day : Time.now.end_of_day %>
+              <% day = params[:attendance] && params[:attendance][:attendanced_at] ? params[:attendance][:attendanced_at].to_date : Time.now.to_date %>
               <% attendance = Attendance.where(
-                      "student_id = ? AND term_id = ? AND ? >= created_at AND created_at >= ?",
+                      "student_id = ? AND term_id = ? AND attendanced_at = ?",
                       student.id,
                       current_term,
-                      end_of_the_day,
-                      start_of_the_day
+                      day
               ).first %>
+
+              <%= hidden_field_tag :attendanced_at, params[:attendance] && params[:attendance][:attendanced_at] ? params[:attendance][:attendanced_at] : Time.now.strftime("%d/%m/%Y") %>
               <%= hidden_field_tag :type_action, student.id, id: "type_attendance" %>
 
               <% [ 'late', 'absence' ].each do |type_action| %>

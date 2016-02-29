@@ -3,8 +3,8 @@
 
     <%= simple_form_for Attendance.new, :url => grade_teacher_attendance_path, method: :get, :html => {:class => "form-horizontal student"} do |f| %>
       <div class="col-md-3">
-        <div style="margin-left: 25px !important;"> <%= f.input :created_at, as: :date_picker, :class => 'form-control',
-                                                                :input_html => { value: params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at] : Time.now.strftime("%d/%m/%Y") } %></div>
+        <div style="margin-left: 25px !important;"> <%= f.input :attendanced_at, as: :date_picker, :class => 'form-control',
+                                                                :input_html => { value: params[:attendance] && params[:attendance][:attendanced_at] ? params[:attendance][:attendanced_at] : Time.now.strftime("%d/%m/%Y") } %></div>
       </div>
       <div class="col-md-9" style="margin-top: 26px;">
         <%= f.submit 'Check', :class => 'btn btn-default', style: 'margin-left: 10px;' %>
@@ -33,16 +33,15 @@
         <td>
           <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "teacher_#{@teacher.id}_attendance_form") do %>
             <%= hidden_field_tag :teacher_id, @teacher.id %>
-            <% start_of_the_day = params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at].to_date.beginning_of_day : Time.now.beginning_of_day %>
-            <% end_of_the_day = params[:attendance] && params[:attendance][:created_at] ? params[:attendance][:created_at].to_date.end_of_day : Time.now.end_of_day %>
+            <% day = params[:attendance] && params[:attendance][:attendanced_at] ? params[:attendance][:attendanced_at].to_date : Time.now.to_date %>
             <% attendance = Attendance.where(
-                    "teacher_id = ? AND term_id = ? AND ? >= created_at AND created_at >= ?",
+                    "teacher_id = ? AND term_id = ? AND attendanced_at = ?",
                     @teacher.id,
                     current_term,
-                    end_of_the_day,
-                    start_of_the_day
+                    day
             ).first %>
 
+            <%= hidden_field_tag :attendanced_at, params[:attendance] && params[:attendance][:attendanced_at] ? params[:attendance][:attendanced_at] : Time.now.strftime("%d/%m/%Y") %>
             <%= hidden_field_tag :type_action, @teacher.id, id: "type_attendance" %>
 
             <% [ 'late', 'half day', 'early dismissal' ].each do |type_action| %>
@@ -71,7 +70,7 @@
       if ($(this).attr("data_type") == "late" ){
         $(this).parent().find('.early').removeAttr('checked')
         $(this).parent().find('.half').removeAttr('checked')
-      }else if ($(this).attr("data_type") == "half" ){
+      }else if ($(this).attr("data_type") == "half day" ){
         $(this).parent().find('.late').removeAttr('checked')
         $(this).parent().find('.early').removeAttr('checked')
       }else{

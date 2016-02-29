@@ -400,6 +400,13 @@ namespace :import do
     evaluates.each { |evaluate| evaluate.update_attributes({ mark_type: 0 })}
   end
 
+  task update_db_report_13: :environment do
+    report_template = ReportTemplate.find_by_name("g1_g3")
+    report_template.evaluates.delete_all
+    Evaluate.create!(name: "This student is meeting the expected level of development for his/her age range. (If No, see Comment)", report_template_id: report_template.id)
+    Evaluate.create!(name: "This student is on a modified program (Y/N If Yes, see Comment)", report_template_id: report_template.id)
+  end
+
 end
 
 

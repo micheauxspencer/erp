@@ -23,7 +23,7 @@ class StudentsController < ApplicationController
       @students = @grade.students.all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
     else
       if current_user.role?('teacher')
-        @students = current_user.students(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
+        @students = current_user.students.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
       else
         @students = Student.all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
       end

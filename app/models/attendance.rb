@@ -2,14 +2,15 @@
 #
 # Table name: attendances
 #
-#  id          :integer          not null, primary key
-#  teacher_id  :integer
-#  student_id  :integer
-#  created_at  :datetime
-#  updated_at  :datetime
-#  term_id     :integer
-#  grade_id    :integer
-#  type_action :string(255)
+#  id             :integer          not null, primary key
+#  teacher_id     :integer
+#  student_id     :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#  term_id        :integer
+#  grade_id       :integer
+#  type_action    :string(255)
+#  attendanced_at :date
 #
 # Indexes
 #
