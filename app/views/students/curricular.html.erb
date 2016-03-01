@@ -33,5 +33,5 @@
   <span> (Length should not exceed 2000 characters!) </span>
   <%= f.text_area :content, maxlength: "2000", class: "form-control", style: "height: 350px; margin-bottom: 20px" %>
   <%= f.submit "Save", class: "btn btn-primary"%>
-  <%= link_to "Cancel", :back, :class => 'btn btn-default' %>
+  <%= link_to "Cancel", edit_student_path(@student), :class => 'btn btn-default' %>
 <% end %>

@@ -139,7 +139,7 @@
               <h2 class="add title-table border-title" style="margin-top: 0; line-height: 25px;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
               <div>
                 <span class="name-term"><label><%= term.name %></label></span>
-                <span style="float: right; padding-right: 30px;"><label>Date:</label></span>
+                <span style="float: right; padding-right: 30px;"><label>Date: <%= term.end_date %> </label></span>
               </div>
 
               <div class="input-content"><%= simple_format(Comment.get_comment(@student.id, term.id)) %></div>

@@ -8,6 +8,10 @@
   <dd><%= @term.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:acedemic_year_id) %>:</strong></dt>
   <dd><%= @term.acedemic_year_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:start_date) %>:</strong></dt>
+  <dd><%= @term.start_date %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:end_date) %>:</strong></dt>
+  <dd><%= @term.end_date %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),

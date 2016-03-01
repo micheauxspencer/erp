@@ -7,6 +7,8 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #  acedemic_year_id :integer
+#  start_date       :date
+#  end_date         :date
 #
 
 class Term < ActiveRecord::Base

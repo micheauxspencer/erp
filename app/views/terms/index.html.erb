@@ -8,6 +8,8 @@
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:acedemic_year_id) %></th>
+      <th><%= model_class.human_attribute_name(:start_date) %></th>
+      <th><%= model_class.human_attribute_name(:end_date) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -17,6 +19,8 @@
         <td><%= link_to term.id, term_path(term) %></td>
         <td><%= term.name %></td>
         <td><%= term.acedemic_year_id %></td>
+        <td><%= term.start_date %></td>
+        <td><%= term.end_date %></td>
         <td>
           <%= link_to 'Show',
                       term_path(term), :class => 'btn btn-default btn-xs' %>

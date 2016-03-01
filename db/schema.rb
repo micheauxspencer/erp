@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160301072909) do
+ActiveRecord::Schema.define(version: 20160301092432) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -360,6 +360,8 @@ ActiveRecord::Schema.define(version: 20160301072909) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "acedemic_year_id"
+    t.date     "start_date"
+    t.date     "end_date"
   end
 
   create_table "users", force: true do |t|

@@ -289,8 +289,8 @@ class StudentsController < ApplicationController
     if @student.present?
       @curricular = Curricular.find_or_create_by(student_id: @student.id) 
       @curricular.update_attributes(content: params[:curricular][:content])
-      flash[:notice] = 'Save success.'
-      redirect_to curricular_path(@student)
+      flash[:notice] = 'Save curricular success.'
+      redirect_to edit_student_path(@student)
     else
       redirect_to root_path
     end
