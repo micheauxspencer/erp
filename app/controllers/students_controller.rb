@@ -2,7 +2,7 @@ class StudentsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
-  before_action :set_student, only: [:show, :edit, :update, :destroy], except: [:import]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular], except: [:import]
 
   before_action :check_permissions, only: [:update, :enter_mark]
   before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all]
@@ -163,7 +163,7 @@ class StudentsController < ApplicationController
       format.pdf do
         render  pdf:  "report_student",
                 layout:      'pdf',
-                disposition: 'attachment',
+                # disposition: 'attachment',
                 title:       'Report Student',
                 template:    'students/export_pdf.pdf.erb',
                 layout:      'pdf.html.erb',
@@ -277,6 +277,22 @@ class StudentsController < ApplicationController
       render :json => { :result => "success"}
     else
       render :json => { :result => "not-success", :massage => student.errors.full_messages }
+    end
+  end
+
+  def curricular
+    @curricular = Curricular.find_by(student_id: @student.id).present? ? Curricular.find_by(student_id: @student.id) : Curricular.new
+  end
+
+  def save_curricular
+    @student = Student.find(params[:curricular][:student_id])
+    if @student.present?
+      @curricular = Curricular.find_or_create_by(student_id: @student.id) 
+      @curricular.update_attributes(content: params[:curricular][:content])
+      flash[:notice] = 'Save success.'
+      redirect_to curricular_path(@student)
+    else
+      redirect_to root_path
     end
   end
 

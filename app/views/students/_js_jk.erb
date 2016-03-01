@@ -85,7 +85,9 @@
   </tr>
   <tr>
     <td>
-      <div class="content-extra_js"></div>
+      <div class="content-curricular content-extra_js">
+        <%= simple_format(@student.curriculars.first.content) if @student.curriculars.first %>
+      </div>
     </td>
   </tr>
 </table>

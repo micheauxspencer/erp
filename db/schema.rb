@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229032228) do
+ActiveRecord::Schema.define(version: 20160301072909) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -96,6 +96,15 @@ ActiveRecord::Schema.define(version: 20160229032228) do
   end
 
   add_index "comments", ["term_student_id"], name: "index_comments_on_term_student_id"
+
+  create_table "curriculars", force: true do |t|
+    t.integer  "student_id"
+    t.string   "content",    limit: 2000
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "curriculars", ["student_id"], name: "index_curriculars_on_student_id"
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false

@@ -89,7 +89,9 @@
   </tr>
   <tr class="table-boder">
     <td>
-      <div class="content-extra_46"></div>
+      <div class="content-curricular content-extra_46">
+        <%= simple_format(@student.curriculars.first.content) if @student.curriculars.first %>
+      </div>
     </td>
   </tr>
 </table>

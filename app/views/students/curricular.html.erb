@@ -1,0 +1,37 @@
+<h2>EXTRA CURRICULAR ACTIVITIES</h2>
+<table width="100%" class="border table-magin-top">
+  <td style="padding: 5px 15px; width: 25%;">
+    <div class="info-left">
+      <div class="info1">
+        <label class="field-label">Student: </label> <label class="infolbl" style="text-align:left;">
+          <%= @student.name %>
+        </label>
+      </div>
+      <div class="info1">
+        <label class="field-label">Grade: </label> <label class="infolbl">
+          <%= @student.grade.name %>
+        </label>
+      </div>
+    </div>
+  </td>
+  <td style="padding: 5px 15px; width: 25%; vertical-align: bottom;">
+    <div class="info-left">
+      <div class="info1">
+        <label class="field-label"> </label>
+      </div>
+      <div class="info1">
+        <label class="field-label">Teachers: </label> <label class="infolbl">
+          <%= @student.grade.teacher.name if @student.grade && @student.grade.teacher %>
+        </label>
+      </div>
+    </div>
+  </td>
+</table>
+<%= simple_form_for @curricular, url: save_curricular_path, :method => :post, :html => {:class => "form-horizontal curricular"} do |f| %>
+  <%= f.hidden_field :student_id, value: @student.id %>
+  <%= f.label :content%>
+  <span> (Length should not exceed 2000 characters!) </span>
+  <%= f.text_area :content, maxlength: "2000", class: "form-control", style: "height: 350px; margin-bottom: 20px" %>
+  <%= f.submit "Save", class: "btn btn-primary"%>
+  <%= link_to "Cancel", :back, :class => 'btn btn-default' %>
+<% end %>
