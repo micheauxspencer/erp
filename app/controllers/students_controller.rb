@@ -20,15 +20,15 @@ class StudentsController < ApplicationController
 
     redirect_to root_path if current_user.role?('teacher') && @grade && !current_user.grades.include?(@grade) 
     if @grade
-      @students = @grade.students.all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
+      @students_all = Student.search_student( @grade.students.all, params[:search])
     else
       if current_user.role?('teacher')
-        @students = current_user.students.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
+        @students_all = Student.search_student( current_user.students, params[:search])
       else
-        @students = Student.all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
+        @students_all = Student.search_student( Student.all, params[:search])
       end
     end
-    
+    @students = @students_all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
   end
 
   # GET /students/1

@@ -1,6 +1,24 @@
 <%- model_class = Student -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+<div class="page-header row">
+  <h1 class="col-md-7" style="margin: 0px;"><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+
+  <div id="search-studnent" class="col-md-5">
+    <div id="imaginary_container"> 
+      <%= form_tag students_path, :method => "get", class: "input-group stylish-input-group" do %>
+        <% if params[:grade_id].present? %>
+          <%= hidden_field_tag :grade_id, params[:grade_id] %>
+        <% end %>
+        <%= text_field_tag :search, params[:search], class: "form-control",
+        placeholder: " Search by first name, last name" %>
+        <span class="input-group-addon">
+          <button type="submit">
+            <span><i class="fa fa-search"></i></span>
+          </button>  
+        </span>
+      <% end %>
+    </div>
+  </div>
+
 </div>
 <label class="pull-left" style="line-height: 30px">Grade: </label>
 <div class="col-md-2">

@@ -117,6 +117,12 @@ class Student < ActiveRecord::Base
     return "#{first_name} #{last_name}"
   end
 
+  def self.search_student (students, search)
+    students = students.where("first_name LIKE ? or last_name LIKE ?",
+      "%#{search}%", "%#{search}%") if search.present?
+    students
+  end
+
   def get_report_template
     if self.grade && self.grade.report_template
       self.grade.report_template
