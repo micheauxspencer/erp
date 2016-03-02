@@ -35,7 +35,7 @@
     <% if index_type == 0 %>
       <tr class="table-header" style="font-weight: bold;">
         <td class="fixed" width="70%" style="padding: 0px 5px;"></td>
-        <% Term.last(3).each_with_index do |term, index| %>
+        <% current_acedemic_year.terms.each_with_index do |term, index| %>
           <td width="10%" colspan="2" class="score" align="center">Report <%= index + 1 %></td>
         <% end %>
       </tr>
@@ -43,7 +43,7 @@
 
     <tr class="table-header" style="font-weight: bold;">
       <td class="fixed" width="70%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
-      <% Term.last(3).each_with_index do |term, index| %>
+      <% current_acedemic_year.terms.each_with_index do |term, index| %>
         <% if index_type == 0 %>
           <td align="center" width="5%" style="font-size: 9px;">Mark</td>
           <td align="center" width="5%" style="font-size: 9px;">Avg</td>
@@ -57,7 +57,7 @@
     <% evaluate_type.evaluates.each do |evaluate|%>
        <tr class="tr">
         <td class="padding-td"><%= evaluate.name %></td>
-        <% Term.last(3).each do |term| %>
+        <% current_acedemic_year.terms.each do |term| %>
           <td width="5%" class="score" align="center"><%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") %></td>
           <td width="5%" class="score" align="center"><%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "avg") %></td>
         <% end %>
@@ -81,7 +81,7 @@
   <% @report_template.evaluates.each do |evaluate| %>
     <tr class="table-header">
       <td width="70%" class=" fixed padding-td"><%= evaluate.name %></td>
-      <% Term.last(3).each do |term| %>
+      <% current_acedemic_year.terms.each do |term| %>
         <td width="10%" class="score" align="center">
           <% if StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 1 %>
           Yes
@@ -108,7 +108,7 @@
   <tr>
     <td>
       <div class="content-curricular content-extra_78">
-        <%= simple_format(@student.curriculars.first.content) if @student.curriculars.first %>
+        <%= simple_format(Curricular.find_by(student_id: @student.id, acedemic_year_id: current_acedemic_year).content) if Curricular.find_by(student_id: @student.id, acedemic_year_id: current_acedemic_year) %>
       </div>
     </td>
   </tr>

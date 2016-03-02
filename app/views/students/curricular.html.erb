@@ -29,6 +29,9 @@
 </table>
 <%= simple_form_for @curricular, url: save_curricular_path, :method => :post, :html => {:class => "form-horizontal curricular"} do |f| %>
   <%= f.hidden_field :student_id, value: @student.id %>
+  <div class="controls">
+    <%= f.input :acedemic_year_id, collection: AcedemicYear.all.map { |a| [a.year, a.id, {'data-type' => a.year}] }, prompt: "Select Acedemic Year", :class => 'form-control', selected: @curricular.get_acedemic_year_id %>
+  </div>
   <%= f.label :content%>
   <span> (Length should not exceed 2000 characters!) </span>
   <%= f.text_area :content, maxlength: "2000", class: "form-control", style: "height: 350px; margin-bottom: 20px" %>

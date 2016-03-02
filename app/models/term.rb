@@ -22,4 +22,8 @@ class Term < ActiveRecord::Base
 
   validates :name, presence: true
 
+  def get_acedemic_year_id
+    self.acedemic_year.present? ? self.acedemic_year.id : nil
+  end
+
 end

@@ -1,3 +1,150 @@
+<div id="page-yield" class="available_sections1">
+  <div class="page1"></div>
+
+  <div class="section1">
+    <span class="date-head-pdf pull-right">Date: <%= Time.now.strftime("%m/%d/%Y") %></span>
+    <% case @template_name %>
+    <% when ReportTemplate::NAME[0] %>
+      <%= render :partial => 'js_jk' %>
+    <% when ReportTemplate::NAME[1] %>
+      <%= render :partial => 'g1_g3' %>
+    <% when ReportTemplate::NAME[2] %>
+      <%= render :partial => 'g4_g6' %>
+    <% when ReportTemplate::NAME[3] %>
+      <%= render :partial => 'g7_g8' %>
+    <% end %>
+
+    <div class="page-break"></div>
+    <div style="margin-top: 20px;">
+      <span style="padding-left: 20px"><label>Student: <%= @student.name %></label></span>
+      <span style="float: right; padding-right: 20px;"><label>Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label></span>
+    </div>
+
+    <% current_acedemic_year.terms.each_with_index do |term, index| %>
+      <table class="pdf-table table-magin-top border-none term" width="100%" border="1" cellspacing="0">
+        <tr>
+          <td height="300px" valign="top" style="border:none;">
+            <div class="custom_header">
+              <h2 class="add title-table border-title" style="margin-top: 0; line-height: 25px;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
+              <div>
+                <span class="name-term"><label>
+                  <% if index == 0 %>
+                    Frist Term
+                  <% elsif %>
+                    Secound Term
+                  <% else %>
+                    Third Term
+                  <% end %>
+                </label></span>
+                <span style="float: right; padding-right: 30px;">
+                  <label>Date: <%= term.end_date if Comment.get_comment(@student.id, term.id).present? %> </label>
+                </span>
+              </div>
+
+              <div class="input-content"><%= simple_format(Comment.get_comment(@student.id, term.id)) %></div>
+              <table width="100%" cellspacing="0">
+                <tr>
+                  <td width="33%" class="signature"><span>Teacher's Signature</span></td>
+                  <td width="34%" align="center"></td>
+                  <td width="33%" class="signature"><span>Administrator's Signature</span></td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+
+    <!-- page braek -->
+    <div class="page-break"></div>
+
+    <table class="pdf-table border-none" width="100%" cellspacing="0" class="page">
+      <tr>
+        <td style="border:0; text-align:center; padding-top: 35px;" colspan="2"><b>Response Form
+          <br>
+          ( to be completed, signed and returned)</b>
+        </td>
+      </tr>
+      <tr >
+        <td>
+          <table width="100%" width="100%" cellspacing="0" class="border" >
+            <tr>
+              <td class="padding-td" width="15%"><label style="line-height: 20px; padding: 8px 10px 0px 10px">Student:</label></td>
+              <td class="padding-td" width="35%"><label style="line-height: 20px; padding: 8px 0px 0px 0px"><%= @student.name %></label></td>
+              <td class="padding-td" width="25%"><label style="line-height: 20px; padding: 8px 10px 0px 0px">Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label> </td>
+              <td class="padding-td" width="25%"><label style="line-height: 20px; padding: 8px 0px 0px 0px">Date: <%= Time.now.strftime("%m/%d/%Y") %></label></td>
+            </tr>
+            <tr>
+              <td class="padding-td"><label class="field-label" style="line-height: 20px;padding-left: 10px">School:</label> </td>
+              <td class="padding-td"><label class="infolbl" style="line-height: 20px;">KHALSA COMMUNITY SCHOOL</label> </td>
+              <td class="padding-td"><label class="infolbl" style="line-height: 20px;">Homeroom Teachers: </label></td>
+              <td class="padding-td"><label class="infolbl" style="line-height: 20px;">
+                <%=  @student.grade.teacher.name if @student.grade && @student.grade.teacher %></label>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+      <td>
+        <div class="border_no_top" style="padding: 15px;">
+          <p style="font-weight: bold;">Parent's/Guardian's and student's comments on student achievement, goals and home support:</p>
+          <div style="height: 620px;"></div>
+          <table class="pdf-table" width="100%" cellspacing="0" class="sig">
+            <tr>
+              <td colspan="3">
+                <table width="100%" >
+                  <tr>
+                    <td width="7%"><span class="square"></span></td>
+                    <td width="33%"><span >I have received the report<br/>card</span></td>
+                    <td width="15"></td>
+                    <td width="7%"><span class="square"></span></td>
+                    <td width="38%"><span >I would like to discuss this report card. Please<br/>contact me.</span></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr height="70px"></tr>
+            <tr>
+              <td colspan="2">
+                <table width="100%" cellspacing="0">
+                  <tr>
+                    <td width="40%" class="signature"><span>Parent's/Guardian's Signature</span></td>
+                    <td width="20%" align="center"></td>
+                    <td width="40%" class="signature"><span>Parent's/Guardian's Name (please print)</span></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr height="70px"></tr>
+            <tr>
+              <td colspan="2">
+                <table width="100%" cellspacing="0">
+                  <tr>
+                    <td width="40%" class="signature"><span>Parent's/Guardian's Signature</span></td>
+                    <td width="60%" class="">
+                      <table width="100%" cellspacing="0" align="center">
+                        <tr align="center">
+                          <td>(______)_______-____________</td>
+                          <td>(______)_______-____________</td>
+                        </tr>
+                        <tr align="center">
+                          <td>Telephone (day)</td>
+                          <td>Telephone (night)</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </td>
+      </tr>
+    </table>
+  </div>
+</div>
 <style type="text/css">
 .table-boder {
   border: 1px solid #000000;
@@ -108,141 +255,3 @@
   padding: 1px 5px;
 }
 </style>
-<div id="page-yield" class="available_sections1">
-  <div class="page1"></div>
-
-  <div class="section1">
-    <span class="date-head-pdf pull-right">Date: <%= Time.now.strftime("%m/%d/%Y") %></span>
-    <% case @template_name %>
-    <% when ReportTemplate::NAME[0] %>
-      <%= render :partial => 'js_jk' %>
-    <% when ReportTemplate::NAME[1] %>
-      <%= render :partial => 'g1_g3' %>
-    <% when ReportTemplate::NAME[2] %>
-      <%= render :partial => 'g4_g6' %>
-    <% when ReportTemplate::NAME[3] %>
-      <%= render :partial => 'g7_g8' %>
-    <% end %>
-
-    <div class="page-break"></div>
-    <div style="margin-top: 20px;">
-      <span style="padding-left: 20px"><label>Student: <%= @student.name %></label></span>
-      <span style="float: right; padding-right: 20px;"><label>Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label></span>
-
-    </div>
-
-    <% Term.last(3).each_with_index do |term, index| %>
-      <table class="pdf-table table-magin-top border-none term" width="100%" border="1" cellspacing="0">
-        <tr>
-          <td height="300px" valign="top" style="border:none;">
-            <div class="custom_header">
-              <h2 class="add title-table border-title" style="margin-top: 0; line-height: 25px;" >ADDITIONAL COMMENTS / WAYS TO SUPPORT LEARNING</h2>
-              <div>
-                <span class="name-term"><label><%= term.name %></label></span>
-                <span style="float: right; padding-right: 30px;"><label>Date: <%= term.end_date %> </label></span>
-              </div>
-
-              <div class="input-content"><%= simple_format(Comment.get_comment(@student.id, term.id)) %></div>
-              <table width="100%" cellspacing="0">
-                <tr>
-                  <td width="33%" class="signature"><span>Teacher's Signature</span></td>
-                  <td width="34%" align="center"></td>
-                  <td width="33%" class="signature"><span>Administrator's Signature</span></td>
-                </tr>
-              </table>
-            </div>
-          </td>
-        </tr>
-      </table>
-    <% end %>
-
-    <!-- page braek -->
-    <div class="page-break"></div>
-
-    <table class="pdf-table border-none" width="100%" cellspacing="0" class="page">
-      <tr>
-        <td style="border:0; text-align:center; padding-top: 35px;" colspan="2"><b>Response Form
-          <br>
-          ( to be completed, signed and returned)</b>
-        </td>
-      </tr>
-      <tr >
-        <td>
-          <table width="100%" width="100%" cellspacing="0" class="border" >
-            <tr>
-              <td class="padding-td" width="15%"><label style="line-height: 20px; padding: 8px 10px 0px 10px">Student:</label></td>
-              <td class="padding-td" width="35%"><label style="line-height: 20px; padding: 8px 0px 0px 0px"><%= @student.name %></label></td>
-              <td class="padding-td" width="25%"><label style="line-height: 20px; padding: 8px 10px 0px 0px">Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label> </td>
-              <td class="padding-td" width="25%"><label style="line-height: 20px; padding: 8px 0px 0px 0px">Date: <%= Time.now.strftime("%m/%d/%Y") %></label></td>
-            </tr>
-            <tr>
-              <td class="padding-td"><label class="field-label" style="line-height: 20px;padding-left: 10px">School:</label> </td>
-              <td class="padding-td"><label class="infolbl" style="line-height: 20px;">KHALSA COMMUNITY SCHOOL</label> </td>
-              <td class="padding-td"><label class="infolbl" style="line-height: 20px;">Homeroom Teachers: </label></td>
-              <td class="padding-td"><label class="infolbl" style="line-height: 20px;">
-                <%=  @student.grade.teacher.name if @student.grade && @student.grade.teacher %></label>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-      <td>
-        <div class="border_no_top" style="padding: 15px;">
-          <p style="font-weight: bold;">Parent's/Guardian's and student's comments on student achievement, goals and home support:</p>
-          <div style="height: 620px;"></div>
-          <table class="pdf-table" width="100%" cellspacing="0" class="sig">
-            <tr>
-              <td colspan="3">
-                <table width="100%" >
-                  <tr>
-                    <td width="7%"><span class="square"></span></td>
-                    <td width="33%"><span >I have received the report<br/>card</span></td>
-                    <td width="15"></td>
-                    <td width="7%"><span class="square"></span></td>
-                    <td width="38%"><span >I would like to discuss this report card. Please<br/>contact me.</span></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr height="70px"></tr>
-            <tr>
-              <td colspan="2">
-                <table width="100%" cellspacing="0">
-                  <tr>
-                    <td width="40%" class="signature"><span>Parent's/Guardian's Signature</span></td>
-                    <td width="20%" align="center"></td>
-                    <td width="40%" class="signature"><span>Parent's/Guardian's Name (please print)</span></td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr height="70px"></tr>
-            <tr>
-              <td colspan="2">
-                <table width="100%" cellspacing="0">
-                  <tr>
-                    <td width="40%" class="signature"><span>Parent's/Guardian's Signature</span></td>
-                    <td width="60%" class="">
-                      <table width="100%" cellspacing="0" align="center">
-                        <tr align="center">
-                          <td>(______)_______-____________</td>
-                          <td>(______)_______-____________</td>
-                        </tr>
-                        <tr align="center">
-                          <td>Telephone (day)</td>
-                          <td>Telephone (night)</td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </td>
-      </tr>
-    </table>
-  </div>
-</div>

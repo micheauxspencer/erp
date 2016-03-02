@@ -2,12 +2,17 @@
 #
 # Table name: acedemic_years
 #
-#  id         :integer          not null, primary key
-#  year       :integer
-#  start_date :date
-#  end_date   :date
-#  created_at :datetime
-#  updated_at :datetime
+#  id             :integer          not null, primary key
+#  year           :integer
+#  start_date     :date
+#  end_date       :date
+#  created_at     :datetime
+#  updated_at     :datetime
+#  curriculars_id :integer
+#
+# Indexes
+#
+#  index_acedemic_years_on_curriculars_id  (curriculars_id)
 #
 
 class AcedemicYear < ActiveRecord::Base

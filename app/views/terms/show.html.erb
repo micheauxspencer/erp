@@ -7,7 +7,7 @@
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @term.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:acedemic_year_id) %>:</strong></dt>
-  <dd><%= @term.acedemic_year_id %></dd>
+  <dd><%= @term.acedemic_year.year if @term.acedemic_year %></dd>
   <dt><strong><%= model_class.human_attribute_name(:start_date) %>:</strong></dt>
   <dd><%= @term.start_date %></dd>
   <dt><strong><%= model_class.human_attribute_name(:end_date) %>:</strong></dt>

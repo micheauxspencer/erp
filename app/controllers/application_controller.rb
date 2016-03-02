@@ -6,13 +6,19 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   before_filter :current_term
+  before_filter :current_acedemic_year
 
   def current_term
     return cookies[:current_term] ? cookies[:current_term] : (Term.last ? Term.last.id : 1) #for example default value
   end
 
+  def current_acedemic_year
+    return cookies[:current_acedemic_year] ? cookies[:current_acedemic_year] : (AcedemicYear.find_by(year: Time.now.year.to_s) ? AcedemicYear.find_by(year: Time.now.year.to_s) : AcedemicYear.last) #for example default value
+  end
+
   # Set this method as helper method to be able to use in views
   helper_method :current_term
+  helper_method :current_acedemic_year
 
   protected
 

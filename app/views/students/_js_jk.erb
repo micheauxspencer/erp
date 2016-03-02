@@ -29,7 +29,7 @@
   <table class="pdf-table table-magin-top border" width="100%" border="1" cellspacing="0" >
     <tr class="table-header" style="font-weight: bold;">
       <td class="fixed" width="76%" style="padding: 0px 5px;"><%= evaluate_type.name %></td>
-      <% Term.last(3).each_with_index do |term, index| %>
+      <% current_acedemic_year.terms.each_with_index do |term, index| %>
         <td width="8%" class="score" align="center">
           <% if index_type == 0 %>
             Report <%= index + 1 %> 
@@ -40,7 +40,7 @@
     <% evaluate_type.evaluates.each do |evaluate|%>
        <tr class="tr">
         <td class="padding-td"><%= evaluate.name %></td>
-        <% Term.last(3).each do |term| %>
+        <% current_acedemic_year.terms.each do |term| %>
           <td width="8%" class="score" align="center"><%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") %></td>
         <% end %>
       </tr>
@@ -59,7 +59,7 @@
   <% @report_template.evaluates.each do |evaluate| %>
     <tr class="table-header">
       <td width="76%" class=" fixed padding-td"><%= evaluate.name %></td>
-      <% Term.last(3).each do |term| %>
+      <% current_acedemic_year.terms.each do |term| %>
         <td width="8%" class="score" align="center">
           <% if StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 1 %>
           Yes
@@ -86,7 +86,7 @@
   <tr>
     <td>
       <div class="content-curricular content-extra_js">
-        <%= simple_format(@student.curriculars.first.content) if @student.curriculars.first %>
+        <%= simple_format(Curricular.find_by(student_id: @student.id, acedemic_year_id: current_acedemic_year).content) if Curricular.find_by(student_id: @student.id, acedemic_year_id: current_acedemic_year) %>
       </div>
     </td>
   </tr>

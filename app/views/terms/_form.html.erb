@@ -4,9 +4,9 @@
       <div class="controls">
         <%= f.input :name %>
       </div>
-      <%#= error_span(@term[:name]) %>
-      <%#= f.input :acedemic_year_id %>
-      <%#= error_span(@term[:acedemic_year_id]) %>
+      <div class="controls">
+        <%= f.input :acedemic_year_id, collection: AcedemicYear.all.map { |a| [a.year, a.id, {'data-type' => a.year}] }, prompt: "Select Acedemic Year", :class => 'form-control', selected: @term.get_acedemic_year_id %>
+      </div>
       <div class="controls">
         <%= f.input :start_date, as: :date_picker, :class => 'form-controll' %>
       </div>

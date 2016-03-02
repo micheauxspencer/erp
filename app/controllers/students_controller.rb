@@ -281,14 +281,14 @@ class StudentsController < ApplicationController
   end
 
   def curricular
-    @curricular = Curricular.find_by(student_id: @student.id).present? ? Curricular.find_by(student_id: @student.id) : Curricular.new
+    @curricular = Curricular.where(student_id: @student.id).last.present? ? Curricular.where(student_id: @student.id).last : Curricular.new
   end
 
   def save_curricular
     @student = Student.find(params[:curricular][:student_id])
     if @student.present?
       @curricular = Curricular.find_or_create_by(student_id: @student.id) 
-      @curricular.update_attributes(content: params[:curricular][:content])
+      @curricular.update_attributes(content: params[:curricular][:content], acedemic_year_id: params[:curricular][:acedemic_year_id])
       flash[:notice] = 'Save curricular success.'
       redirect_to edit_student_path(@student)
     else
