@@ -58,8 +58,12 @@
        <tr class="tr">
         <td class="padding-td"><%= evaluate.name %></td>
         <% current_acedemic_year.terms.each do |term| %>
-          <td width="5%" class="score" align="center"><%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") %></td>
-          <td width="5%" class="score" align="center"><%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "avg") %></td>
+          <td width="5%" class="score" align="center">
+            <%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark").present? ? StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") : "N/A" %>
+          </td>
+          <td width="5%" class="score" align="center">
+          <%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "avg").present? ? StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "avg") : "N/A" %>
+          </td>
         <% end %>
       </tr>
     <% end %>
@@ -84,9 +88,11 @@
       <% current_acedemic_year.terms.each do |term| %>
         <td width="10%" class="score" align="center">
           <% if StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 1 %>
-          Yes
+            Yes
           <% elsif StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 0 %>
-          No
+            No
+          <% else %>
+            N/A
           <% end %>
         </td>
       <% end %>

@@ -41,7 +41,9 @@
        <tr class="tr">
         <td class="padding-td"><%= evaluate.name %></td>
         <% current_acedemic_year.terms.each do |term| %>
-          <td width="8%" class="score" align="center"><%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") %></td>
+          <td width="8%" class="score" align="center">
+            <%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark").present? ? StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") : "N/A" %>
+          </td>
         <% end %>
       </tr>
     <% end %>
@@ -62,9 +64,11 @@
       <% current_acedemic_year.terms.each do |term| %>
         <td width="8%" class="score" align="center">
           <% if StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 1 %>
-          Yes
+            Yes
           <% elsif StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 0 %>
-          No
+            No
+          <% else %>
+            N/A
           <% end %>
         </td>
       <% end %>
@@ -86,7 +90,7 @@
   <tr>
     <td>
       <div class="content-curricular content-extra">
-        <%= simple_format(@student.curriculars.first.content) if @student.curriculars.first %>
+        <%= simple_format(Curricular.find_by(student_id: @student.id, acedemic_year_id: current_acedemic_year).content) if Curricular.find_by(student_id: @student.id, acedemic_year_id: current_acedemic_year) %>
       </div>
     </td>
   </tr>

@@ -1,31 +1,29 @@
 <tr width="100%" >
   <table width="100%" class="border table-magin-top">
-    <td style="padding: 5px 15px; width: 25%;">
-      <div class="info-left">
-        <div class="info1">
-          <label class="field-label">Student: </label> <label class="infolbl" style="text-align:left;">
-            <%= @student.name %>
-          </label>
-        </div>
-        <div class="info1">
-          <label class="field-label">Grade: </label> <label class="infolbl">
-            <%= @student.grade.name if @student.grade.present? %>
-          </label>
-        </div>
-      </div>
+    <td style="padding: 5px 15px; width: 50%;">
+      <table width="100%">
+        <tr>
+          <td colspan="2" >
+            <label class="field-label">Student: </label> <label class="infolbl" style="text-align:left;">
+              <%= @student.full_name %>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td width="50%">
+            <label class="field-label">Grade: </label> <label class="infolbl">
+              <%= @student.grade.name if @student.grade.present? %>
+            </label>
+          </td>
+          <td width="50%">
+            <label class="field-label">Teachers: </label> <label class="infolbl">
+              <%=  @student.grade.teacher.name if @student.grade && @student.grade.teacher %>
+            </label>
+          </td>
+        </tr>
+      </table>
     </td>
-    <td style="padding: 5px 15px; border-right: 1px solid #000; width: 25%; vertical-align: bottom;">
-      <div class="info-left">
-        <div class="info1">
-          <label class="field-label"> </label>
-        </div>
-        <div class="info1">
-          <label class="field-label">Teachers: </label> <label class="infolbl">
-            <%=  @student.grade.teacher.name if @student.grade && @student.grade.teacher %>
-          </label>
-        </div>
-      </div>
-    </td>
+    
     <td style="padding: 5px 15px; width: 25%;">
       <div class="info-left">
         <div class="info1">
@@ -41,11 +39,11 @@
       <div class="info-left">
         <div class="info1">
           <label class="field-label2">Total Days Absent: </label>
-          <label class="infolbl"><%= @student.get_total_days_absent %></label>
+          <label class="infolbl"><%= Student.get_total_days_absent(@student, current_acedemic_year) %></label>
         </div>
         <div class="info1">
           <label class="field-label">Total Times Late: </label>
-          <label class="infolbl"><%= @student.get_total_times_late %></label>
+          <label class="infolbl"><%= Student.get_total_times_late(@student, current_acedemic_year) %></label>
         </div>
       </div>
     </td>
@@ -55,7 +53,6 @@
   <table width="100%" class="border_no_top">
     <tr>
       <td style="border:0;border-left:1px solid #000; padding: 5px 15px; width: 15%;" class="logobox">
-        <%#= wicked_pdf_image_tag current_school_detail.logo,:s3=>true,:style=>:original,:timestamp=>false %>
         <%= wicked_pdf_image_tag("logo_pdf.png") %>
       </td>
       <td>

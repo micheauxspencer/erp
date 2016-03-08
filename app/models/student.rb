@@ -118,6 +118,10 @@ class Student < ActiveRecord::Base
     return "#{first_name} #{last_name}"
   end
 
+  def full_name
+    return "#{first_name} #{middle_name} #{last_name}"
+  end
+
   def self.search_student (students, search)
     students = students.where("first_name LIKE ? or last_name LIKE ?",
       "%#{search}%", "%#{search}%") if search.present?
@@ -132,12 +136,12 @@ class Student < ActiveRecord::Base
     end
   end
 
-  def get_total_days_absent
-    self.attendances.where(type_action: "absence").count
+  def self.get_total_days_absent(student, acedemic_year)
+    student.attendances.where("type_action = 'absence' and term_id: in (?)", acedemic_year.terms.map(&:id))
   end
 
-  def get_total_times_late
-    self.attendances.where(type_action: "late").count
+  def self.get_total_times_late(student, acedemic_year)
+    student.attendances.where("type_action = 'late' and term_id: in (?)", acedemic_year.terms.map(&:id))
   end
 
   def self.import_csv(file)

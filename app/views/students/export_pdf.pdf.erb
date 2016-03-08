@@ -70,7 +70,7 @@
           <table width="100%" width="100%" cellspacing="0" class="border" >
             <tr>
               <td class="padding-td" width="15%"><label style="line-height: 20px; padding: 8px 10px 0px 10px">Student:</label></td>
-              <td class="padding-td" width="35%"><label style="line-height: 20px; padding: 8px 0px 0px 0px"><%= @student.name %></label></td>
+              <td class="padding-td" width="35%"><label style="line-height: 20px; padding: 8px 0px 0px 0px"><%= @student.full_name %></label></td>
               <td class="padding-td" width="25%"><label style="line-height: 20px; padding: 8px 10px 0px 0px">Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label> </td>
               <td class="padding-td" width="25%"><label style="line-height: 20px; padding: 8px 0px 0px 0px">Date: <%= Time.now.strftime("%m/%d/%Y") %></label></td>
             </tr>
