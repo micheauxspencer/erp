@@ -137,11 +137,11 @@ class Student < ActiveRecord::Base
   end
 
   def self.get_total_days_absent(student, acedemic_year)
-    student.attendances.where("type_action = 'absence' and term_id: in (?)", acedemic_year.terms.map(&:id))
+    Attendance.where("student_id = ? and type_action = ? and term_id in (?)", student.id, "absence", acedemic_year.terms.map(&:id)).count
   end
 
   def self.get_total_times_late(student, acedemic_year)
-    student.attendances.where("type_action = 'late' and term_id: in (?)", acedemic_year.terms.map(&:id))
+    Attendance.where("student_id = ? and type_action = ? and term_id in (?)", student.id, "late", acedemic_year.terms.map(&:id)).count
   end
 
   def self.import_csv(file)
