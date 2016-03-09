@@ -37,11 +37,11 @@
                   <% end %>
                 </label></span>
                 <span style="float: right; padding-right: 30px;">
-                  <label>Date: <%= term.end_date if Comment.get_comment(@student.id, term.id).present? %> </label>
+                  <label>Date: <%= term.end_date if Comment.get_comment(@student.id, term.id).present? && term.active? %> </label>
                 </span>
               </div>
 
-              <div class="input-content"><%= simple_format(Comment.get_comment(@student.id, term.id)) %></div>
+              <div class="input-content"><%= simple_format(Comment.get_comment(@student.id, term.id)) if term.active? %></div>
               <table width="100%" cellspacing="0">
                 <tr>
                   <td width="33%" class="signature"><span>Teacher's Signature</span></td>

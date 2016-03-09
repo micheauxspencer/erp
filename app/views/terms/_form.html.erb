@@ -14,6 +14,10 @@
         <%= f.input :end_date, as: :date_picker, :class => 'form-controll' %>
       </div>
 
+      <div class="controls">
+        <%= f.input :status, collection: ["Inactive", "Active"], :include_blank => false, :class => 'form-control' %>
+      </div>
+
       <%= f.button :submit, :class => 'btn-primary' %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                   terms_path, :class => 'btn btn-default' %>

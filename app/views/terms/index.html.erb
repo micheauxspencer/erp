@@ -10,6 +10,7 @@
       <th><%= model_class.human_attribute_name(:acedemic_year) %></th>
       <th><%= model_class.human_attribute_name(:start_date) %></th>
       <th><%= model_class.human_attribute_name(:end_date) %></th>
+      <th><%= model_class.human_attribute_name(:status) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -21,6 +22,7 @@
         <td><%= term.acedemic_year.year if term.acedemic_year %></td>
         <td><%= term.start_date %></td>
         <td><%= term.end_date %></td>
+        <td><%= term.status %></td>
         <td>
           <%= link_to 'Show',
                       term_path(term), :class => 'btn btn-default btn-xs' %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302075704) do
+ActiveRecord::Schema.define(version: 20160309025120) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -366,6 +366,7 @@ ActiveRecord::Schema.define(version: 20160302075704) do
     t.integer  "acedemic_year_id"
     t.date     "start_date"
     t.date     "end_date"
+    t.string   "status",           default: "Inactive"
   end
 
   create_table "users", force: true do |t|

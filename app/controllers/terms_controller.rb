@@ -65,6 +65,6 @@ class TermsController < ApplicationController
   end
 
   def term_params
-    params.require(:term).permit(:name, :acedemic_year_id, :start_date, :end_date)
+    params.require(:term).permit(:name, :acedemic_year_id, :start_date, :end_date, :status)
   end
 end

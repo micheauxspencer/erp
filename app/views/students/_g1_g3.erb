@@ -42,7 +42,9 @@
         <td class="padding-td"><%= evaluate.name %></td>
         <% current_acedemic_year.terms.each do |term| %>
           <td width="8%" class="score" align="center">
-            <%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark").present? ? StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") : "N/A" %>
+            <% if term.active? %> 
+              <%= StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark").present? ? StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") : "N/A" %>
+            <% end %>
           </td>
         <% end %>
       </tr>
@@ -63,11 +65,11 @@
       <td width="76%" class=" fixed padding-td"><%= evaluate.name %></td>
       <% current_acedemic_year.terms.each do |term| %>
         <td width="8%" class="score" align="center">
-          <% if StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 1 %>
+          <% if StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 1 && term.active? %>
             Yes
-          <% elsif StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 0 %>
+          <% elsif StudentEvaluate.get_value(evaluate.id, @student.id, term.id, "mark") == 0 && term.active? %>
             No
-          <% else %>
+          <% elsif term.active? %>
             N/A
           <% end %>
         </td>
