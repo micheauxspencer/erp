@@ -299,7 +299,7 @@ class StudentsController < ApplicationController
   def family_report
     respond_to do |format|
       format.html
-      format.xls #{ send_data @attendances.to_csv(col_sep: "\t") }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Family Report #{@student.name}.xls\"" } 
     end
   end
 

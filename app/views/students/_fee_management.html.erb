@@ -1,7 +1,7 @@
 <h2> Student's Fees </h2>
-<%= link_to 'Fee Peport Paid',
+<%= link_to 'Fee Report Paid',
               fee_report_paid_path(@student, format: "xls"),  class: "btn btn-default" %>
-<%= link_to 'Fee Peport Unpaid',
+<%= link_to 'Fee Report Unpaid',
               fee_report_unpaid_path(@student, format: "xls"),  class: "btn btn-default" %>
 <table class="table table-striped" style="margin-top: 30px; margin-bottom: 50px;">
   <thead>
@@ -74,7 +74,7 @@
   </tbody>
 </table>
 
-<%= link_to "Export Reciept", export_fee_path(@student, :format => :pdf), class: 'btn btn-primary' %>
+<%= link_to "Export Receipt", export_fee_path(@student, :format => :pdf), class: 'btn btn-primary' %>
 
 <br>
 <br>

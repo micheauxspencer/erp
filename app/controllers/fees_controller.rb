@@ -69,7 +69,7 @@ class FeesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xls
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Fees Paid #{@student.name}.xls\"" } 
     end
   end
 
@@ -79,7 +79,7 @@ class FeesController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.xls
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Fees Unpaid #{@student.name}.xls\"" }
     end
   end
 

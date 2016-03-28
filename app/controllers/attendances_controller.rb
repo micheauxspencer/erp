@@ -52,7 +52,7 @@ class AttendancesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @attendances.to_csv }
-      format.xls #{ send_data @attendances.to_csv(col_sep: "\t") }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@student.name}.xls\"" } 
     end
   end
 
@@ -62,7 +62,7 @@ class AttendancesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @attendances.to_csv }
-      format.xls #{ send_data @attendances.to_csv(col_sep: "\t") }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@grade.name}.xls\"" } 
     end
   end
 
