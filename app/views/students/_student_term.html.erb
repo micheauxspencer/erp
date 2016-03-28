@@ -9,7 +9,7 @@
     <br>
     <br>
     <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false" id="choose-term-text" style="width: 160px">
-      <%= (current_term && current_term != "") ? (Term.where(id: current_term).exists? ? Term.where(id: current_term).first.name : 'Choose Term') : 'Choose Term' %>
+      <span id="active-term"><%= (current_term && current_term != "") ? (Term.where(id: current_term).exists? ? Term.where(id: current_term).first.name : 'Choose Term') : 'Choose Term' %></span>
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" role="menu" style="margin-left: 15px;">
