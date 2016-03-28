@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
   resources :fees
 
+  get 'fees/report_paid/:student_id' => "fees#report_paid", as: :fee_report_paid
+  get 'fees/report_unpaid/:student_id' => "fees#report_unpaid", as: :fee_report_unpaid
+
   resources :terms
 
   resources :models
@@ -26,6 +29,7 @@ Rails.application.routes.draw do
   resources :grades do
     collection do
       get 'enter_grade' => "grades#enter_grade", as: :enter_grade
+      get 'export_students/:id' => "grades#export_students", as: :export_students
       post 'add_template'
     end
   end
@@ -37,6 +41,9 @@ Rails.application.routes.draw do
 
   get '/grades/:grade_id/student_attendance' => "attendances#student_attendance", as: :grade_student_attendance
   get '/grades/:grade_id/teacher_attendance' => "attendances#teacher_attendance", as: :grade_teacher_attendance
+
+  get '/attendances/export_by_student/:student_id' => "attendances#export_by_student", as: :attendance_export_by_student
+  get '/attendances/export_by_grade/:grade_id' => "attendances#export_by_grade", as: :attendance_export_by_grade
 
   get '/classes' => 'class_names#index', as: :class_list
 
@@ -62,6 +69,8 @@ Rails.application.routes.draw do
   post 'save_import_student' => "students#save_import_student", as: :save_import_student
   get 'import_student' => "students#import", as: :import_student
   post 'students/delete_all' => "students#delete_all", as: :delete_all_student
+
+  get 'students/family_report/:id' => "students#family_report", as: :student_family_report
 
   post 'student_siblings/create' => "student_siblings#create", as: :create_sibling
   post 'student_siblings/delete' => "student_siblings#destroy", as: :delete_sibling

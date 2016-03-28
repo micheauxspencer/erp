@@ -30,6 +30,8 @@
             <%= link_to "Teacher Attendances", grade_teacher_attendance_path(grade), :class => 'btn btn-default btn-xs' %></li>
             <%= link_to 'Show',
                         grade_path(grade), :class => 'btn btn-default btn-xs' %>
+            <%= link_to 'Export Students', 
+                        export_students_grades_path(grade, format: "xls"), :class => 'btn btn-default btn-xs' %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         edit_grade_path(grade), :class => 'btn btn-default btn-xs' %>
             <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
@@ -37,6 +39,7 @@
                         :method => :delete,
                         :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                         :class => 'btn btn-xs btn-danger' %>
+
           <% end %>
         </td>
       </tr>

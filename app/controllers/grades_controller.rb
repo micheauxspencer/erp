@@ -1,5 +1,5 @@
 class GradesController < ApplicationController
-  before_action :set_grade, only: [:show, :edit, :update, :destroy]
+  before_action :set_grade, only: [:show, :edit, :update, :destroy, :export_students]
   before_action :check_permissions, only: [:show, :create, :edit, :update, :destroy]
   # GET /grades
   # GET /grades.json
@@ -72,6 +72,16 @@ class GradesController < ApplicationController
     grade = Grade.find(params[:grade_id])
     grade.update_attributes(report_template_id: params[:tem_id].to_i)
     render json: { results: "success"}
+  end
+
+  def export_students
+    @students = @grade.students
+    @teacher = @grade.teacher
+    respond_to do |format|
+      format.html
+      format.csv { send_data @students.to_csv }
+      format.xls #{ send_data @students.to_csv(col_sep: "\t") }
+    end
   end
 
   private

@@ -24,4 +24,18 @@ class Fee < ActiveRecord::Base
   belongs_to :term
 
   validates :term, presence: true
+
+  def self.get_fees_paid(student_id)
+    select('fees.*').
+      joins(:charges).
+      group('fees.id').
+      where('charges.student_id = ? and charges.is_completed = ?', student_id, true)
+  end
+
+  def self.get_fees_unpaid(student_id)
+    select('fees.*').
+      joins(:charges).
+      group('fees.id').
+      where('charges.student_id = ? and charges.is_completed = ?', student_id, false)
+  end
 end

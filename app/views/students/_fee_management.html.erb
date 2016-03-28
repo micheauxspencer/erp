@@ -1,4 +1,8 @@
 <h2> Student's Fees </h2>
+<%= link_to 'Fee Peport Paid',
+              fee_report_paid_path(@student, format: "xls"),  class: "btn btn-default" %>
+<%= link_to 'Fee Peport Unpaid',
+              fee_report_unpaid_path(@student, format: "xls"),  class: "btn btn-default" %>
 <table class="table table-striped" style="margin-top: 30px; margin-bottom: 50px;">
   <thead>
   <tr>
@@ -45,7 +49,7 @@
 
             <td class="col-md-2">
               <div class="pull-left" id="amount_field_<%= "#{@student.id}_#{fee.id}"%>">
-                <%= hidden_field_tag "original_amount", charge ? charge.amount.to_i : 0%>
+                <%= hidden_field_tag "original_amount", charge ? charge.amount.to_i : 0 %>
                 <input disabled type="text" name="amount" value="<%= charge ? charge.amount.to_i : 0 %>" style="width: 80px; height: 1.8em" class="form-control">
               </div>
 

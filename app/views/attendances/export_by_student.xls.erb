@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Attendances List</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Student: <%= @student.name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">No.</Data></Cell>
+        <Cell><Data ss:Type="String">Date</Data></Cell>
+        <Cell><Data ss:Type="String">Type</Data></Cell>
+      </Row>
+      <% @attendances.each_with_index do |attendance, index| %>
+        <Row>
+          <Cell><Data ss:Type="Number"><%= index + 1 %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= attendance.attendanced_at %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= attendance.type_action %></Data></Cell>
+        </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

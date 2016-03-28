@@ -23,6 +23,8 @@
 <%= link_to "#", class: "btn btn-default", data: {toggle: "modal", target: "#assign_teacher_modal"} do %>
   <%= t("grades.buttons.assign_teacher") %>
 <% end %>
+<%= link_to 'Export Attendances Students',
+              attendance_export_by_grade_path(@grade, format: "xls"),  class: "btn btn-default" %>
 <dl class="dl-horizontal">
   <h2><%= t "teacher_infomations" %>:</h2>
   <% if @teacher %>
@@ -44,6 +46,7 @@
       <th><%= model_class.human_attribute_name(:gender) %></th>
       <th><%= model_class.human_attribute_name(:birthdate) %></th>
       <th><%= t "grade.current_grade" %></th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -54,6 +57,7 @@
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
         <td><%= student.grade_name %></td>
+        <td><%= link_to 'Export Attendances', attendance_export_by_student_path(student, format: "xls"),  class: "btn btn-xs btn-default" %></td>
       </tr>
     <% end %>
   </tbody>

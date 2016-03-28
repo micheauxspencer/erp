@@ -63,6 +63,26 @@ class FeesController < ApplicationController
     end
   end
 
+  def report_paid
+    @student = Student.find(params[:student_id])
+    @fees = Fee.get_fees_paid(@student.id)
+
+    respond_to do |format|
+      format.html
+      format.xls
+    end
+  end
+
+  def report_unpaid
+    @student = Student.find(params[:student_id])
+    @fees = Fee.get_fees_unpaid(@student.id)
+    
+    respond_to do |format|
+      format.html
+      format.xls
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fee

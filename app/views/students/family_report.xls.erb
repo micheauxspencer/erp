@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Family Report</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Student: <%= @student.name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String"></Data></Cell>
+        <Cell><Data ss:Type="String">Father</Data></Cell>
+        <Cell><Data ss:Type="String">Mother</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">First Name</Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.f_first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.m_first_name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Last Name</Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.f_last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.m_last_name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Home Phone</Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.f_phone %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.m_phone %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Cell Phone</Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.f_cell %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.m_cell %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Work Phone</Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.f_work %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.m_work %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Email Address</Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.f_email %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.m_email %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Home Address</Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.f_home_address %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.m_home_address %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">City</Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.f_city %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.m_city %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">State</Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.f_state %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @student.m_state %></Data></Cell>
+      </Row>
+    </Table>
+  </Worksheet>
+</Workbook>

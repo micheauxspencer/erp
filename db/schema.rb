@@ -26,10 +26,7 @@ ActiveRecord::Schema.define(version: 20160309025120) do
     t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "curriculars_id"
   end
-
-  add_index "acedemic_years", ["curriculars_id"], name: "index_acedemic_years_on_curriculars_id"
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"

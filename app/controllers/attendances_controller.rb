@@ -46,6 +46,26 @@ class AttendancesController < ApplicationController
     end
   end
 
+  def export_by_student
+    @student = Student.find(params[:student_id].to_i)
+    @attendances = @student.attendances
+    respond_to do |format|
+      format.html
+      format.csv { send_data @attendances.to_csv }
+      format.xls #{ send_data @attendances.to_csv(col_sep: "\t") }
+    end
+  end
+
+  def export_by_grade
+    @grade = Grade.find(params[:grade_id].to_i)
+    @attendances = Attendance.where('student_id IN (?)', @grade.students.map(&:id) )
+    respond_to do |format|
+      format.html
+      format.csv { send_data @attendances.to_csv }
+      format.xls #{ send_data @attendances.to_csv(col_sep: "\t") }
+    end
+  end
+
   private
     def sort_column
       Student.column_names.include?(params[:sort]) ? params[:sort] : "first_name"

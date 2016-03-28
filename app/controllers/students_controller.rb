@@ -2,7 +2,7 @@ class StudentsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular], except: [:import]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report], except: [:import]
 
   before_action :check_permissions, only: [:update, :enter_mark]
   before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all]
@@ -293,6 +293,13 @@ class StudentsController < ApplicationController
       redirect_to edit_student_path(@student)
     else
       redirect_to root_path
+    end
+  end
+
+  def family_report
+    respond_to do |format|
+      format.html
+      format.xls #{ send_data @attendances.to_csv(col_sep: "\t") }
     end
   end
 
