@@ -32,6 +32,7 @@
 <% end %>
 <% if current_user.role?(User::ROLE[:accounting]) %>
   <%= link_to 'Import', import_student_path, :class => 'btn btn-primary' %>
+  <%= link_to 'Export All', student_export_all_path(format: "xls"), :class => "btn btn-primary" %>
   <%= link_to 'Delete All',
                       delete_all_student_path,
                       :method => :post,

@@ -13,7 +13,7 @@
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" role="menu" style="margin-left: 15px;">
-      <% Term.all.each do |term| %>
+      <% @current_acedemic_year.terms.each do |term| %>
           <li><%= link_to "#{term.name}", view_snapshot_term_path(student_id: @student.id, term_id: term.id), :remote => true %></li>
       <% end %>
     </ul>

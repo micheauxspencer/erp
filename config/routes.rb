@@ -5,12 +5,16 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root :to => "students#index"
 
-  resources :teachers
+  # resources :teachers
 
   devise_for :users
 
   get 'profile' => 'users#profile', as: :profile
   patch 'users/update_profile' => 'users#update_profile', as: :update_profile
+  get 'teacher/:user_id' => 'users#show_teacher', as: :show_teacher
+  patch 'users/:user_id/update_teacher' => 'users#update_teacher', as: :update_teacher
+
+  get 'teachers' => 'users#teachers', as: :teachers
 
   resources :acedemic_years
 
@@ -50,6 +54,7 @@ Rails.application.routes.draw do
   get '/term_snapshot' => 'students#term_snapshot', as: :view_snapshot_term
 
   get 'set_current_term' => "terms#set_current_term", as: :set_current_term
+  get 'set_current_acedemic_year' => "acedemic_years#set_current_acedemic_year", as: :set_current_acedemic_year
 
   post 'students/assign_fee' => "students#assign_fee", as: :assign_fee
   post 'students/:student_id/routes' => "students#assign_route", as: :assign_route
@@ -58,6 +63,7 @@ Rails.application.routes.draw do
 
   get 'students/export_pdf/:student_id' => "students#export_pdf", as: :export_pdf
   get 'students/export_fee/:student_id' => "students#export_fee", as: :export_fee
+  get 'export_students' => "students#export_all", as: :student_export_all
 
   get 'students/:student_id/enter_mark' => "students#enter_mark", as: :enter_mark
   post 'students/save_mark' => "students#save_mark", as: :save_mark

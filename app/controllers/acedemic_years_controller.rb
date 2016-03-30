@@ -61,6 +61,13 @@ class AcedemicYearsController < ApplicationController
     end
   end
 
+  def set_current_acedemic_year
+    cookies.permanent[:current_acedemic_year] = params[:acedemic_year_id]
+    acedemic_year = AcedemicYear.find(params[:acedemic_year_id])
+    cookies.permanent[:current_term] = acedemic_year.terms.first.id if acedemic_year.terms.first
+    redirect_to request.referer || root_url
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_acedemic_year

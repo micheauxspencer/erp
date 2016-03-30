@@ -34,6 +34,7 @@
                 <li><%= link_to 'New Admission', new_student_path %></li>
               <% end %>
               <li><%= link_to 'Student List', students_path %></li>
+              <li><%= link_to 'Teacher List', teachers_path %></li>
             </ul>
           </li>
         </ul>
@@ -75,22 +76,36 @@
 
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
-            <li>
-              <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <% if Term.count > 0 %>
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="choose-term-text"> <%= current_term && current_term != "" ? Term.where(id: current_term).first.name : 'Choose Term' %> <span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                        <% Term.all.each do |term| %>
-                            <li><%= link_to "#{term.name}", set_current_term_path(term_id: term.id), :onclick => "termChosen('" + term.name + "')" %></li>
-                            <!---->
-                        <% end %>
-                      </ul>
-                    <% end %>
-                </li>
-              </ul>
+          <% current_year = AcedemicYear.find(current_acedemic_year)  %>
+          <li>
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                  <% if AcedemicYear.count > 0 %>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="choose-year-text"> <%= current_acedemic_year && current_acedemic_year != "" ? current_year.year : 'Choose Acedemic Year' %> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <% AcedemicYear.all.each do |acedemic_year| %>
+                        <li><%= link_to "#{acedemic_year.year}", set_current_acedemic_year_path(acedemic_year_id: acedemic_year.id) %></li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+              </li>
+            </ul>
 
-            </li>
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                  <% if current_year.terms.count > 0 %>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="choose-term-text"> <%= current_term && current_term != "" ? Term.where(id: current_term).first.name : 'Choose Term' %> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <% current_year.terms.each do |term| %>
+                        <li><%= link_to "#{term.name}", set_current_term_path(term_id: term.id), :onclick => "termChosen('" + term.name + "')" %></li>
+                        <!---->
+                      <% end %>
+                    </ul>
+                  <% end %>
+              </li>
+            </ul>
+
+          </li>
           <li>
             <ul class="nav navbar-nav">
               <li class="dropdown">
@@ -116,30 +131,30 @@
   </div><!-- /.container-fluid -->
 </nav>
   <% if notice %>
-      <p class="notice"><%= notice %></p>
+    <p class="notice"><%= notice %></p>
   <% end %>
 
   <% if alert %>
-      <p class="alert"><%= alert %></p>
+    <p class="alert"><%= alert %></p>
   <% end %>
 
   <div class="row">
-      <%= yield %>
+    <%= yield %>
   </div>
-      <div id="push"></div>
-</div>
+    <div id="push"></div>
+  </div>
 
-   </div>
+  </div>
 
-    <div id="footer">
-      <div class="container">
-        <p class="muted credit">Powered by <a href="http://balantech.com">Balantech</a></p>
-      </div>
+  <div id="footer">
+    <div class="container">
+      <p class="muted credit">Powered by <a href="http://balantech.com">Balantech</a></p>
     </div>
+  </div>
 
 <script>
   var termChosen = function(term_name){
-      $('#choose-term-text').text(term_name);
+    $('#choose-term-text').text(term_name);
   }
 </script>
 </body>

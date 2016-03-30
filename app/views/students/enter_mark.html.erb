@@ -1,5 +1,5 @@
 <h3 >Select Term</h3>
-<%= select_tag "term_id", options_from_collection_for_select(Term.all, "id", "name", @term_id ), class: "form-control term-select-tag" %>
+<%= select_tag "term_id", options_from_collection_for_select(@current_acedemic_year.terms, "id", "name", @term_id ), class: "form-control term-select-tag" %>
 <button class="btn btn-primary select-term" >Select</button>
 
 <%= render :partial => 'form_enter_mark' %>

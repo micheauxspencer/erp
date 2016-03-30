@@ -39,11 +39,11 @@
       <div class="info-left">
         <div class="info1">
           <label class="field-label2">Total Days Absent: </label>
-          <label class="infolbl"><%= Student.get_total_days_absent(@student, current_acedemic_year) %></label>
+          <label class="infolbl"><%= Student.get_total_days_absent(@student, @current_acedemic_year) %></label>
         </div>
         <div class="info1">
           <label class="field-label">Total Times Late: </label>
-          <label class="infolbl"><%= Student.get_total_times_late(@student, current_acedemic_year) %></label>
+          <label class="infolbl"><%= Student.get_total_times_late(@student, @current_acedemic_year) %></label>
         </div>
       </div>
     </td>

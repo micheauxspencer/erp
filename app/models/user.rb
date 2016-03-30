@@ -69,4 +69,9 @@ class User < ActiveRecord::Base
       where(conditions.to_hash).first
     end
   end
+
+  def get_list_grades
+    self.grades.map { |i| i.name.to_s }.join(", ")
+  end
+
 end

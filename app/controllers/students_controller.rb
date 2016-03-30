@@ -2,7 +2,7 @@ class StudentsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report], except: [:import]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report], except: [:import, :export_all]
 
   before_action :check_permissions, only: [:update, :enter_mark]
   before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all]
@@ -53,6 +53,7 @@ class StudentsController < ApplicationController
     @report_template = @student.get_report_template
     @siblings = @student.siblings
     @not_siblings = Student.not_siblings(@student)
+    @current_acedemic_year = AcedemicYear.find(current_acedemic_year)
   end
 
   # POST /students
@@ -157,7 +158,8 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:student_id])
     @report_template = @student.get_report_template
     @template_name = @report_template ? @report_template.name : 'No Template'
-
+    @current_acedemic_year = AcedemicYear.find(current_acedemic_year)
+    
     respond_to do |format|
       format.html
       format.pdf do
@@ -205,6 +207,7 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:student_id])
     @report_template = @student.get_report_template
     @term_id = params[:term].present? ? params[:term] : current_term
+    @current_acedemic_year = AcedemicYear.find(current_acedemic_year)
   end
 
   def save_mark
@@ -300,6 +303,14 @@ class StudentsController < ApplicationController
     respond_to do |format|
       format.html
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"Family Report #{@student.name}.xls\"" } 
+    end
+  end
+
+  def export_all
+    @students = Student.all
+    respond_to do |format|
+      format.html
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student list.xls\"" } 
     end
   end
 

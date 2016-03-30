@@ -13,8 +13,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_acedemic_year
-    return cookies[:current_acedemic_year] ? cookies[:current_acedemic_year] : (AcedemicYear.find_by(year: Time.now.year.to_s) ? AcedemicYear.find_by(year: Time.now.year.to_s) : AcedemicYear.last) #for example default value
+    return cookies[:current_acedemic_year] ? cookies[:current_acedemic_year] : (AcedemicYear.find_by(year: Time.now.year.to_s) ? AcedemicYear.find_by(year: Time.now.year.to_s).id : AcedemicYear.last.id) #for example default value
   end
+
 
   # Set this method as helper method to be able to use in views
   helper_method :current_term

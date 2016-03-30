@@ -1,0 +1,42 @@
+<%- model_class = User -%>
+<div class="page-header row">
+  <h1 class="col-md-7" style="margin: 0px;">Teachers</h1>
+</div>
+<div class="clearfix"></div>
+<br />
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:No) %></th>
+      <th><%= model_class.human_attribute_name(:email) %></th>
+      <th><%= model_class.human_attribute_name(:user_name) %></th>
+      <th><%= model_class.human_attribute_name(:first_name) %></th>
+      <th><%= model_class.human_attribute_name(:last_name) %></th>
+      <th><%= model_class.human_attribute_name(:birth_date) %></th>
+      <th><%= model_class.human_attribute_name(:phone) %></th>
+      <th><%= model_class.human_attribute_name(:address) %></th>
+      <th><%= model_class.human_attribute_name(:grade) %></th>
+      <th><%= model_class.human_attribute_name(:action) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @teachers.each_with_index do |teacher, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= teacher.email %></td>
+        <td><%= teacher.user_name %></td>
+        <td><%= teacher.first_name %></td>
+        <td><%= teacher.last_name %></td>
+        <td><%= teacher.birth_date.strftime("%B, %d, %Y") if teacher.birth_date %></td>
+        <td><%= teacher.phone %></td>
+        <td><%= teacher.address %></td>
+        <td><%= teacher.get_list_grades %>
+
+        </td>
+        <td>
+          <%= link_to "Edit", show_teacher_path(teacher), class: "btn btn-default btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
