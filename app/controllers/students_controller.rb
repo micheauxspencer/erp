@@ -6,6 +6,7 @@ class StudentsController < ApplicationController
 
   before_action :check_permissions, only: [:update, :enter_mark]
   before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all]
+  before_action :set_current_acedemic_year
 
   # GET /students
   # GET /students.json
@@ -53,7 +54,6 @@ class StudentsController < ApplicationController
     @report_template = @student.get_report_template
     @siblings = @student.siblings
     @not_siblings = Student.not_siblings(@student)
-    @current_acedemic_year = AcedemicYear.find(current_acedemic_year)
   end
 
   # POST /students
@@ -158,7 +158,6 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:student_id])
     @report_template = @student.get_report_template
     @template_name = @report_template ? @report_template.name : 'No Template'
-    @current_acedemic_year = AcedemicYear.find(current_acedemic_year)
     
     respond_to do |format|
       format.html
@@ -207,7 +206,6 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:student_id])
     @report_template = @student.get_report_template
     @term_id = params[:term].present? ? params[:term] : current_term
-    @current_acedemic_year = AcedemicYear.find(current_acedemic_year)
   end
 
   def save_mark
@@ -400,5 +398,9 @@ class StudentsController < ApplicationController
 
     def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
+    def set_current_acedemic_year
+      @current_acedemic_year = AcedemicYear.find(current_acedemic_year)
     end
 end
