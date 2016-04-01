@@ -15,6 +15,10 @@ class AttendancesController < ApplicationController
     @teacher = @grade.teacher 
   end
 
+  def teacher_attendance_all
+    @teachers = User.teachers.order(sort_column + " " + sort_direction)
+  end
+
 
   def create
     # create attendance for that student in that day if we have not done before

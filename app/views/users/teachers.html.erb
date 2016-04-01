@@ -30,9 +30,7 @@
         <td><%= teacher.birth_date.strftime("%B, %d, %Y") if teacher.birth_date %></td>
         <td><%= teacher.phone %></td>
         <td><%= teacher.address %></td>
-        <td><%= teacher.get_list_grades %>
-
-        </td>
+        <td><%= teacher.get_list_grades %></td>
         <td>
           <%= link_to "Edit", show_teacher_path(teacher), class: "btn btn-default btn-sm" %>
         </td>
