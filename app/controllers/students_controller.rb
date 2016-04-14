@@ -54,6 +54,9 @@ class StudentsController < ApplicationController
     @report_template = @student.get_report_template
     @siblings = @student.siblings
     @not_siblings = Student.not_siblings(@student)
+
+    @parents = @student.parents
+    @not_parents = Parent.all - @parents
   end
 
   # POST /students

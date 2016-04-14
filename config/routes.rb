@@ -82,6 +82,9 @@ Rails.application.routes.draw do
   post 'student_siblings/create' => "student_siblings#create", as: :create_sibling
   post 'student_siblings/delete' => "student_siblings#destroy", as: :delete_sibling
 
+  post 'student_parents/create' => "student_parents#create", as: :create_parent
+  post 'student_parents/delete' => "student_parents#destroy", as: :delete_parent
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

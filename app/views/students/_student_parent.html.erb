@@ -1,0 +1,82 @@
+<div class="page-header">
+  <h2> Parents </h2>
+</div>
+<% if current_user.role?("teacher") || current_user.role?("accounting") %>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#add-parent"> Add Parent </button>
+<% end %>
+<%= render :partial => 'list_parents' %>
+
+<% if current_user.role?("teacher") || current_user.role?("accounting") %>
+  <!-- Modal -->
+  <div class="modal fade" id="add-parent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Add Parent</h4>
+        </div>
+        <div class="modal-body">
+          <h5>Select Parent</h5>
+          <select class="js-select-parents" multiple="multiple">
+            <% @not_parents.each do |parent| %>
+              <option value="<%= parent.id %>"><%= parent.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default close-parents" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary save-parents">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(".js-select-parents").select2();
+
+  $(document).on("click",".save-parents",function(){
+    var student_id = "<%= @student.id %>";
+    var url = "<%= create_parent_path %>";
+    var parents = $(".js-select-parents").select2("val");
+    $.ajax({
+      url: url,
+      type: "post",
+      dataType: "script",
+      data: "student_id=" + student_id + "&parents=" + parents,
+      asycn: true,
+      success: function(data) {
+      },
+      error: function(err){
+      }
+    });
+  });
+
+  $(document).on("click",".close-parents",function(){
+    $(".js-select-parents").select2("val", "");
+  });
+
+  $(document).on("click",".delete_student_parent",function(){
+    if(confirm("Are you sure you want to delete this?")){
+      var student_id = "<%= @student.id %>";
+      var parent_id = $(this).attr("parent");
+      var url = "<%= delete_parent_path %>";
+      $.ajax({
+        url: url,
+        type: "post",
+        dataType: "script",
+        data: "student_id=" + student_id + "&parent_id=" + parent_id,
+        success: function(data) {
+        },
+        error: function(err){
+        }
+      });
+    }
+    else{
+      return false;
+    }
+  });
+
+  
+</script>
+

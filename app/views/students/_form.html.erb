@@ -36,7 +36,11 @@
         <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Student Information</a></li>
       <% if current_user.role?("accounting") %>
         <li role="presentation">
-          <a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">Parent / Guardian Information</a></li>
+          <a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">Parent / Guardian Information</a>
+        </li>
+        <li role="presentation">
+          <a href="#parent" aria-controls="parent" role="tab" data-toggle="tab">Parent</a>
+        </li>
         <li role="presentation">
           <a href="#health" aria-controls="heatlh" role="tab" data-toggle="tab">Health Information</a></li>
       <% end %>
@@ -383,6 +387,10 @@
                     students_path, :class => 'btn btn-default' %>
       <% end %>
     </div> <!-- End second tab panel -->
+
+    <div role="tabpanel" class="tab-pane" id="parent">
+      <%= render 'student_parent' %>
+    </div>
 
     <div role="tabpanel" class="tab-pane" id="health">
 
