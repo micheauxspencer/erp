@@ -97,6 +97,10 @@ class Student < ActiveRecord::Base
 
   has_many :grade_students
   has_many :grades, through: :grade_students
+
+  has_many :student_parents
+  has_many :parents, through: :student_parents
+
   has_many :attendances
   has_many :curriculars
 

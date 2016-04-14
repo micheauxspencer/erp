@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309025120) do
+ActiveRecord::Schema.define(version: 20160414142323) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -198,6 +198,22 @@ ActiveRecord::Schema.define(version: 20160309025120) do
     t.datetime "updated_at"
   end
 
+  create_table "parents", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "gender"
+    t.date     "birthdate"
+    t.string   "phone"
+    t.string   "cell"
+    t.string   "work"
+    t.string   "email"
+    t.string   "home_address"
+    t.string   "city"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "report_templates", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -236,6 +252,16 @@ ActiveRecord::Schema.define(version: 20160309025120) do
 
   add_index "student_evaluates", ["evaluate_id"], name: "index_student_evaluates_on_evaluate_id"
   add_index "student_evaluates", ["term_student_id"], name: "index_student_evaluates_on_term_student_id"
+
+  create_table "student_parents", force: true do |t|
+    t.integer  "student_id"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "student_parents", ["parent_id"], name: "index_student_parents_on_parent_id"
+  add_index "student_parents", ["student_id"], name: "index_student_parents_on_student_id"
 
   create_table "student_siblings", force: true do |t|
     t.integer  "student_id"
