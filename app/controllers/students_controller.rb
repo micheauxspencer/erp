@@ -43,6 +43,8 @@ class StudentsController < ApplicationController
     @student = Student.new
     @siblings = []
     @not_siblings = []
+    @parents = []
+    @not_parents = []
   end
 
   # GET /students/1/edit
