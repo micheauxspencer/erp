@@ -1,3 +1,4 @@
+<%- model_class = Parent -%>
 <?xml version="1.0"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -12,56 +13,37 @@
       <Row>
         <Cell><Data ss:Type="String">Student: <%= @student.name %></Data></Cell>
       </Row>
+
       <Row>
-        <Cell><Data ss:Type="String"></Data></Cell>
-        <Cell><Data ss:Type="String">Father</Data></Cell>
-        <Cell><Data ss:Type="String">Mother</Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:id) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:first_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:last_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:relationship) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:birthdate) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:phone) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:cell) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:work) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:email) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:home_address) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:city) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:state) %></Data></Cell>
       </Row>
+    <% @student.parents.each do |parent| %>
       <Row>
-        <Cell><Data ss:Type="String">First Name</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.f_first_name %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.m_first_name %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= parent.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= parent.first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= parent.last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= parent.gender == "Male" ? "Mother" : "Father" %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= parent.birthdate %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= parent.email %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= parent.cell %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= parent.work %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= parent.phone %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= parent.home_address %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= parent.state %></Data></Cell>
       </Row>
-      <Row>
-        <Cell><Data ss:Type="String">Last Name</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.f_last_name %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.m_last_name %></Data></Cell>
-      </Row>
-      <Row>
-        <Cell><Data ss:Type="String">Home Phone</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.f_phone %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.m_phone %></Data></Cell>
-      </Row>
-      <Row>
-        <Cell><Data ss:Type="String">Cell Phone</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.f_cell %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.m_cell %></Data></Cell>
-      </Row>
-      <Row>
-        <Cell><Data ss:Type="String">Work Phone</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.f_work %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.m_work %></Data></Cell>
-      </Row>
-      <Row>
-        <Cell><Data ss:Type="String">Email Address</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.f_email %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.m_email %></Data></Cell>
-      </Row>
-      <Row>
-        <Cell><Data ss:Type="String">Home Address</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.f_home_address %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.m_home_address %></Data></Cell>
-      </Row>
-      <Row>
-        <Cell><Data ss:Type="String">City</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.f_city %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.m_city %></Data></Cell>
-      </Row>
-      <Row>
-        <Cell><Data ss:Type="String">State</Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.f_state %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= @student.m_state %></Data></Cell>
-      </Row>
+    <% end %>
+    
     </Table>
   </Worksheet>
 </Workbook>

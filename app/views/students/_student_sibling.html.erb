@@ -46,6 +46,7 @@
       data: "student_id=" + student_id + "&siblings=" + siblings,
       asycn: true,
       success: function(data) {
+        $(".js-select-siblings").select2("val", "");
       },
       error: function(err){
       }

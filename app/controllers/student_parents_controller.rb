@@ -8,9 +8,16 @@ class StudentParentsController < ApplicationController
       unless parents.empty?
         parents.each do |parent|
           StudentParent.find_or_create_by(student_id: student.id, parent_id: parent.to_i)
+          siblings = student.siblings
+          unless siblings.empty?
+            siblings.each do |sibling|
+              StudentParent.find_or_create_by(student_id: sibling.id, parent_id: parent.to_i)
+            end
+          end
         end
       end
     end
+
     @parents = student.parents
     respond_to do |format|
       format.js do
@@ -23,6 +30,13 @@ class StudentParentsController < ApplicationController
     student = Student.find(params[:student_id])
     parent = StudentParent.where(student_id: student.id, parent_id: params[:parent_id]).first
     parent.destroy if parent.present?
+    siblings = student.siblings
+    unless siblings.empty?
+      siblings.each do |sibling|
+        parent_sibling = StudentParent.where(student_id: sibling.id, parent_id: params[:parent_id]).first
+        parent_sibling.destroy if parent_sibling.present?
+      end
+    end
     @parents = student.parents
     respond_to do |format|
       format.js do

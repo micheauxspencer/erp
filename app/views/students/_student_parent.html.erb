@@ -3,7 +3,12 @@
 </div>
 <% if current_user.role?("teacher") || current_user.role?("accounting") %>
   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#add-parent"> Add Parent </button>
+  <% if params[:action] == 'edit' && params[:controller] == 'students' %>
+    <%= link_to 'Family Report',
+          student_family_report_path(@student, format: "xls"),  class: "btn btn-default" %>
+  <% end %>
 <% end %>
+
 <%= render :partial => 'list_parents' %>
 
 <% if current_user.role?("teacher") || current_user.role?("accounting") %>
@@ -46,6 +51,7 @@
       data: "student_id=" + student_id + "&parents=" + parents,
       asycn: true,
       success: function(data) {
+        $(".js-select-parents").select2("val", "");
       },
       error: function(err){
       }
