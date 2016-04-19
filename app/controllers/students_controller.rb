@@ -70,7 +70,6 @@ class StudentsController < ApplicationController
       if @student.save
         grade_student = GradeStudent.create(student: @student, grade_id: student_params[:grade_id])
         parents = params[:parents].scan( /\d+/ ).map(&:to_i)
-        Rails.logger.info "RRRRRRRRRRRRRR #{parents}"
         unless parents.empty?
           parents.each do |parent_id|
             StudentParent.create(student_id: @student.id, parent_id: parent_id)
@@ -78,7 +77,6 @@ class StudentsController < ApplicationController
         end
 
         siblings = params[:siblings].scan( /\d+/ ).map(&:to_i)
-        Rails.logger.info "SSSSSSSSSSSSS #{siblings}"
         unless siblings.empty?
           siblings.each do |sibling|
             StudentSibling.find_or_create_by(student_id: @student.id, sibling_id: sibling)
