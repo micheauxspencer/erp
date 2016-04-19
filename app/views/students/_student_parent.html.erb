@@ -25,7 +25,7 @@
           <select class="js-select-parents" multiple="multiple">
             <% @not_parents.each do |parent| %>
               <option value="<%= parent.id %>">
-                <%= (parent.phone + " - ") if parent.phone %> <%= parent.name %>
+                <%= (parent.phone + " - ") if parent.phone.present? %> <%= parent.name %>
               </option>
             <% end %>
           </select>
