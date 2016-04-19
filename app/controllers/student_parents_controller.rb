@@ -7,12 +7,16 @@ class StudentParentsController < ApplicationController
       if student.present?
         parents = params[:parents].split(',')
         unless parents.empty?
-          parents.each do |parent|
-            StudentParent.find_or_create_by(student_id: student.id, parent_id: parent.to_i)
-            siblings = student.siblings
-            unless siblings.empty?
-              siblings.each do |sibling|
-                StudentParent.find_or_create_by(student_id: sibling.id, parent_id: parent.to_i)
+          parents.each do |parent_id|
+            parent = Parent.find(parent_id)
+            if parent.present?
+              StudentParent.find_or_create_by(student_id: student.id, parent_id: parent.id)
+
+              siblings = parent.students
+              unless siblings.empty?
+                siblings.each do |sibling|
+                  StudentSibling.find_or_create_by(student_id: student.id, sibling_id: sibling.id) unless student == sibling
+                end
               end
             end
           end
@@ -35,13 +39,13 @@ class StudentParentsController < ApplicationController
       student = Student.find(params[:student_id])
       parent = StudentParent.where(student_id: student.id, parent_id: params[:parent_id]).first
       parent.destroy if parent.present?
-      siblings = student.siblings
-      unless siblings.empty?
-        siblings.each do |sibling|
-          parent_sibling = StudentParent.where(student_id: sibling.id, parent_id: params[:parent_id]).first
-          parent_sibling.destroy if parent_sibling.present?
-        end
-      end
+      # siblings = student.siblings
+      # unless siblings.empty?
+      #   siblings.each do |sibling|
+      #     parent_sibling = StudentParent.where(student_id: sibling.id, parent_id: params[:parent_id]).first
+      #     parent_sibling.destroy if parent_sibling.present?
+      #   end
+      # end
       @parents = student.parents
     else
       parent_ar = params[:parent_olds].split(',').map{ |x| x.to_i }

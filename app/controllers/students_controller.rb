@@ -72,7 +72,18 @@ class StudentsController < ApplicationController
         parents = params[:parents].scan( /\d+/ ).map(&:to_i)
         unless parents.empty?
           parents.each do |parent_id|
-            StudentParent.create(student_id: @student.id, parent_id: parent_id)
+            parent = Parent.find(parent_id)
+            if parent.present?
+              StudentParent.create(student_id: @student.id, parent_id: parent.id)
+
+              siblings = parent.students
+              unless siblings.empty?
+                siblings.each do |sibling|
+                  StudentSibling.create(student_id: @student.id, sibling_id: sibling.id) unless @student == sibling
+                end
+              end
+            end
+
           end
         end
 
@@ -80,12 +91,6 @@ class StudentsController < ApplicationController
         unless siblings.empty?
           siblings.each do |sibling|
             StudentSibling.find_or_create_by(student_id: @student.id, sibling_id: sibling)
-            parents = @student.parents
-            unless parents.empty?
-              parents.each do |parent|
-                StudentParent.find_or_create_by(student_id: sibling, parent: parent)
-              end
-            end
           end
         end
 
