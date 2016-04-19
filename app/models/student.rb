@@ -158,6 +158,11 @@ class Student < ActiveRecord::Base
       students = []
       grade_students = []
       grades = {}
+      parents = []
+      student_parents = []
+      student_id = nil
+      parent_id = 1
+
 
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
@@ -180,52 +185,25 @@ class Student < ActiveRecord::Base
             mobile: row["Mobile"],
             enrolled: true
           }
-
-          if row["Parents relation"].present?
-            if row["Parents relation"].downcase == "father"
-              params.merge!(
-                f_first_name: row["Parents first name"],
-                f_last_name: row["Parents last name"],
-                f_home_address: row["Parents home address 1"],
-                f_city: row["Parents city"],
-                f_state: row["Parents state"],
-                f_phone: row["Parents home phone"],
-                f_work:  row["Parents mobile phone"]
-              )
-            elsif row["Parents relation"].downcase == "mother"
-              params.merge!(
-                m_first_name: row["Parents first name"],
-                m_last_name: row["Parents last name"],
-                m_home_address: row["Parents home address 1"],
-                m_city: row["Parents city"],
-                m_state: row["Parents state"],
-                m_phone: row["Parents home phone"],
-                m_work:  row["Parents mobile phone"]
-              )
-            end
-          end
+          student_id = row["Student Number"].to_i
           students << Student.new(params)
-        else
-          next unless Hash[[header, spreadsheet.row(i-1)].transpose]["Student Number"].present? && !arr_student_ids.include?(Hash[[header, spreadsheet.row(i-1)].transpose]["Student Number"].to_i)
-          if row["Parents relation"].present?
-            if row["Parents relation"].downcase == "father"
-              students.last.f_first_name = row["Parents first name"]
-              students.last.f_last_name = row["Parents last name"]
-              students.last.f_home_address = row["Parents home address 1"]
-              students.last.f_city = row["Parents city"]
-              students.last.f_state = row["Parents state"]
-              students.last.f_phone = row["Parents home phone"]
-              students.last.f_work =  row["Parents mobile phone"]
-            elsif row["Parents relation"].downcase == "mother"
-              students.last.m_first_name = row["Parents first name"]
-              students.last.m_last_name = row["Parents last name"]
-              students.last.m_home_address = row["Parents home address 1"]
-              students.last.m_city = row["Parents city"]
-              students.last.m_state = row["Parents state"]
-              students.last.m_phone = row["Parents home phone"]
-              students.last.m_work = row["Parents mobile phone"]
-            end
-          end
+        end
+
+        if row["Parents relation"].present? && student_id.present?
+          parent = Parent.new(
+            id: parent_id,
+            gender: row["Parents relation"].downcase == "mother" ? "Male" : "Female",
+            first_name: row["Parents first name"],
+            last_name: row["Parents last name"],
+            home_address: row["Parents home address 1"],
+            city: row["Parents city"],
+            state: row["Parents state"],
+            phone: row["Parents home phone"],
+            work:  row["Parents mobile phone"]
+          )
+          parents << parent
+          student_parents << StudentParent.new(student_id: student_id, parent_id: parent_id)
+          parent_id += 1
         end
 
         if row["Grade"]
@@ -241,6 +219,8 @@ class Student < ActiveRecord::Base
 
       Student.import(students)
       GradeStudent.import(grade_students)
+      Parent.import(parents)
+      StudentParent.import(student_parents)
 
       return true
     rescue => e

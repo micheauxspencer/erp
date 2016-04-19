@@ -14,10 +14,12 @@ ReportTemplate.create!([
   {name: "g7_g8"}
 ])
 
+acedemic_year = AcedemicYear.create(year: 2015)
+
 Term.create([
-  {name: "Term 1 - 2015", acedemic_year_id: nil},
-  {name: "Term 2 - 2015", acedemic_year_id: nil},
-  {name: "Term 3 - 2015", acedemic_year_id: nil}
+  {name: "Term 1 - 2015", acedemic_year_id: acedemic_year.id},
+  {name: "Term 2 - 2015", acedemic_year_id: acedemic_year.id},
+  {name: "Term 3 - 2015", acedemic_year_id: acedemic_year.id}
 ])
 
 term = Term.last
