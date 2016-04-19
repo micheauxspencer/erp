@@ -44,11 +44,15 @@
     var student_id = "<%= @student.id %>";
     var url = "<%= create_parent_path %>";
     var parents = $(".js-select-parents").select2("val");
+    var parent_olds = [];
+    $("#list_parents .parent-id").each(function(){
+      parent_olds.push($(this).text());
+    });
     $.ajax({
       url: url,
       type: "post",
       dataType: "script",
-      data: "student_id=" + student_id + "&parents=" + parents,
+      data: "student_id=" + student_id + "&parents=" + parents + "&parent_olds=" + parent_olds,
       asycn: true,
       success: function(data) {
         $(".js-select-parents").select2("val", "");
@@ -67,11 +71,15 @@
       var student_id = "<%= @student.id %>";
       var parent_id = $(this).attr("parent");
       var url = "<%= delete_parent_path %>";
+      var parent_olds = [];
+      $("#list_parents .parent-id").each(function(){
+        parent_olds.push($(this).text());
+      });
       $.ajax({
         url: url,
         type: "post",
         dataType: "script",
-        data: "student_id=" + student_id + "&parent_id=" + parent_id,
+        data: "student_id=" + student_id + "&parent_id=" + parent_id + "&parent_olds=" + parent_olds,
         success: function(data) {
         },
         error: function(err){

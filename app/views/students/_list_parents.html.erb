@@ -9,13 +9,15 @@
       <th class="col-md-1">Home Address</th>
       <th class="col-md-1">City</th>
       <th class="col-md-1">State</th>
-      <th class="col-md-1"></th>
+      <th class="col-md-1">
+        <input name="parents" type="text" hidden value="<%= @parents.map(&:id) %>">
+      </th>
     </tr>
   </thead>
   <tbody>
     <% @parents.each do |parent| %>
       <tr> 
-        <td><%= parent.id %></td>
+        <td class="parent-id"><%= parent.id %></td>
         <td><%= parent.name %></td>
         <td><%= parent.gender %></td>
         <td><%= parent.phone %></td>

@@ -8,13 +8,15 @@
       <th class="col-md-1">Gender</th>
       <th class="col-md-1">Street</th>
       <th class="col-md-1">City</th>
-      <th class="col-md-1"></th>
+      <th class="col-md-1">
+        <input name="siblings" type="text" hidden value="<%= @siblings.map(&:id) %>">
+      </th>
     </tr>
   </thead>
   <tbody>
     <% @siblings.each do |sibling| %>
       <tr> 
-        <td><%= sibling.id %></td>
+        <td class="sibling-id"><%= sibling.id %></td>
         <td><%= sibling.name %></td>
         <td><%= sibling.f_phone %></td>
         <td><%= sibling.email %></td>

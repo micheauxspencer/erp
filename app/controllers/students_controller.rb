@@ -42,9 +42,9 @@ class StudentsController < ApplicationController
   def new
     @student = Student.new
     @siblings = []
-    @not_siblings = []
+    @not_siblings = Student.all
     @parents = []
-    @not_parents = []
+    @not_parents = Parent.all
   end
 
   # GET /students/1/edit
@@ -69,6 +69,28 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if @student.save
         grade_student = GradeStudent.create(student: @student, grade_id: student_params[:grade_id])
+        parents = params[:parents].scan( /\d+/ ).map(&:to_i)
+        Rails.logger.info "RRRRRRRRRRRRRR #{parents}"
+        unless parents.empty?
+          parents.each do |parent_id|
+            StudentParent.create(student_id: @student.id, parent_id: parent_id)
+          end
+        end
+
+        siblings = params[:siblings].scan( /\d+/ ).map(&:to_i)
+        Rails.logger.info "SSSSSSSSSSSSS #{siblings}"
+        unless siblings.empty?
+          siblings.each do |sibling|
+            StudentSibling.find_or_create_by(student_id: @student.id, sibling_id: sibling)
+            parents = @student.parents
+            unless parents.empty?
+              parents.each do |parent|
+                StudentParent.find_or_create_by(student_id: sibling, parent: parent)
+              end
+            end
+          end
+        end
+
         format.html { redirect_to @student, notice: 'Student was successfully created.' }
         format.json { render :show, status: :created, location: @student }
       else
@@ -385,7 +407,8 @@ class StudentsController < ApplicationController
         :m_city,
         :m_state,
         :phone,
-        :mobile
+        :mobile,
+        :parents
       )
     end
 

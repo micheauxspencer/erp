@@ -39,11 +39,15 @@
     var student_id = "<%= @student.id %>";
     var url = "<%= create_sibling_path %>";
     var siblings = $(".js-select-siblings").select2("val");
+    var sibling_olds = [];
+    $("#list_sibling .sibling-id").each(function(){
+      sibling_olds.push($(this).text());
+    });
     $.ajax({
       url: url,
       type: "post",
       dataType: "script",
-      data: "student_id=" + student_id + "&siblings=" + siblings,
+      data: "student_id=" + student_id + "&siblings=" + siblings + "&sibling_olds=" + sibling_olds,
       asycn: true,
       success: function(data) {
         $(".js-select-siblings").select2("val", "");
@@ -62,11 +66,15 @@
       var student_id = "<%= @student.id %>";
       var sibling_id = $(this).attr("sibling");
       var url = "<%= delete_sibling_path %>";
+      var sibling_olds = [];
+      $("#list_sibling .sibling-id").each(function(){
+        sibling_olds.push($(this).text());
+      });
       $.ajax({
         url: url,
         type: "post",
         dataType: "script",
-        data: "student_id=" + student_id + "&sibling_id=" + sibling_id,
+        data: "student_id=" + student_id + "&sibling_id=" + sibling_id + "&sibling_olds=" + sibling_olds,
         success: function(data) {
         },
         error: function(err){
@@ -77,7 +85,6 @@
       return false;
     }
   });
-
   
 </script>
 
