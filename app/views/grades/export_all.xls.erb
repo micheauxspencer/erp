@@ -1,0 +1,32 @@
+<%- model_class = Grade -%>
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String" >List Grade</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String" >Total grades: <%= @grades.count %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:id) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:teacher) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:total_students) %></Data></Cell>
+      </Row>
+    <% @grades.each do |grade| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= grade.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= grade.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= grade.teacher.name if grade.teacher %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= grade.students.count %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -84,6 +84,14 @@ class GradesController < ApplicationController
     end
   end
 
+  def export_all
+    @grades = Grade.all
+    respond_to do |format|
+      format.html
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"list grades.xls\"" }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_grade

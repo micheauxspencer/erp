@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     collection do
       get 'enter_grade' => "grades#enter_grade", as: :enter_grade
       get 'export_students/:id' => "grades#export_students", as: :export_students
+      get 'export_all' => "grades#export_all", as: :export_all
       post 'add_template'
     end
   end

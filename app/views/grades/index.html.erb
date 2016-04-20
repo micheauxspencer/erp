@@ -6,6 +6,8 @@
   <%= link_to t('.new', :default => t("helpers.links.new")),
             new_grade_path,
             :class => 'btn btn-primary' %>
+  <%= link_to 'Export All',
+              export_all_grades_path(format: "xls"),  class: "btn btn-primary" %>
 <% end %>
 <table class="table table-striped">
   <thead>
