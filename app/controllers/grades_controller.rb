@@ -1,5 +1,5 @@
 class GradesController < ApplicationController
-  before_action :set_grade, only: [:show, :edit, :update, :destroy, :export_students]
+  before_action :set_grade, only: [:show, :edit, :update, :destroy, :export_students, :export_attendance]
   before_action :check_permissions, only: [:show, :create, :edit, :update, :destroy]
   # GET /grades
   # GET /grades.json
@@ -90,6 +90,10 @@ class GradesController < ApplicationController
       format.html
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"list grades.xls\"" }
     end
+  end
+
+  def export_attendance
+    
   end
 
   private

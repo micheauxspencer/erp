@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get 'enter_grade' => "grades#enter_grade", as: :enter_grade
       get 'export_students/:id' => "grades#export_students", as: :export_students
       get 'export_all' => "grades#export_all", as: :export_all
+      get ':id/export_attendance' => "grades#export_attendance", as: :export_attendance
       post 'add_template'
     end
   end
@@ -48,8 +49,8 @@ Rails.application.routes.draw do
   get '/grades/:grade_id/teacher_attendance' => "attendances#teacher_attendance", as: :grade_teacher_attendance
   get '/attendances/teacher_attendance_all' => "attendances#teacher_attendance_all", as: :teacher_attendance_all
 
-  get '/attendances/export_by_student/:student_id' => "attendances#export_by_student", as: :attendance_export_by_student
-  get '/attendances/export_by_grade/:grade_id' => "attendances#export_by_grade", as: :attendance_export_by_grade
+  get '/attendances/export_by_student/:student_id' => "attendances#export_by_student", as: :attendance_export_by_student, defaults: { format: 'xls' }
+  get '/attendances/export_by_grade' => "attendances#export_by_grade", as: :attendance_export_by_grade, defaults: { format: 'xls' }
 
   get '/classes' => 'class_names#index', as: :class_list
 

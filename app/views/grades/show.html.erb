@@ -24,7 +24,7 @@
   <%= t("grades.buttons.assign_teacher") %>
 <% end %>
 <%= link_to 'Export Attendances Students',
-              attendance_export_by_grade_path(@grade, format: "xls"),  class: "btn btn-default" %>
+              export_attendance_grades_path(@grade),  class: "btn btn-default" %>
 <dl class="dl-horizontal">
   <h2><%= t "teacher_infomations" %>:</h2>
   <% if @teacher %>

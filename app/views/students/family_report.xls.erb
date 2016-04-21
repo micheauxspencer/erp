@@ -28,7 +28,7 @@
         <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:city) %></Data></Cell>
         <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:state) %></Data></Cell>
       </Row>
-    <% @student.parents.each do |parent| %>
+    <% @parents.each do |parent| %>
       <Row>
         <Cell><Data ss:Type="Number"><%= parent.id %></Data></Cell>
         <Cell><Data ss:Type="String"><%= parent.first_name %></Data></Cell>
@@ -43,7 +43,47 @@
         <Cell><Data ss:Type="String"><%= parent.state %></Data></Cell>
       </Row>
     <% end %>
-    
+    <Row></Row>
+    <% unless @siblings.empty? %>
+        <Row>
+          <Cell><Data ss:Type="String" >Sibling List</Data></Cell>
+        </Row>
+         <Row>
+          <Cell><Data ss:Type="String" >Total siblings: <%= @siblings.count %></Data></Cell>
+        </Row>
+        <Row>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:id) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:first_name) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:last_name) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:middle_name) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:gender) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:birthdate) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:street) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:city) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:state) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:postal_code) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:phone) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:mobile) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:grade) %></Data></Cell>
+        </Row>
+      <% @siblings.each do |student| %>
+        <Row>
+          <Cell><Data ss:Type="Number"><%= student.id %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.first_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.last_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.middle_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.gender %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.birthdate %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.street %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.city %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.state %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.postal_code %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.phone %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.mobile %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.grade.name if student.grade %></Data></Cell>
+        </Row>
+      <% end %>
+    <% end %>
     </Table>
   </Worksheet>
 </Workbook>

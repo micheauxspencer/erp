@@ -1,0 +1,53 @@
+<%- model_class = Grade -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#report-day" aria-controls="report-day" role="tab" data-toggle="tab">Day</a></li>
+    <li role="presentation"><a href="#report-month" aria-controls="report-month" role="tab" data-toggle="tab">Month</a></li>
+    <li role="presentation"><a href="#report-year" aria-controls="report-year" role="tab" data-toggle="tab">Year</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="report-day">
+      <%= simple_form_for :report, { url: attendance_export_by_grade_path, method: :get } do |f| %>
+        <div class="col-md-3">
+          <div> 
+            <%= f.input :day, as: :date_picker, class: 'form-control', input_html: { value: Time.now.strftime("%d/%m/%Y") }%>
+            <%= f.input :grade_id, :as => "hidden", :input_html => { :value => @grade.id } %>
+          </div>
+        </div>
+        <div class="col-md-9" style="margin-top: 26px;">
+          <%= f.button :submit, "Export", :class => 'btn btn-default', style: 'margin-left: 10px;' %>
+        </div>
+      <% end %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="report-month">
+      <%= simple_form_for :report, { url: attendance_export_by_grade_path, method: :get } do |f| %>
+        <div class="col-md-3">
+          <%= f.input :month, collection: 1..12, :include_blank => false, class: 'form-control' %>
+          <%= f.input :year, :collection => 2010..2025, :include_blank => false, class: 'form-control' %>
+          <%= f.input :grade_id, :as => "hidden", :input_html => { :value => @grade.id } %>
+          <%= f.button :submit, "Export", :class => 'btn btn-default' %>
+        </div>
+      <% end %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="report-year">
+      <%= simple_form_for :report, { url: attendance_export_by_grade_path, method: :get } do |f| %>
+        <div class="col-md-3">
+          <%= f.input :year, :collection => 2010..2025, :include_blank => false, class: 'form-control' %>
+          <%= f.input :grade_id, :as => "hidden", :input_html => { :value => @grade.id } %>
+        </div>
+        <div class="col-md-9" style="margin-top: 26px;">
+          <%= f.button :submit, "Export", :class => 'btn btn-default', style: 'margin-left: 10px;' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

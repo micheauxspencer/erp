@@ -328,6 +328,8 @@ class StudentsController < ApplicationController
   end
 
   def family_report
+    @parents = @student.parents
+    @siblings = @student.siblings
     respond_to do |format|
       format.html
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"Family Report #{@student.name}.xls\"" } 
@@ -336,6 +338,8 @@ class StudentsController < ApplicationController
 
   def export_all
     @students = Student.all
+    # @students = Student.all.order("extract(day from birthdate) DESC")
+    # @students = date_select("student", "birthdate", :order => [:day, :month, :year])
     respond_to do |format|
       format.html
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student list.xls\"" } 
