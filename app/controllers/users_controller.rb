@@ -22,6 +22,14 @@ class UsersController < ApplicationController
     @user = User.find(params[:user_id])
   end
 
+  def export_staff
+    @users = User.all
+    respond_to do |format|
+      format.html
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"staff list.xls\"" } 
+    end
+  end
+
   def update_teacher
     @user = User.find(params[:user_id])
     if @user.update_attributes(user_params)

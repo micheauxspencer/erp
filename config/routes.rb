@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   patch 'users/update_profile' => 'users#update_profile', as: :update_profile
   get 'teacher/:user_id' => 'users#show_teacher', as: :show_teacher
   patch 'users/:user_id/update_teacher' => 'users#update_teacher', as: :update_teacher
+  get 'users/export_staff' => 'users#export_staff', as: :export_staff
 
   get 'teachers' => 'users#teachers', as: :teachers
 
