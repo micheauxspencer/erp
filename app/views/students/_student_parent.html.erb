@@ -6,6 +6,8 @@
   <% if params[:action] == 'edit' && params[:controller] == 'students' %>
     <%= link_to 'Family Report',
           student_family_report_path(@student, format: "xls"),  class: "btn btn-default" %>
+    <%= link_to 'Families report',
+          student_families_report_path(@student, format: "xls"),  class: "btn btn-default" %>
   <% end %>
 <% end %>
 

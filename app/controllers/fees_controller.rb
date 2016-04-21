@@ -83,6 +83,15 @@ class FeesController < ApplicationController
     end
   end
 
+  def report_all
+    @student = Student.find(params[:student_id])
+    @fees = @student.fees.where(term: current_term)
+    respond_to do |format|
+      format.html
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Fees all #{@student.name}.xls\"" }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fee

@@ -51,12 +51,26 @@ class AttendancesController < ApplicationController
   end
 
   def export_by_student
-    @student = Student.find(params[:student_id].to_i)
-    @attendances = @student.attendances
+    @student = Student.find(params[:report][:student_id].to_i)
+    name_file = ""
+    if params[:report][:day].present?
+      name_file = params[:report][:day].to_s
+      @attendances = Attendance.where(student_id: @student.id)
+                               .where(attendanced_at: params[:report][:day].to_date)
+    elsif params[:report][:month].present? && params[:report][:year].present?
+      name_file = params[:report][:month].to_s + "_" + params[:report][:year].to_s
+      @attendances = Attendance.where(student_id: @student.id)
+                               .where("cast(strftime('%m', attendanced_at) as int) = ?", params[:report][:month].to_i)
+                               .where("cast(strftime('%Y', attendanced_at) as int) = ?", params[:report][:year].to_i)
+    elsif params[:report][:year].present?
+      name_file = params[:report][:year].to_s
+      @attendances = Attendance.where(student_id: @student.id)
+                              .where("cast(strftime('%Y', attendanced_at) as int) = ?", params[:report][:year].to_i)
+    end
     respond_to do |format|
       format.html
       format.csv { send_data @attendances.to_csv }
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@student.name}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@student.name} #{name_file}.xls\"" } 
     end
   end
 
@@ -81,6 +95,29 @@ class AttendancesController < ApplicationController
       format.html
       format.csv { send_data @attendances.to_csv }
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@grade.name} #{name_file}.xls\"" } 
+    end
+  end
+
+  def export_by_staff
+    name_file = ""
+    if params[:report][:day].present?
+      name_file = params[:report][:day].to_s
+      @attendances = Attendance.where('teacher_id IN (?)', User.all.map(&:id))
+                               .where(attendanced_at: params[:report][:day].to_date)
+    elsif params[:report][:month].present? && params[:report][:year].present?
+      name_file = params[:report][:month].to_s + "_" + params[:report][:year].to_s
+      @attendances = Attendance.where('teacher_id IN (?)', User.all.map(&:id))
+                               .where("cast(strftime('%m', attendanced_at) as int) = ?", params[:report][:month].to_i)
+                               .where("cast(strftime('%Y', attendanced_at) as int) = ?", params[:report][:year].to_i)
+    elsif params[:report][:year].present?
+      name_file = params[:report][:year].to_s
+      @attendances = Attendance.where('teacher_id IN (?)', User.all.map(&:id))
+                              .where("cast(strftime('%Y', attendanced_at) as int) = ?", params[:report][:year].to_i)
+    end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @attendances.to_csv }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"staff attendance list #{name_file}.xls\"" } 
     end
   end
 

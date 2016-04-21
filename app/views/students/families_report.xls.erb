@@ -1,0 +1,83 @@
+<%- model_class = Parent -%>
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Family Report</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:id) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:first_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:last_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:relationship) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:birthdate) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:phone) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:cell) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:work) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:email) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:home_address) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:city) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:state) %></Data></Cell>
+      </Row>
+      <% @parents.each do |parent| %>
+        <Row>
+          <Cell><Data ss:Type="Number"><%= parent.id %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= parent.first_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= parent.last_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= parent.gender == "Male" ? "Mother" : "Father" %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= parent.birthdate %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= parent.email %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= parent.cell %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= parent.work %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= parent.phone %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= parent.home_address %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= parent.state %></Data></Cell>
+        </Row>
+      <% end %>
+      <Row></Row>
+      <Row>
+        <Cell><Data ss:Type="String" >Sibling List</Data></Cell>
+      </Row>
+       <Row>
+        <Cell><Data ss:Type="String" >Total children: <%= @children.count %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:id) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:first_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:last_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:middle_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:gender) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:birthdate) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:street) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:city) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:state) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:postal_code) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:phone) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:mobile) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:grade) %></Data></Cell>
+      </Row>
+      <% @children.each do |child| %>
+        <Row>
+          <Cell><Data ss:Type="Number"><%= child.id %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.first_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.last_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.middle_name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.gender %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.birthdate %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.street %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.city %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.state %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.postal_code %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.phone %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.mobile %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= child.grade.name if child.grade %></Data></Cell>
+        </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

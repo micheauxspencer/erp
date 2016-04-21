@@ -2,7 +2,7 @@ class StudentsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report], except: [:import, :export_all]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report, :families_report, :export_attendance], except: [:import, :export_all]
 
   before_action :check_permissions, only: [:update, :enter_mark]
   before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all]
@@ -336,14 +336,33 @@ class StudentsController < ApplicationController
     end
   end
 
+  def families_report
+    @parents = @student.parents
+    @children = Student.where('id IN (?)', @student.siblings.map(&:id) << @student.id)
+    respond_to do |format|
+      format.html
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Families Report #{@student.name}.xls\"" } 
+    end
+  end
+
   def export_all
-    @students = Student.all
-    # @students = Student.all.order("extract(day from birthdate) DESC")
-    # @students = date_select("student", "birthdate", :order => [:day, :month, :year])
+    @students = Student.all.order('birthdate ASC')
     respond_to do |format|
       format.html
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student list.xls\"" } 
     end
+  end
+
+  def expprt_health
+    @students = Student.all
+    respond_to do |format|
+      format.html
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Health information list.xls\"" } 
+    end
+  end
+
+  def export_attendance
+    
   end
 
   private

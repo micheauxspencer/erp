@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get 'teacher/:user_id' => 'users#show_teacher', as: :show_teacher
   patch 'users/:user_id/update_teacher' => 'users#update_teacher', as: :update_teacher
   get 'users/export_staff' => 'users#export_staff', as: :export_staff
-
+  get 'users/export_attendance' => "users#export_attendance", as: :export_attendance_users
   get 'teachers' => 'users#teachers', as: :teachers
 
   resources :acedemic_years
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
   get 'fees/report_paid/:student_id' => "fees#report_paid", as: :fee_report_paid
   get 'fees/report_unpaid/:student_id' => "fees#report_unpaid", as: :fee_report_unpaid
-
+  get 'fees/report_all/:student_id' => "fees#report_all", as: :fee_report_all
   resources :terms
 
   resources :models
@@ -50,8 +50,9 @@ Rails.application.routes.draw do
   get '/grades/:grade_id/teacher_attendance' => "attendances#teacher_attendance", as: :grade_teacher_attendance
   get '/attendances/teacher_attendance_all' => "attendances#teacher_attendance_all", as: :teacher_attendance_all
 
-  get '/attendances/export_by_student/:student_id' => "attendances#export_by_student", as: :attendance_export_by_student, defaults: { format: 'xls' }
+  get '/attendances/export_by_student' => "attendances#export_by_student", as: :attendance_export_by_student, defaults: { format: 'xls' }
   get '/attendances/export_by_grade' => "attendances#export_by_grade", as: :attendance_export_by_grade, defaults: { format: 'xls' }
+  get '/attendances/export_by_staff' => "attendances#export_by_staff", as: :attendance_export_by_staff, defaults: { format: 'xls' }
 
   get '/classes' => 'class_names#index', as: :class_list
 
@@ -75,12 +76,16 @@ Rails.application.routes.draw do
   post 'students/save_curricular' => "students#save_curricular", as: :save_curricular
   get 'students/:student_id/select_term' => "students#select_term", as: :select_term
   post 'students/:student_id/enroll' => "students#enroll", as: :enroll_student
+  get 'students/:id/export_attendance' => "students#export_attendance", as: :export_attendance_students
   
   post 'save_import_student' => "students#save_import_student", as: :save_import_student
   get 'import_student' => "students#import", as: :import_student
   post 'students/delete_all' => "students#delete_all", as: :delete_all_student
 
+  get 'expprt_health' => "students#expprt_health", as: :expprt_health
+
   get 'students/family_report/:id' => "students#family_report", as: :student_family_report
+  get 'students/families_report/:id' => "students#families_report", as: :student_families_report
 
   post 'student_siblings/create' => "student_siblings#create", as: :create_sibling
   post 'student_siblings/delete' => "student_siblings#destroy", as: :delete_sibling

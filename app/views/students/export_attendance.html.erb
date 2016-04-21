@@ -1,6 +1,6 @@
-<%- model_class = Grade -%>
+<%- model_class = Student -%>
 <div class="page-header">
-  <h1>Student Attendance By Grade</h1>
+  <h1>Student Attendance</h1>
 </div>
 
 <div>
@@ -14,11 +14,11 @@
   <!-- Tab panes -->
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="report-day">
-      <%= simple_form_for :report, { url: attendance_export_by_grade_path, method: :get } do |f| %>
+      <%= simple_form_for :report, { url: attendance_export_by_student_path, method: :get } do |f| %>
         <div class="col-md-3">
           <div> 
             <%= f.input :day, as: :date_picker, class: 'form-control', input_html: { value: Time.now.strftime("%d/%m/%Y") }%>
-            <%= f.input :grade_id, :as => "hidden", :input_html => { :value => @grade.id } %>
+            <%= f.input :student_id, :as => "hidden", :input_html => { :value => @student.id } %>
           </div>
         </div>
         <div class="col-md-9" style="margin-top: 26px;">
@@ -28,20 +28,20 @@
     </div>
 
     <div role="tabpanel" class="tab-pane" id="report-month">
-      <%= simple_form_for :report, { url: attendance_export_by_grade_path, method: :get } do |f| %>
+      <%= simple_form_for :report, { url: attendance_export_by_student_path, method: :get } do |f| %>
         <div class="col-md-3">
           <%= f.input :month, collection: 1..12, :include_blank => false, class: 'form-control' %>
           <%= f.input :year, :collection => 2010..2025, :include_blank => false, class: 'form-control' %>
-          <%= f.input :grade_id, :as => "hidden", :input_html => { :value => @grade.id } %>
+          <%= f.input :student_id, :as => "hidden", :input_html => { :value => @student.id } %>
           <%= f.button :submit, "Export", :class => 'btn btn-default' %>
         </div>
       <% end %>
     </div>
     <div role="tabpanel" class="tab-pane" id="report-year">
-      <%= simple_form_for :report, { url: attendance_export_by_grade_path, method: :get } do |f| %>
+      <%= simple_form_for :report, { url: attendance_export_by_student_path, method: :get } do |f| %>
         <div class="col-md-3">
           <%= f.input :year, :collection => 2010..2025, :include_blank => false, class: 'form-control' %>
-          <%= f.input :grade_id, :as => "hidden", :input_html => { :value => @grade.id } %>
+          <%= f.input :student_id, :as => "hidden", :input_html => { :value => @student.id } %>
         </div>
         <div class="col-md-9" style="margin-top: 26px;">
           <%= f.button :submit, "Export", :class => 'btn btn-default', style: 'margin-left: 10px;' %>

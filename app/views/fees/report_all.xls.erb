@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Fees report paid</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Student: <%= @student.name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">No.</Data></Cell>
+        <Cell><Data ss:Type="String">Name Fee</Data></Cell>
+        <Cell><Data ss:Type="String">Amount</Data></Cell>
+        <Cell><Data ss:Type="String">Term</Data></Cell>
+        <Cell><Data ss:Type="String">Completion</Data></Cell>
+        <Cell><Data ss:Type="String">Paid Amount</Data></Cell>
+      </Row>
+      <% @fees.each_with_index do |fee, index| %>
+        <% charge = Charge.where(student_id: @student.id, fee_id: fee.id).first %>
+        <Row>
+          <Cell><Data ss:Type="Number"><%= index + 1 %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= fee.name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= fee.amount %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= fee.term ? fee.term.name : '' %></Data></Cell>
+          <%
+            fee_status = 'Unpaid'
+            fee_status = 'Paid' if charge && charge.is_completed
+            fee_status = 'Partial' if charge && !charge.is_completed && charge.amount.to_i > 0
+          %>
+          <Cell><Data ss:Type="String"><%= fee_status %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= charge ? charge.amount.to_i : 0 %></Data></Cell>
+        </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

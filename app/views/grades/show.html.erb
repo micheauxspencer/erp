@@ -57,7 +57,9 @@
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
         <td><%= student.grade_name %></td>
-        <td><%= link_to 'Export Attendances', attendance_export_by_student_path(student, format: "xls"),  class: "btn btn-xs btn-default" %></td>
+        <td>
+          <%= link_to "Export Attendance", export_attendance_students_path(student), class: "btn btn-xs btn-default" %>
+        </td>
       </tr>
     <% end %>
   </tbody>

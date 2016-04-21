@@ -1,0 +1,56 @@
+<%- model_class = Student -%>
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String" >Students List</Data></Cell>
+      </Row>
+       <Row>
+        <Cell><Data ss:Type="String" >Total students: <%= @students.count %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:id) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:first_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:last_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:middle_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:gender) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:birthdate) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:emerg_1_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:emerg_1_phone) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:emerg_1_relation) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:emerg_2_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:emerg_2_phone) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:emerg_2_relation) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:medical_conditions) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:doctor_name) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:doctor_phone) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= model_class.human_attribute_name(:healthcard) %></Data></Cell>
+      </Row>
+    <% @students.each do |student| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= student.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.middle_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.gender %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.birthdate %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.emerg_1_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.emerg_1_phone %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.emerg_1_relation %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.emerg_2_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.emerg_2_phone %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.emerg_2_relation %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.medical_conditions %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.doctor_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.doctor_phone %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.healthcard %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
