@@ -17,7 +17,9 @@
     <% @siblings.each do |sibling| %>
       <tr> 
         <td class="sibling-id"><%= sibling.id %></td>
-        <td><%= sibling.name %></td>
+        <td>
+          <%= link_to sibling.name, edit_student_path(sibling) %>
+        </td>
         <td><%= sibling.f_phone %></td>
         <td><%= sibling.email %></td>
         <td><%= sibling.gender %></td>

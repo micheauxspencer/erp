@@ -22,14 +22,16 @@
       </Row>
       <Row>
         <Cell><Data ss:Type="String">ID</Data></Cell>
-        <Cell><Data ss:Type="String">Date</Data></Cell>
+        <Cell><Data ss:Type="String">First Name</Data></Cell>
+        <Cell><Data ss:Type="String">Last Name</Data></Cell>
         <Cell><Data ss:Type="String">Gender</Data></Cell>
         <Cell><Data ss:Type="String">Birthdate</Data></Cell>
       </Row>
     <% @students.each do |student| %>
       <Row>
         <Cell><Data ss:Type="Number"><%= student.id %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= student.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= student.last_name %></Data></Cell>
         <Cell><Data ss:Type="String"><%= student.gender %></Data></Cell>
         <Cell><Data ss:Type="String"><%= student.birthdate %></Data></Cell>
       </Row>

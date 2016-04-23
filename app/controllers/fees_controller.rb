@@ -83,7 +83,7 @@ class FeesController < ApplicationController
     end
   end
 
-  def report_all
+  def report_by_family
     @student = Student.find(params[:student_id])
     @fees = @student.fees.where(term: current_term)
     respond_to do |format|

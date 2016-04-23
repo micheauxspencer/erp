@@ -75,7 +75,7 @@ class GradesController < ApplicationController
   end
 
   def export_students
-    @students = @grade.students
+    @students = @grade.students.order('last_name, first_name ASC')
     @teacher = @grade.teacher
     respond_to do |format|
       format.html
@@ -85,7 +85,7 @@ class GradesController < ApplicationController
   end
 
   def export_all
-    @grades = Grade.all
+    @grades = Grade.all.order("name ASC")
     respond_to do |format|
       format.html
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"list grades.xls\"" }

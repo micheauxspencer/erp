@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
   get 'fees/report_paid/:student_id' => "fees#report_paid", as: :fee_report_paid
   get 'fees/report_unpaid/:student_id' => "fees#report_unpaid", as: :fee_report_unpaid
-  get 'fees/report_all/:student_id' => "fees#report_all", as: :fee_report_all
+  get 'fees/report_by_family/:student_id' => "fees#report_by_family", as: :fee_report_by_family
   resources :terms
 
   resources :models

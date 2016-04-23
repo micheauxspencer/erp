@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   def teachers
-    @teachers = User.teachers
+    @teachers = User.teachers.order('last_name, first_name ASC')
   end
 
   def show_teacher
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   end
 
   def export_staff
-    @users = User.all
+    @users = User.all.order('last_name, first_name ASC')
     respond_to do |format|
       format.html
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"staff list.xls\"" } 
