@@ -60,12 +60,12 @@ class AttendancesController < ApplicationController
     elsif params[:report][:month].present? && params[:report][:year].present?
       name_file = params[:report][:month].to_s + "_" + params[:report][:year].to_s
       @attendances = Attendance.where(student_id: @student.id)
-                               .where("cast(strftime('%m', attendanced_at) as int) = ?", params[:report][:month].to_i)
-                               .where("cast(strftime('%Y', attendanced_at) as int) = ?", params[:report][:year].to_i)
+                               .where("extract(month from date_column) = ?", params[:report][:month].to_i)
+                               .where("extract(year from date_column) = ?", params[:report][:year].to_i)
     elsif params[:report][:year].present?
       name_file = params[:report][:year].to_s
       @attendances = Attendance.where(student_id: @student.id)
-                              .where("cast(strftime('%Y', attendanced_at) as int) = ?", params[:report][:year].to_i)
+                              .where("extract(year from date_column) = ?", params[:report][:year].to_i)
     end
     respond_to do |format|
       format.html
@@ -84,12 +84,12 @@ class AttendancesController < ApplicationController
     elsif params[:report][:month].present? && params[:report][:year].present?
       name_file = params[:report][:month].to_s + "_" + params[:report][:year].to_s
       @attendances = Attendance.where('student_id IN (?)', @grade.students.map(&:id))
-                               .where("cast(strftime('%m', attendanced_at) as int) = ?", params[:report][:month].to_i)
-                               .where("cast(strftime('%Y', attendanced_at) as int) = ?", params[:report][:year].to_i)
+                               .where("extract(month from date_column) = ?", params[:report][:month].to_i)
+                               .where("extract(year from date_column) = ?", params[:report][:year].to_i)
     elsif params[:report][:year].present?
       name_file = params[:report][:year].to_s
       @attendances = Attendance.where('student_id IN (?)', @grade.students.map(&:id))
-                              .where("cast(strftime('%Y', attendanced_at) as int) = ?", params[:report][:year].to_i)
+                              .where("extract(year from date_column) = ?", params[:report][:year].to_i)
     end
     respond_to do |format|
       format.html
@@ -107,12 +107,12 @@ class AttendancesController < ApplicationController
     elsif params[:report][:month].present? && params[:report][:year].present?
       name_file = params[:report][:month].to_s + "_" + params[:report][:year].to_s
       @attendances = Attendance.where('teacher_id IN (?)', User.all.map(&:id))
-                               .where("cast(strftime('%m', attendanced_at) as int) = ?", params[:report][:month].to_i)
-                               .where("cast(strftime('%Y', attendanced_at) as int) = ?", params[:report][:year].to_i)
+                               .where("extract(month from date_column) = ?", params[:report][:month].to_i)
+                               .where("extract(year from date_column) = ?", params[:report][:year].to_i)
     elsif params[:report][:year].present?
       name_file = params[:report][:year].to_s
       @attendances = Attendance.where('teacher_id IN (?)', User.all.map(&:id))
-                              .where("cast(strftime('%Y', attendanced_at) as int) = ?", params[:report][:year].to_i)
+                              .where("extract(year from date_column) = ?", params[:report][:year].to_i)
     end
     respond_to do |format|
       format.html
