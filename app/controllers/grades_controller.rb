@@ -80,7 +80,7 @@ class GradesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @students.to_csv }
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student List #{@grade.name}.xls\"" }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student List #{@grade.name}.xlsx\"" }
     end
   end
 
@@ -88,7 +88,7 @@ class GradesController < ApplicationController
     @grades = Grade.all.order("name ASC")
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"list grades.xls\"" }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"list grades.xlsx\"" }
     end
   end
 

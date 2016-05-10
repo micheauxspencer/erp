@@ -69,7 +69,7 @@ class FeesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Fees Paid #{@student.name}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Fees Paid #{@student.name}.xlsx\"" } 
     end
   end
 
@@ -79,7 +79,7 @@ class FeesController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Fees Unpaid #{@student.name}.xls\"" }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Fees Unpaid #{@student.name}.xlsx\"" }
     end
   end
 
@@ -88,7 +88,7 @@ class FeesController < ApplicationController
     @fees = @student.fees.where(term: current_term)
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Fees all #{@student.name}.xls\"" }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Fees all #{@student.name}.xlsx\"" }
     end
   end
 

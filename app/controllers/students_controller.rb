@@ -332,7 +332,7 @@ class StudentsController < ApplicationController
     @siblings = @student.siblings
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Family Report #{@student.name}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Family Report #{@student.name}.xlsx\"" } 
     end
   end
 
@@ -341,7 +341,7 @@ class StudentsController < ApplicationController
     @children = Student.where('id IN (?)', @student.siblings.map(&:id) << @student.id)
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Families Report #{@student.name}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Families Report #{@student.name}.xlsx\"" } 
     end
   end
 
@@ -349,7 +349,7 @@ class StudentsController < ApplicationController
     @students = Student.all.order('last_name, first_name ASC')
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student list.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student list.xlsx\"" } 
     end
   end
 
@@ -357,7 +357,7 @@ class StudentsController < ApplicationController
     @students = Student.all.order('last_name, first_name ASC')
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Health information list.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Health information list.xlsx\"" } 
     end
   end
 
