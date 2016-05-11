@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.datetime "updated_at"
   end
 
-  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace"
-  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "admin_users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.string   "user_name"
   end
 
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "attendances", force: true do |t|
     t.integer  "teacher_id"
@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.date     "attendanced_at"
   end
 
-  add_index "attendances", ["student_id"], name: "index_attendances_on_student_id"
-  add_index "attendances", ["term_id"], name: "index_attendances_on_term_id"
+  add_index "attendances", ["student_id"], name: "index_attendances_on_student_id", using: :btree
+  add_index "attendances", ["term_id"], name: "index_attendances_on_term_id", using: :btree
 
   create_table "charges", force: true do |t|
     t.integer  "student_id"
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.boolean  "is_completed", default: false
   end
 
-  add_index "charges", ["term_id"], name: "index_charges_on_term_id"
+  add_index "charges", ["term_id"], name: "index_charges_on_term_id", using: :btree
 
   create_table "comments", force: true do |t|
     t.integer  "term_student_id"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["term_student_id"], name: "index_comments_on_term_student_id"
+  add_index "comments", ["term_student_id"], name: "index_comments_on_term_student_id", using: :btree
 
   create_table "curriculars", force: true do |t|
     t.integer  "student_id"
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.integer  "acedemic_year_id"
   end
 
-  add_index "curriculars", ["student_id"], name: "index_curriculars_on_student_id"
+  add_index "curriculars", ["student_id"], name: "index_curriculars_on_student_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "enrollments", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.integer  "term_id"
   end
 
-  add_index "enrollments", ["term_id"], name: "index_enrollments_on_term_id"
+  add_index "enrollments", ["term_id"], name: "index_enrollments_on_term_id", using: :btree
 
   create_table "evaluate_types", force: true do |t|
     t.string   "name"
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.datetime "updated_at"
   end
 
-  add_index "evaluate_types", ["report_template_id"], name: "index_evaluate_types_on_report_template_id"
+  add_index "evaluate_types", ["report_template_id"], name: "index_evaluate_types_on_report_template_id", using: :btree
 
   create_table "evaluates", force: true do |t|
     t.string   "name"
@@ -151,8 +151,8 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.integer  "mark_type"
   end
 
-  add_index "evaluates", ["evaluate_type_id"], name: "index_evaluates_on_evaluate_type_id"
-  add_index "evaluates", ["report_template_id"], name: "index_evaluates_on_report_template_id"
+  add_index "evaluates", ["evaluate_type_id"], name: "index_evaluates_on_evaluate_type_id", using: :btree
+  add_index "evaluates", ["report_template_id"], name: "index_evaluates_on_report_template_id", using: :btree
 
   create_table "fee_categories", force: true do |t|
     t.string   "name"
@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 20160414142323) do
 
   create_table "fees", force: true do |t|
     t.string   "name"
-    t.float    "amount"
+    t.float    "amount",          limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "fee_caregory_id"
@@ -170,15 +170,15 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.integer  "term_id"
   end
 
-  add_index "fees", ["term_id"], name: "index_fees_on_term_id"
+  add_index "fees", ["term_id"], name: "index_fees_on_term_id", using: :btree
 
   create_table "grade_students", force: true do |t|
     t.integer "grade_id"
     t.integer "student_id"
   end
 
-  add_index "grade_students", ["grade_id"], name: "index_grade_students_on_grade_id"
-  add_index "grade_students", ["student_id"], name: "index_grade_students_on_student_id"
+  add_index "grade_students", ["grade_id"], name: "index_grade_students_on_grade_id", using: :btree
+  add_index "grade_students", ["student_id"], name: "index_grade_students_on_student_id", using: :btree
 
   create_table "grades", force: true do |t|
     t.string   "name"
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.integer  "report_template_id"
   end
 
-  add_index "grades", ["term_id"], name: "index_grades_on_term_id"
+  add_index "grades", ["term_id"], name: "index_grades_on_term_id", using: :btree
 
   create_table "graduations", force: true do |t|
     t.integer  "student_id"
@@ -231,7 +231,7 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.integer  "grade_id"
   end
 
-  add_index "reports", ["term_id"], name: "index_reports_on_term_id"
+  add_index "reports", ["term_id"], name: "index_reports_on_term_id", using: :btree
 
   create_table "routes", force: true do |t|
     t.string   "name"
@@ -250,8 +250,8 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.integer  "avg"
   end
 
-  add_index "student_evaluates", ["evaluate_id"], name: "index_student_evaluates_on_evaluate_id"
-  add_index "student_evaluates", ["term_student_id"], name: "index_student_evaluates_on_term_student_id"
+  add_index "student_evaluates", ["evaluate_id"], name: "index_student_evaluates_on_evaluate_id", using: :btree
+  add_index "student_evaluates", ["term_student_id"], name: "index_student_evaluates_on_term_student_id", using: :btree
 
   create_table "student_parents", force: true do |t|
     t.integer  "student_id"
@@ -260,8 +260,8 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.datetime "updated_at"
   end
 
-  add_index "student_parents", ["parent_id"], name: "index_student_parents_on_parent_id"
-  add_index "student_parents", ["student_id"], name: "index_student_parents_on_student_id"
+  add_index "student_parents", ["parent_id"], name: "index_student_parents_on_parent_id", using: :btree
+  add_index "student_parents", ["student_id"], name: "index_student_parents_on_student_id", using: :btree
 
   create_table "student_siblings", force: true do |t|
     t.integer  "student_id"
@@ -341,8 +341,8 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.string   "mobile"
   end
 
-  add_index "students", ["grade_id"], name: "index_students_on_grade_id"
-  add_index "students", ["route_id"], name: "index_students_on_route_id"
+  add_index "students", ["grade_id"], name: "index_students_on_grade_id", using: :btree
+  add_index "students", ["route_id"], name: "index_students_on_route_id", using: :btree
 
   create_table "subjects", force: true do |t|
     t.string   "name"
@@ -369,8 +369,8 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.datetime "updated_at"
   end
 
-  add_index "term_grades", ["grade_id"], name: "index_term_grades_on_grade_id"
-  add_index "term_grades", ["term_id"], name: "index_term_grades_on_term_id"
+  add_index "term_grades", ["grade_id"], name: "index_term_grades_on_grade_id", using: :btree
+  add_index "term_grades", ["term_id"], name: "index_term_grades_on_term_id", using: :btree
 
   create_table "term_students", force: true do |t|
     t.integer  "term_id"
@@ -379,8 +379,8 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.datetime "updated_at"
   end
 
-  add_index "term_students", ["student_id"], name: "index_term_students_on_student_id"
-  add_index "term_students", ["term_id"], name: "index_term_students_on_term_id"
+  add_index "term_students", ["student_id"], name: "index_term_students_on_student_id", using: :btree
+  add_index "term_students", ["term_id"], name: "index_term_students_on_term_id", using: :btree
 
   create_table "terms", force: true do |t|
     t.string   "name"
@@ -414,8 +414,8 @@ ActiveRecord::Schema.define(version: 20160414142323) do
     t.string   "phone"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "year_classes", force: true do |t|
     t.datetime "created_at"

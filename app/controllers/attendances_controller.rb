@@ -79,17 +79,23 @@ class AttendancesController < ApplicationController
     name_file = ""
     if params[:report][:day].present?
       name_file = params[:report][:day].to_s
-      @attendances = Attendance.where('student_id IN (?)', @grade.students.map(&:id))
+      @attendances = Attendance.joins('LEFT JOIN students on students.id = attendances.student_id')
+                               .where('student_id IN (?)', @grade.students.map(&:id))
                                .where(attendanced_at: params[:report][:day].to_date)
+                               .order("students.last_name ASC, students.first_name ASC")
     elsif params[:report][:month].present? && params[:report][:year].present?
       name_file = params[:report][:month].to_s + "_" + params[:report][:year].to_s
-      @attendances = Attendance.where('student_id IN (?)', @grade.students.map(&:id))
+      @attendances = Attendance.joins('LEFT JOIN students on students.id = attendances.student_id')
+                               .where('student_id IN (?)', @grade.students.map(&:id))
                                .where("extract(month from attendanced_at) = ?", params[:report][:month].to_i)
                                .where("extract(year from attendanced_at) = ?", params[:report][:year].to_i)
+                               .order("students.last_name ASC, students.first_name ASC")
     elsif params[:report][:year].present?
       name_file = params[:report][:year].to_s
-      @attendances = Attendance.where('student_id IN (?)', @grade.students.map(&:id))
-                              .where("extract(year from attendanced_at) = ?", params[:report][:year].to_i)
+      @attendances = Attendance.joins('LEFT JOIN students on students.id = attendances.student_id')
+                               .where('student_id IN (?)', @grade.students.map(&:id))
+                               .where("extract(year from attendanced_at) = ?", params[:report][:year].to_i)
+                               .order("students.last_name ASC, students.first_name ASC")
     end
     respond_to do |format|
       format.html
@@ -102,17 +108,23 @@ class AttendancesController < ApplicationController
     name_file = ""
     if params[:report][:day].present?
       name_file = params[:report][:day].to_s
-      @attendances = Attendance.where('teacher_id IN (?)', User.all.map(&:id))
+      @attendances = Attendance.joins('LEFT JOIN users on users.id = attendances.teacher_id')
+                               .where('teacher_id IN (?)', User.all.map(&:id))
                                .where(attendanced_at: params[:report][:day].to_date)
+                               .order("users.last_name ASC, users.first_name ASC")
     elsif params[:report][:month].present? && params[:report][:year].present?
       name_file = params[:report][:month].to_s + "_" + params[:report][:year].to_s
-      @attendances = Attendance.where('teacher_id IN (?)', User.all.map(&:id))
+      @attendances = Attendance.joins('LEFT JOIN users on users.id = attendances.teacher_id')
+                               .where('teacher_id IN (?)', User.all.map(&:id))
                                .where("extract(month from attendanced_at) = ?", params[:report][:month].to_i)
                                .where("extract(year from attendanced_at) = ?", params[:report][:year].to_i)
+                               .order("users.last_name ASC, users.first_name ASC")
     elsif params[:report][:year].present?
       name_file = params[:report][:year].to_s
-      @attendances = Attendance.where('teacher_id IN (?)', User.all.map(&:id))
-                              .where("extract(year from attendanced_at) = ?", params[:report][:year].to_i)
+      @attendances = Attendance.joins('LEFT JOIN users on users.id = attendances.teacher_id')
+                               .where('teacher_id IN (?)', User.all.map(&:id))
+                               .where("extract(year from attendanced_at) = ?", params[:report][:year].to_i)
+                               .order("users.last_name ASC, users.first_name ASC")
     end
     respond_to do |format|
       format.html
