@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     @users = User.all.order('last_name, first_name ASC')
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"staff list.xlsx\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"staff list.xls\"" } 
     end
   end
 
