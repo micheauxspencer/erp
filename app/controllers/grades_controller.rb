@@ -75,7 +75,7 @@ class GradesController < ApplicationController
   end
 
   def export_students
-    @students = @grade.students.order('last_name, first_name ASC')
+    @students = @grade.students.order('last_name ASC, first_name ASC')
     @teacher = @grade.teacher
     respond_to do |format|
       format.html
