@@ -30,8 +30,8 @@ class StudentsController < ApplicationController
       end
     end
     if params[:year].present? && params[:year].to_i !=  0
-      # @students_all = @students_all.where("extract(month from admission_date) = ?", params[:year].to_i)
-      @students_all = @students_all.where("cast(strftime('%Y', admission_date) as int) = ?", params[:year].to_i)
+      @students_all = @students_all.where("extract(month from admission_date) = ?", params[:year].to_i)
+      # @students_all = @students_all.where("cast(strftime('%Y', admission_date) as int) = ?", params[:year].to_i)
     end
     @students = @students_all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
   end
