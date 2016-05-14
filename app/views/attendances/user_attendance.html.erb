@@ -1,8 +1,12 @@
+<div class="col-md-12">
+  <%= link_to 'Export Staff', export_staff_path(format: "xls"), :class => "btn btn-primary" %>
+  <%= link_to 'Export Attendance', export_attendance_users_path, :class => "btn btn-primary" %>
+</div>
 <div class="row">
 
-    <%= simple_form_for Attendance.new, :url => teacher_attendance_all_path, method: :get, :html => {:class => "form-horizontal teacher"} do |f| %>
+    <%= simple_form_for Attendance.new, :url => user_attendance_path, method: :get, :html => {:class => "form-horizontal user"} do |f| %>
       <div class="col-md-3">
-        <div style="margin-left: 25px !important;"> <%= f.input :attendanced_at, as: :date_picker, :class => 'form-control',
+        <div style="margin-left: 30px !important;"> <%= f.input :attendanced_at, as: :date_picker, :class => 'form-control',
                                                                 :input_html => { value: params[:attendance] && params[:attendance][:attendanced_at] ? params[:attendance][:attendanced_at] : Time.now.strftime("%d/%m/%Y") } %></div>
       </div>
       <div class="col-md-9" style="margin-top: 26px;">
@@ -26,26 +30,26 @@
   </tr>
   </thead>
   <tbody>
-  <% @teachers.each do |teacher| %>
+  <% @users.each do |user| %>
       <tr>
-        <td><%= teacher.id%></td>
-        <td><%= teacher.first_name %></td>
-        <td><%= teacher.last_name %></td>
-        <td><%= teacher.phone %></td>
-        <td><%= teacher.get_list_grades %></td>
+        <td><%= user.id%></td>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.phone %></td>
+        <td><%= user.get_list_grades %></td>
         <td>
-          <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "teacher_#{teacher.id}_attendance_form") do %>
-              <%= hidden_field_tag :teacher_id, teacher.id %>
+          <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "user_#{user.id}_attendance_form") do %>
+              <%= hidden_field_tag :user_id, user.id %>
               <% day = params[:attendance] && params[:attendance][:attendanced_at] ? params[:attendance][:attendanced_at].to_date : Time.now.to_date %>
               <% attendance = Attendance.where(
-                      "teacher_id = ? AND term_id = ? AND attendanced_at = ?",
-                      teacher.id,
+                      "user_id = ? AND term_id = ? AND attendanced_at = ?",
+                      user.id,
                       current_term,
                       day
               ).first %>
 
               <%= hidden_field_tag :attendanced_at, params[:attendance] && params[:attendance][:attendanced_at] ? params[:attendance][:attendanced_at] : Time.now.strftime("%d/%m/%Y") %>
-              <%= hidden_field_tag :type_action, teacher.id, id: "type_attendance" %>
+              <%= hidden_field_tag :type_action, user.id, id: "type_attendance" %>
 
               <% [ 'late', 'absence', 'half day', 'early dismissal' ].each do |type_action| %>
                 <label class="label-radio-action"><%= type_action.humanize %></label>

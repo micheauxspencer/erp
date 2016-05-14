@@ -4,7 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  name            :string(255)
-#  amount          :float(24)
+#  amount          :float
 #  created_at      :datetime
 #  updated_at      :datetime
 #  fee_caregory_id :integer

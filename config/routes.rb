@@ -48,7 +48,7 @@ Rails.application.routes.draw do
 
   get '/grades/:grade_id/student_attendance' => "attendances#student_attendance", as: :grade_student_attendance
   get '/grades/:grade_id/teacher_attendance' => "attendances#teacher_attendance", as: :grade_teacher_attendance
-  get '/attendances/teacher_attendance_all' => "attendances#teacher_attendance_all", as: :teacher_attendance_all
+  get '/attendances/user_attendance' => "attendances#user_attendance", as: :user_attendance
 
   get '/attendances/export_by_student' => "attendances#export_by_student", as: :attendance_export_by_student, defaults: { format: 'xls' }
   get '/attendances/export_by_grade' => "attendances#export_by_grade", as: :attendance_export_by_grade, defaults: { format: 'xls' }

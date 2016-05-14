@@ -11,14 +11,18 @@
       </Row>
       <Row>
         <Cell><Data ss:Type="String">ID</Data></Cell>
-        <Cell><Data ss:Type="String">Staff</Data></Cell>
+        <Cell><Data ss:Type="String">First Name</Data></Cell>
+        <Cell><Data ss:Type="String">Last Name</Data></Cell>
+        <Cell><Data ss:Type="String">Role</Data></Cell>
         <Cell><Data ss:Type="String">Date</Data></Cell>
         <Cell><Data ss:Type="String">Type</Data></Cell>
       </Row>
     <% @attendances.each_with_index do |attendance, index| %>
       <Row>
         <Cell><Data ss:Type="String"><%= index + 1 %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= User.find(attendance.teacher_id).name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= attendance.user.first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= attendance.user.last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= attendance.user.role %></Data></Cell>
         <Cell><Data ss:Type="String"><%= attendance.attendanced_at %></Data></Cell>
         <Cell><Data ss:Type="String"><%= attendance.type_action %></Data></Cell>
       </Row>

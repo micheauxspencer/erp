@@ -3,7 +3,7 @@
 # Table name: attendances
 #
 #  id             :integer          not null, primary key
-#  teacher_id     :integer
+#  user_id        :integer
 #  student_id     :integer
 #  created_at     :datetime
 #  updated_at     :datetime
@@ -19,7 +19,7 @@
 #
 
 class Attendance < ActiveRecord::Base
-  belongs_to :teacher, class_name: 'User'
+  belongs_to :user
   belongs_to :grade
   belongs_to :student
 

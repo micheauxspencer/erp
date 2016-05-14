@@ -35,7 +35,8 @@ class User < ActiveRecord::Base
       accounting: "accounting",
       teacher: 'teacher',
       office: 'office',
-      drivers: 'drivers'
+      drivers: 'drivers',
+      assistant: 'assistant'
   }
 
   # Include default devise modules. Others available are:

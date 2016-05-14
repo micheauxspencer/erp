@@ -15,8 +15,8 @@ class AttendancesController < ApplicationController
     @teacher = @grade.teacher 
   end
 
-  def teacher_attendance_all
-    @teachers = User.teachers.order(sort_column + " " + sort_direction)
+  def user_attendance
+    @users = User.order(sort_column + " " + sort_direction)
   end
 
 
@@ -33,14 +33,14 @@ class AttendancesController < ApplicationController
           day
       ).first
       @attendance = Attendance.create(student_id: params[:student_id], term_id: current_term, attendanced_at: params[:attendanced_at]) unless @attendance
-    elsif params[:teacher_id].present?
+    elsif params[:user_id].present?
       @attendance = Attendance.where(
-          "teacher_id = ? AND term_id = ? AND attendanced_at = ?",
-          params[:teacher_id],
+          "user_id = ? AND term_id = ? AND attendanced_at = ?",
+          params[:user_id],
           current_term,
           day
       ).first
-      @attendance = Attendance.create(teacher_id: params[:teacher_id], term_id: current_term, attendanced_at: params[:attendanced_at]) unless @attendance
+      @attendance = Attendance.create(user_id: params[:user_id], term_id: current_term, attendanced_at: params[:attendanced_at]) unless @attendance
     end
 
     @attendance.update_attributes(type_action: params[:type_action]) if @attendance.present?
@@ -70,7 +70,7 @@ class AttendancesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @attendances.to_csv }
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@student.name} #{name_file}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@student.name} #{name_file}.xlsx\"" } 
     end
   end
 
@@ -87,20 +87,20 @@ class AttendancesController < ApplicationController
       name_file = params[:report][:month].to_s + "_" + params[:report][:year].to_s
       @attendances = Attendance.joins('LEFT JOIN students on students.id = attendances.student_id')
                                .where('student_id IN (?)', @grade.students.map(&:id))
-                               .where("extract(month from attendanced_at) = ?", params[:report][:month].to_i)
-                               .where("extract(year from attendanced_at) = ?", params[:report][:year].to_i)
+                               .where("extract(month from attendances.attendanced_at) = ?", params[:report][:month].to_i)
+                               .where("extract(year from attendances.attendanced_at) = ?", params[:report][:year].to_i)
                                .order("students.last_name ASC, students.first_name ASC")
     elsif params[:report][:year].present?
       name_file = params[:report][:year].to_s
       @attendances = Attendance.joins('LEFT JOIN students on students.id = attendances.student_id')
                                .where('student_id IN (?)', @grade.students.map(&:id))
-                               .where("extract(year from attendanced_at) = ?", params[:report][:year].to_i)
+                               .where("extract(year from attendances.attendanced_at) = ?", params[:report][:year].to_i)
                                .order("students.last_name ASC, students.first_name ASC")
     end
     respond_to do |format|
       format.html
       format.csv { send_data @attendances.to_csv }
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@grade.name} #{name_file}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@grade.name} #{name_file}.xlsx\"" } 
     end
   end
 
@@ -108,28 +108,28 @@ class AttendancesController < ApplicationController
     name_file = ""
     if params[:report][:day].present?
       name_file = params[:report][:day].to_s
-      @attendances = Attendance.joins('LEFT JOIN users on users.id = attendances.teacher_id')
-                               .where('teacher_id IN (?)', User.all.map(&:id))
+      @attendances = Attendance.joins('LEFT JOIN users on users.id = attendances.user_id')
+                               .where('user_id IN (?)', User.all.map(&:id))
                                .where(attendanced_at: params[:report][:day].to_date)
                                .order("users.last_name ASC, users.first_name ASC")
     elsif params[:report][:month].present? && params[:report][:year].present?
       name_file = params[:report][:month].to_s + "_" + params[:report][:year].to_s
-      @attendances = Attendance.joins('LEFT JOIN users on users.id = attendances.teacher_id')
-                               .where('teacher_id IN (?)', User.all.map(&:id))
+      @attendances = Attendance.joins('LEFT JOIN users on users.id = attendances.user_id')
+                               .where('user_id IN (?)', User.all.map(&:id))
                                .where("extract(month from attendanced_at) = ?", params[:report][:month].to_i)
                                .where("extract(year from attendanced_at) = ?", params[:report][:year].to_i)
                                .order("users.last_name ASC, users.first_name ASC")
     elsif params[:report][:year].present?
       name_file = params[:report][:year].to_s
-      @attendances = Attendance.joins('LEFT JOIN users on users.id = attendances.teacher_id')
-                               .where('teacher_id IN (?)', User.all.map(&:id))
+      @attendances = Attendance.joins('LEFT JOIN users on users.id = attendances.user_id')
+                               .where('user_id IN (?)', User.all.map(&:id))
                                .where("extract(year from attendanced_at) = ?", params[:report][:year].to_i)
                                .order("users.last_name ASC, users.first_name ASC")
     end
     respond_to do |format|
       format.html
       format.csv { send_data @attendances.to_csv }
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"staff attendance list #{name_file}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"staff attendance list #{name_file}.xlsx\"" } 
     end
   end
 
