@@ -1,0 +1,51 @@
+<%- model_class = User -%>
+<div class="page-header row">
+  <h1 class="col-md-7" style="margin: 0px;">Accounting Export</h1>
+</div>
+
+<div id="accounting_export">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#tab-student" aria-controls="tab-student" role="tab" data-toggle="tab">Student</a></li>
+    <li role="presentation"><a href="#tab-staff" aria-controls="tab-staff" role="tab" data-toggle="tab">Staff</a></li>
+    <li role="presentation"><a href="#tab-grade" aria-controls="tab-grade" role="tab" data-toggle="tab">Grade</a></li>
+    <li role="presentation"><a href="#tab-routes" aria-controls="tab-routes" role="tab" data-toggle="tab">Routes</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="tab-student">      
+      <div class="row" style="text-align: left;">
+        <div class="col-md-3">
+          <%= link_to 'Export All Student', student_export_all_path(format: "xls"), :class => "btn btn-primary" %>
+        </div>
+        <div class="col-md-3">
+          <%= link_to 'Export Health', export_health_path(format: "xls"), :class => "btn btn-primary" %>
+        </div>
+        <div class="col-md-3">
+          <%= link_to 'Export Route', export_route_student_path(format: "xls"), :class => "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-staff">
+      <div class="row" style="text-align: left;">
+        <div class="col-md-3">
+          <%= link_to 'Export All Staff', export_staff_path(format: "xls"), :class => "btn btn-primary" %>
+        </div>
+        <div class="col-md-3">
+          <%= link_to 'Export Staff Attendance', export_attendance_users_path, :class => "btn btn-primary" %>
+        </div>
+        <div class="col-md-3">
+          
+        </div>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-grade">
+     <%= link_to 'Export All Grade', export_all_grades_path(format: "xls"),  class: "btn btn-primary" %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-routes">
+     <%= link_to 'Export All Routes', export_all_routes_path(format: "xls"), :class => "btn btn-primary" %>
+    </div>
+  </div>
+
+</div>

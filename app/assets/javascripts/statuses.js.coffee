@@ -2,8 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).ready ->
-  $('select#select_grade').change ->
-    val = $(this).val()
-    window.location = '/students?grade_id=' + val
+  $('#select-grade').change ->
+    grade_id = $("#select-grade").val()
+    year = $("#select-year").val()
+    window.location = '/students?grade_id=' + grade_id + '&year=' + year
+    return
+
+  $('#select-year').change ->
+    grade_id = $("#select-grade").val()
+    year = $("#select-year").val()
+    window.location = '/students?grade_id=' + grade_id + '&year=' + year
     return
   return

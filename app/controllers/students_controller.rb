@@ -2,7 +2,7 @@ class StudentsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report, :families_report, :export_attendance], except: [:import, :export_all]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report, :families_report, :export_attendance], except: [:import, :export_all, :export_health, :export_route]
 
   before_action :check_permissions, only: [:update, :enter_mark]
   before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all]
@@ -28,6 +28,10 @@ class StudentsController < ApplicationController
       else
         @students_all = Student.search_student( Student.all, params[:search])
       end
+    end
+    if params[:year].present? && params[:year] !=  0
+      @students_all = @students_all.where("extract(month from admission_date) = ?", params[:year].to_i)
+      # @students_all = @students_all.where("cast(strftime('%Y', admission_date) as int) = ?", params[:year].to_i)
     end
     @students = @students_all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
   end
@@ -353,11 +357,20 @@ class StudentsController < ApplicationController
     end
   end
 
-  def expprt_health
+  def export_health
     @students = Student.all.order('last_name ASC, first_name ASC')
     respond_to do |format|
       format.html
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"Health information list.xls\"" } 
+    end
+  end
+
+  def export_route
+    @students = Student.where.not(route_id: nil)
+                       .order('last_name ASC, first_name ASC')
+    respond_to do |format|
+      format.html
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student route list.xls\"" } 
     end
   end
 

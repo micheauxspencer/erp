@@ -36,6 +36,7 @@
               <li><%= link_to 'Student List', students_path %></li>
               <li><%= link_to 'Teacher List', teachers_path %></li>
               <li><%= link_to 'Staff Attendance ', user_attendance_path %></li>
+              <li><%= link_to 'Accounting Export ', accounting_export_path %></li>
             </ul>
           </li>
         </ul>
@@ -70,6 +71,7 @@
                 <li><%= link_to 'Students', students_path %></li>
                 <li><%= link_to "Grades", grades_path %></li>
                 <li><%= link_to "Enter Grades", enter_grade_grades_path %></li>
+                <li><%= link_to "Routes", routes_path %></li>
               </ul>
             </li>
           </ul>
@@ -132,11 +134,17 @@
   </div><!-- /.container-fluid -->
 </nav>
   <% if notice %>
-    <p class="notice"><%= notice %></p>
+    <div class="alert alert-success">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <%= notice %>
+    </div>
   <% end %>
 
   <% if alert %>
-    <p class="alert"><%= alert %></p>
+    <div class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <%= alert %>
+    </div>
   <% end %>
 
   <div class="row">

@@ -24,6 +24,7 @@
     <th><%= User.human_attribute_name(:id) %></th>
     <th><%= sortable_attendance "first_name" %></th>
     <th><%= sortable_attendance "last_name" %></th>
+    <th><%= User.human_attribute_name(:role) %></th>
     <th><%= User.human_attribute_name(:phone) %></th>
     <th><%= User.human_attribute_name(:gende) %></th>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -36,6 +37,7 @@
         <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>
         <td><%= user.phone %></td>
+        <td><%= user.role %></td>
         <td><%= user.get_list_grades %></td>
         <td>
           <%= form_tag({controller: 'attendances', action: 'create'}, method: 'post', remote: true, id: "user_#{user.id}_attendance_form") do %>

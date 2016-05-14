@@ -135,7 +135,7 @@ class AttendancesController < ApplicationController
 
   private
     def sort_column
-      Student.column_names.include?(params[:sort]) ? params[:sort] : "first_name"
+      Student.column_names.include?(params[:sort]) ? params[:sort] : "last_name"
     end
 
     def sort_direction

@@ -39,6 +39,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def accounting_export
+    
+  end
+
   private
     def user_params
       params.require(:user).permit(:email, :user_name, :role, :first_name, :last_name, :birth_date, :address, :phone)

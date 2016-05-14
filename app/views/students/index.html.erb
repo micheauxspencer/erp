@@ -8,6 +8,9 @@
         <% if params[:grade_id].present? %>
           <%= hidden_field_tag :grade_id, params[:grade_id] %>
         <% end %>
+        <% if params[:year].present? %>
+          <%= hidden_field_tag :year, params[:grade_id] %>
+        <% end %>
         <%= text_field_tag :search, params[:search], class: "form-control",
         placeholder: " Search by first name, last name" %>
         <span class="input-group-addon">
@@ -22,18 +25,22 @@
 </div>
 <label class="pull-left" style="line-height: 30px">Grade: </label>
 <div class="col-md-2">
-  <%= select_tag "select_grade", options_for_select(@grades.collect{ |u| [u.name, u.id]}.unshift(["Select a grade",0]), :selected => params[:grade_id]), {:class =>"form-control"} %>
+  <%= select_tag "select_grade", options_for_select(@grades.collect{ |u| [u.name, u.id]}.unshift(["Select a grade",0]), :selected => params[:grade_id]), {class: "form-control", id: "select-grade"} %>
 </div>
+<label class="pull-left" style="line-height: 30px">Acedemic Year: </label>
+<div class="col-md-2">
+  <%= select_tag "select_year", options_for_select(AcedemicYear.all.collect{ |u| [u.year, u.year]}.unshift(["Select a year",0]),:selected => params[:year]), {:class =>"form-control", id: "select-year"} %>
+</div>
+
 <span style="line-height: 30px;">Students total: <%= @students.count %></span>
 <div class="clearfix"></div>
 <br />
 <% if current_user.role?(User::ROLE[:accounting]) %>
   <%= link_to t('.new', :default => t("helpers.links.new")), new_student_path, :class => 'btn btn-primary' %>
-<% end %>
-<% if current_user.role?(User::ROLE[:accounting]) %>
   <%= link_to 'Import', import_student_path, :class => 'btn btn-primary' %>
   <%= link_to 'Export All', student_export_all_path(format: "xls"), :class => "btn btn-primary" %>
-  <%= link_to 'Export Health', expprt_health_path(format: "xls"), :class => "btn btn-primary" %>
+  <%= link_to 'Export Health', export_health_path(format: "xls"), :class => "btn btn-primary" %>
+  <%= link_to 'Export Route', export_route_student_path(format: "xls"), :class => "btn btn-primary" %>
 
   <%= link_to 'Delete All',
                       delete_all_student_path,
@@ -50,6 +57,7 @@
       <th>Grade</th>
       <th><%= sortable "gender" %></th>
       <th><%= sortable "birthdate" %></th>
+      <th><%= sortable "admission_date" %></th>
       <% unless current_user.role?('teacher') %>
         <th>Fees Amount</th>
       <% end %>
@@ -67,6 +75,7 @@
         <td><%= student.grade.name if student.grade %></td>
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
+        <td><%= student.admission_date.strftime("%B, %d, %Y") if student.admission_date %></td>
         <% unless current_user.role?('teacher') %>
           <td><%= student.fees.sum(:amount) %></td>
         <% end %>

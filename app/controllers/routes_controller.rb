@@ -28,11 +28,14 @@ class RoutesController < ApplicationController
 
     respond_to do |format|
       if @route.save
-        @student = Student.find(params[:route][:student_id])
-        @student.route = @route
-        @student.save
-
-        format.html { redirect_to edit_student_path(@student), notice: 'Route was successfully created.' }
+        if params[:route][:student_id]
+          @student = Student.find(params[:route][:student_id])
+          @student.route = @route
+          @student.save
+          format.html { redirect_to edit_student_path(@student), notice: 'Route was successfully created.' }
+        else
+          format.html { redirect_to @route, notice: 'Route was successfully created.' }
+        end
         format.json { render :show, status: :created, location: @route }
         format.js
       else
@@ -64,6 +67,14 @@ class RoutesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to routes_url, notice: 'Route was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def export_all
+    @routes = Route.all
+    respond_to do |format|
+      format.html
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Routes list.xls\"" } 
     end
   end
 

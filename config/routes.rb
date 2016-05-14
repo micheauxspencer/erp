@@ -16,11 +16,16 @@ Rails.application.routes.draw do
   get 'users/export_staff' => 'users#export_staff', as: :export_staff
   get 'users/export_attendance' => "users#export_attendance", as: :export_attendance_users
   get 'teachers' => 'users#teachers', as: :teachers
+  get 'accounting_export' => 'users#accounting_export',as: :accounting_export
 
   resources :acedemic_years
 
   resources :fee_categories
-  resources :routes
+  resources :routes do
+    collection do
+      get 'export_all' => "routes#export_all", as: :export_all
+    end
+  end
 
   resources :fees
 
@@ -82,7 +87,8 @@ Rails.application.routes.draw do
   get 'import_student' => "students#import", as: :import_student
   post 'students/delete_all' => "students#delete_all", as: :delete_all_student
 
-  get 'expprt_health' => "students#expprt_health", as: :expprt_health
+  get 'export_health' => "students#export_health", as: :export_health
+  get 'export_route' => "students#export_route", as: :export_route_student
 
   get 'students/family_report/:id' => "students#family_report", as: :student_family_report
   get 'students/families_report/:id' => "students#families_report", as: :student_families_report
