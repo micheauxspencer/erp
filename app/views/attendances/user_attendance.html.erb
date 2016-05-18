@@ -44,9 +44,8 @@
               <%= hidden_field_tag :user_id, user.id %>
               <% day = params[:attendance] && params[:attendance][:attendanced_at] ? params[:attendance][:attendanced_at].to_date : Time.now.to_date %>
               <% attendance = Attendance.where(
-                      "user_id = ? AND term_id = ? AND attendanced_at = ?",
+                      "user_id = ? AND attendanced_at = ?",
                       user.id,
-                      current_term,
                       day
               ).first %>
 
