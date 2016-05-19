@@ -22,6 +22,8 @@
         <th class="col-md-1">Completion</th>
 
         <th class="col-md-1">Paid Amount</th>
+
+        <th class="col-md-1">Action</th>
     </div>
   </tr>
   </thead>
@@ -52,25 +54,26 @@
             </td>
 
             <td class="col-md-2">
+              
               <div class="pull-left" id="amount_field_<%= "#{@student.id}_#{fee.id}"%>">
                 <%= hidden_field_tag "original_amount", charge ? charge.amount.to_i : 0 %>
                 <input disabled type="text" name="amount" value="<%= charge ? charge.amount.to_i : 0 %>" style="width: 80px; height: 1.8em" class="form-control">
               </div>
-
+              <span style="font-size: 20px; line-height: 27px;">$</span>
               <div class="amount-edit-group-btns">
-                <div class="btn btn-default" style="padding: 1px 5px; margin-left: 10px; top: -2px; position: relative" id="btn_edit_<%= "#{@student.id}_#{fee.id}"%>" onclick="updatePaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                <div class="btn btn-default btn-change-paid" id="btn_edit_<%= "#{@student.id}_#{fee.id}"%>" onclick="updatePaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
                   <span class="fa fa-pencil"></span>
                 </div>
 
-                <div class="btn btn-success payment_update pull-left" style="padding: 1px 5px; margin-left: 10px; top: -2px; position: relative" id="payment_update_<%= "#{@student.id}_#{fee.id}" %>" onclick="confirmPaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                <div class="btn btn-success payment_update pull-left" id="payment_update_<%= "#{@student.id}_#{fee.id}" %>" onclick="confirmPaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
                   <span class="fa fa-check"></span>
                 </div>
-                <div class="btn btn-default payment_cancel pull-left" style="padding: 1px 6px; margin-left: 5px; top: -2px; position: relative" id="payment_cancel_<%= "#{@student.id}_#{fee.id}"%>" onclick="cancelPaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                <div class="btn btn-default payment_cancel pull-left" id="payment_cancel_<%= "#{@student.id}_#{fee.id}"%>" onclick="cancelPaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
                   <span class="fa fa-close"> </span>
                 </div>
               </div>
             </td>
-
+            <td><%= link_to "Unassign", unassign_fee_path(fee_id: fee.id, student_id: @student.id), method: :post, class: 'btn btn-default' %></td>
         </div>
 
       </tr>
@@ -133,6 +136,27 @@
 
     .amount-edit-group-btns {
         margin-top: 2px;
+    }
+    .btn-change-paid {
+      padding: 1px 5px;
+      top: -27px;
+      left: 100px;
+      position: relative;
+      display: inline-block;
+    }
+    .payment_update {
+      padding: 1px 5px;
+      margin-left: 10px;
+      top: -29px;
+      left: 94px;
+      position: relative;
+    }
+    .payment_cancel {
+      padding: 1px 6px;
+      margin-left: 5px;
+      left: 92px;
+      top: -29px;
+      position: relative;
     }
 </style>
 

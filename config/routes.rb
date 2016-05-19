@@ -67,6 +67,7 @@ Rails.application.routes.draw do
   get 'set_current_acedemic_year' => "acedemic_years#set_current_acedemic_year", as: :set_current_acedemic_year
 
   post 'students/assign_fee' => "students#assign_fee", as: :assign_fee
+  post 'students/unassign_fee' => "students#unassign_fee", as: :unassign_fee
   post 'students/:student_id/routes' => "students#assign_route", as: :assign_route
 
   post 'students/:student_id/payment' => "students#payment", as: :student_fee

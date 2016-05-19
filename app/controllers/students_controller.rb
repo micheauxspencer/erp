@@ -150,6 +150,15 @@ class StudentsController < ApplicationController
     redirect_to edit_student_path(@student)
   end
 
+  def unassign_fee
+    @student_id = params[:student_id]
+    @fee_id = params[:fee_id]
+    @student = Student.find(@student_id)
+    charge = Charge.where(student_id: @student_id, fee_id: @fee_id).first
+    charge.destroy if charge.present?
+    redirect_to edit_student_path(@student)
+  end
+
 
   def assign_route
     @student_id = params[:student_id]
