@@ -54,12 +54,11 @@
             </td>
 
             <td class="col-md-2">
-              
-              <div class="pull-left" id="amount_field_<%= "#{@student.id}_#{fee.id}"%>">
+              <div class="" id="amount_field_<%= "#{@student.id}_#{fee.id}"%>" style="position: relative;" >
                 <%= hidden_field_tag "original_amount", charge ? charge.amount.to_i : 0 %>
-                <input disabled type="text" name="amount" value="<%= charge ? charge.amount.to_i : 0 %>" style="width: 80px; height: 1.8em" class="form-control">
+                <span style="font-size: 20px; line-height: 27px;">$</span>
+                <input disabled type="text" name="amount" value="<%= charge ? charge.amount.to_i : 0 %>" style="width: 80px; height: 1.8em" class="form-control amount_field">
               </div>
-              <span style="font-size: 20px; line-height: 27px;">$</span>
               <div class="amount-edit-group-btns">
                 <div class="btn btn-default btn-change-paid" id="btn_edit_<%= "#{@student.id}_#{fee.id}"%>" onclick="updatePaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
                   <span class="fa fa-pencil"></span>
@@ -137,9 +136,16 @@
     .amount-edit-group-btns {
         margin-top: 2px;
     }
+    .amount_field {
+      width: 80px;
+      height: 1.8em;
+      position: absolute;
+      top: 2px;
+      left: 15px;
+    }
     .btn-change-paid {
       padding: 1px 5px;
-      top: -27px;
+      top: -25px;
       left: 100px;
       position: relative;
       display: inline-block;
@@ -147,7 +153,7 @@
     .payment_update {
       padding: 1px 5px;
       margin-left: 10px;
-      top: -29px;
+      top: -25px;
       left: 94px;
       position: relative;
     }
@@ -155,7 +161,7 @@
       padding: 1px 6px;
       margin-left: 5px;
       left: 92px;
-      top: -29px;
+      top: -25px;
       position: relative;
     }
 </style>
