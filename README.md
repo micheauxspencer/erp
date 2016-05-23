@@ -12,7 +12,7 @@ password: khalsa1234
 
 * Update code from origin/master:
 ```
-  git pull origin master
+  git pull deloyed master
   ```
 
 * Update database: (if we make changes on DB)
