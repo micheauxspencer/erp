@@ -1,11 +1,11 @@
 <h2> Student's Fees </h2>
 <% if current_user.role?("accounting") %>
 <%= link_to 'Fee Report Paid',
-              fee_report_paid_path(@student, format: "xls"),  class: "btn btn-default" %>
+              fee_report_paid_path(student, format: "xls"),  class: "btn btn-default" %>
 <%= link_to 'Fee Report Unpaid',
-              fee_report_unpaid_path(@student, format: "xls"),  class: "btn btn-default" %>
+              fee_report_unpaid_path(student, format: "xls"),  class: "btn btn-default" %>
 <%= link_to 'Fee Report All',
-              fee_report_by_family_path(@student, format: "xls"),  class: "btn btn-default" %>
+              fee_report_by_family_path(student, format: "xls"),  class: "btn btn-default" %>
 <% end %>
 <table class="table table-striped" style="margin-top: 30px; margin-bottom: 50px;">
   <thead>
@@ -29,18 +29,18 @@
   </thead>
 
   <tbody>
-  <% @fees.each do |fee| %>
-      <% charge = Charge.where(student_id: @student.id, fee_id: fee.id).first %>
+  <% fees.each do |fee| %>
+      <% charge = Charge.where(student_id: student.id, fee_id: fee.id).first %>
 
       <tr>
         <div class="row">
-              <%= hidden_field_tag 'amount', charge ? charge.amount.to_i : 0, id: "student_fee_form_amount_#{@student.id}_#{fee.id}" %>
+              <%= hidden_field_tag 'amount', charge ? charge.amount.to_i : 0, id: "student_fee_form_amount_#{student.id}_#{fee.id}" %>
 
             <td class="col-md-1"><%= link_to fee.id, fee_path(fee) %></td>
 
             <td class="col-md-1"><%= fee.name %></td>
 
-            <td class="col-md-1"><%= fee.amount %></td>
+            <td class="col-md-1">&#36; <%= fee.amount %></td>
 
             <td class="col-md-1"><%= fee.term ? fee.term.name : ''%></td>
 
@@ -50,29 +50,28 @@
                  fee_status = 'Paid' if charge && charge.is_completed
                  fee_status = 'Partial' if charge && !charge.is_completed && charge.amount.to_i > 0
               %>
-              <span id="charge_status_<%= "#{@student.id}_#{fee.id}"%>"><%= fee_status %></span>
+              <span id="charge_status_<%= "#{student.id}_#{fee.id}"%>"><%= fee_status %></span>
             </td>
 
             <td class="col-md-2">
-              <div class="" id="amount_field_<%= "#{@student.id}_#{fee.id}"%>" style="position: relative;" >
+              <div class="" id="amount_field_<%= "#{student.id}_#{fee.id}"%>" style="position: relative;" >
                 <%= hidden_field_tag "original_amount", charge ? charge.amount.to_i : 0 %>
-                <span style="font-size: 20px; line-height: 27px;">$</span>
                 <input disabled type="text" name="amount" value="<%= charge ? charge.amount.to_i : 0 %>" style="width: 80px; height: 1.8em" class="form-control amount_field">
               </div>
               <div class="amount-edit-group-btns">
-                <div class="btn btn-default btn-change-paid" id="btn_edit_<%= "#{@student.id}_#{fee.id}"%>" onclick="updatePaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                <div class="btn btn-default btn-change-paid" id="btn_edit_<%= "#{student.id}_#{fee.id}"%>" onclick="updatePaymentClicked(<%= "#{student.id}, #{fee.id}" %>)">
                   <span class="fa fa-pencil"></span>
                 </div>
 
-                <div class="btn btn-success payment_update pull-left" id="payment_update_<%= "#{@student.id}_#{fee.id}" %>" onclick="confirmPaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                <div class="btn btn-success payment_update pull-left" id="payment_update_<%= "#{student.id}_#{fee.id}" %>" onclick="confirmPaymentClicked(<%= "#{student.id}, #{fee.id}" %>)">
                   <span class="fa fa-check"></span>
                 </div>
-                <div class="btn btn-default payment_cancel pull-left" id="payment_cancel_<%= "#{@student.id}_#{fee.id}"%>" onclick="cancelPaymentClicked(<%= "#{@student.id}, #{fee.id}" %>)">
+                <div class="btn btn-default payment_cancel pull-left" id="payment_cancel_<%= "#{student.id}_#{fee.id}"%>" onclick="cancelPaymentClicked(<%= "#{student.id}, #{fee.id}" %>)">
                   <span class="fa fa-close"> </span>
                 </div>
               </div>
             </td>
-            <td><%= link_to "Unassign", unassign_fee_path(fee_id: fee.id, student_id: @student.id), method: :post, class: 'btn btn-default' %></td>
+            <td><button type="button" class="btn btn-default unassign_fee_student" data-fee-id="<%= fee.id%>" data-student-id="<%= student.id%>">Unassign</button></td>
         </div>
 
       </tr>
@@ -80,7 +79,7 @@
   </tbody>
 </table>
 
-<%= link_to "Fee Report All", export_fee_path(@student, :format => :pdf), class: 'btn btn-primary' %>
+<%= link_to "Fee Report All", export_fee_path(student, :format => :pdf), class: 'btn btn-primary' %>
 
 <br>
 <br>
@@ -103,7 +102,7 @@
   </thead>
 
   <tbody>
-    <% @other_fees.each do |fee| %>
+    <% other_fees.each do |fee| %>
 
       <tr>
         <div class="row">
@@ -111,15 +110,15 @@
 
           <td class="col-md-1"><%= fee.name %></td>
 
-          <td class="col-md-1"><%= fee.amount %></td>
+          <td class="col-md-1">&#36; <%= fee.amount %></td>
 
           <td class="col-md-1"><%= fee.term ? fee.term.name : ''%></td>
 
           <td class="col-md-1">
-            <% if @student.fees.include? fee %>
+            <% if student.fees.include? fee %>
                 <span class="grey-text">Assigned</span>
             <% else %>
-              <%= link_to "Assign", assign_fee_path(fee_id: fee.id, student_id: @student.id), method: :post, class: 'btn btn-default' %>
+              <button type="button" class="btn btn-default assign_fee_student" data-fee-id="<%= fee.id%>" data-student-id="<%= student.id%>">Assign</button>
             <% end %>
           </td>
         </div>
@@ -127,7 +126,6 @@
     <% end %>
   </tbody>
 </table>
-
 <style>
     .payment_update, .payment_cancel {
         display: none;
@@ -145,7 +143,6 @@
     }
     .btn-change-paid {
       padding: 1px 5px;
-      top: -25px;
       left: 100px;
       position: relative;
       display: inline-block;
@@ -153,7 +150,6 @@
     .payment_update {
       padding: 1px 5px;
       margin-left: 10px;
-      top: -25px;
       left: 94px;
       position: relative;
     }
@@ -161,7 +157,6 @@
       padding: 1px 6px;
       margin-left: 5px;
       left: 92px;
-      top: -25px;
       position: relative;
     }
 </style>
@@ -204,22 +199,37 @@
       });
   };
 
-  var assignFee = function(feeId, studentId){
-      $.ajax({
-          url: '/students/assign_fee',
-          type: 'post',
-          dataType: 'script',
-          data: {
-              fee_id: feeId,
-              student_id: studentId
-          },
-          success: function(data){
-              $("#fee_assign_" + studentId + "_" + feeId).html('Assigned');
-              $("#fee_assign_" + studentId + "_" + feeId).removeClass('btn');
-              $("#fee_assign_" + studentId + "_" + feeId).removeClass('btn-default');
-          }
-      });
-  }
+  $('.assign_fee_student').on('click', function(){
+    var fee_id = $(this).attr('data-fee-id')
+    var student_id = $(this).attr('data-student-id')
+    $.ajax({
+      url: '/students/assign_fee',
+      method: 'post',
+      dataType: 'script',
+      data: {
+        fee_id: fee_id,
+        id: student_id
+      },
+      success: function(data){
+      }
+    });
+  })
+
+  $('.unassign_fee_student').on('click', function(){
+    var fee_id = $(this).attr('data-fee-id')
+    var student_id = $(this).attr('data-student-id')
+    $.ajax({
+      url: '/students/unassign_fee',
+      method: 'post',
+      dataType: 'script',
+      data: {
+        fee_id: fee_id,
+        id: student_id
+      },
+      success: function(data){
+      }
+    });
+  })
 </script>
 
 
