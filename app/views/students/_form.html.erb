@@ -471,7 +471,7 @@
 
     <div role="tabpanel" class="tab-pane" id="fees">
       <% if params[:action] == 'edit' && params[:controller] == 'students' %>
-          <%= render 'fee_management' %>
+          <%= render partial: "fee_management", locals: { fees: @fees, student: @student, other_fees: @other_fees } %>
       <% end %>
     </div>
 
@@ -521,7 +521,7 @@
           context: this,
           success : function(data) {
             if (data.result == "success"){
-              
+
             }else{
               alert(data.massage);
             }

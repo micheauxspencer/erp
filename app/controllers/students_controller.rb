@@ -2,7 +2,7 @@ class StudentsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report, :families_report, :export_attendance], except: [:import, :export_all, :export_health, :export_route]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report, :families_report, :export_attendance, :assign_fee, :unassign_fee], except: [:import, :export_all, :export_health, :export_route]
 
   before_action :check_permissions, only: [:update, :enter_mark]
   before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all]
@@ -19,7 +19,7 @@ class StudentsController < ApplicationController
       @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? Grade.find(params[:grade_id]) : nil
     end
 
-    redirect_to root_path if current_user.role?('teacher') && @grade && !current_user.grades.include?(@grade) 
+    redirect_to root_path if current_user.role?('teacher') && @grade && !current_user.grades.include?(@grade)
     if @grade
       @students_all = Student.search_student( @grade.students.all, params[:search])
     else
@@ -39,7 +39,7 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
-    
+
   end
 
   # GET /students/new
@@ -138,25 +138,33 @@ class StudentsController < ApplicationController
   end
 
   def assign_fee
-    @student_id = params[:student_id]
-    @fee_id = params[:fee_id]
-
-    @student = Student.find(@student_id)
-    @fee = Fee.find(@fee_id)
-    if @student && @fee && !(@student.fee_ids.include? @fee_id)
+    @fee = Fee.find(params[:fee_id])
+    if @student && @fee && !(@student.fee_ids.include? params[:fee_id])
       @student.fees << @fee
     end
 
-    redirect_to edit_student_path(@student)
+    @fees = @student.fees.where(term: current_term).order('amount asc')
+    @other_fees = Fee.where(term: current_term).where.not(id: @fees.map(&:id)).order('amount asc')
+
+    respond_to do |format|
+      format.js do
+        @return_content = render_to_string(partial: 'students/fee_management', locals: { student: @student, fees: @fees, other_fees: @other_fees })
+      end
+    end
   end
 
   def unassign_fee
-    @student_id = params[:student_id]
-    @fee_id = params[:fee_id]
-    @student = Student.find(@student_id)
-    charge = Charge.where(student_id: @student_id, fee_id: @fee_id).first
+    charge = Charge.where(student_id: @student.id, fee_id: params[:fee_id]).first
     charge.destroy if charge.present?
-    redirect_to edit_student_path(@student)
+
+    @fees = @student.fees.where(term: current_term).order('amount asc')
+    @other_fees = Fee.where(term: current_term).where.not(id: @fees.map(&:id)).order('amount asc')
+
+    respond_to do |format|
+      format.js do
+        @return_content = render_to_string(partial: 'students/fee_management', locals: { student: @student, fees: @fees, other_fees: @other_fees })
+      end
+    end
   end
 
 
@@ -201,7 +209,7 @@ class StudentsController < ApplicationController
     @student = Student.find(params[:student_id])
     @report_template = @student.get_report_template
     @template_name = @report_template ? @report_template.name : 'No Template'
-    
+
     respond_to do |format|
       format.html
       format.pdf do
@@ -227,7 +235,6 @@ class StudentsController < ApplicationController
   def export_fee
     @student = Student.find(params[:student_id])
     @fees = @student.fees.where(term: current_term).order('amount asc')
-
     respond_to do |format|
       format.html
       format.pdf do
@@ -331,7 +338,7 @@ class StudentsController < ApplicationController
   def save_curricular
     @student = Student.find(params[:curricular][:student_id])
     if @student.present?
-      @curricular = Curricular.find_or_create_by(student_id: @student.id) 
+      @curricular = Curricular.find_or_create_by(student_id: @student.id)
       @curricular.update_attributes(content: params[:curricular][:content], acedemic_year_id: params[:curricular][:acedemic_year_id])
       flash[:notice] = 'Save curricular success.'
       redirect_to edit_student_path(@student)
@@ -345,7 +352,7 @@ class StudentsController < ApplicationController
     @siblings = @student.siblings
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Family Report #{@student.name}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Family Report #{@student.name}.xls\"" }
     end
   end
 
@@ -354,7 +361,7 @@ class StudentsController < ApplicationController
     @children = Student.where('id IN (?)', @student.siblings.map(&:id) << @student.id)
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Families Report #{@student.name}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Families Report #{@student.name}.xls\"" }
     end
   end
 
@@ -362,7 +369,7 @@ class StudentsController < ApplicationController
     @students = Student.all.order('last_name ASC, first_name ASC')
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student list.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student list.xls\"" }
     end
   end
 
@@ -370,7 +377,7 @@ class StudentsController < ApplicationController
     @students = Student.all.order('last_name ASC, first_name ASC')
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Health information list.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Health information list.xls\"" }
     end
   end
 
@@ -379,12 +386,12 @@ class StudentsController < ApplicationController
                        .order('last_name ASC, first_name ASC')
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student route list.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student route list.xls\"" }
     end
   end
 
   def export_attendance
-    
+
   end
 
   private
@@ -416,8 +423,8 @@ class StudentsController < ApplicationController
         :last_school_phone,
         {:sibling_ids => []},
         {:fee_ids => []},
-        :emerg_2_name, 
-        :emerg_2_phone, 
+        :emerg_2_name,
+        :emerg_2_phone,
         :emerg_2_relation,
         :f_first_name,
         :f_last_name,
