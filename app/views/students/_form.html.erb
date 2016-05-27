@@ -16,18 +16,25 @@
         </div>
     <% end %>
     <% if current_user.role?("accounting") %>
-      <strong>Enrolled: </strong><br><br>
-      <input type="checkbox" <%= "checked" if @student.enrolled %> data-toggle="toggle" id="enroll-checkbox" data-on="Yes" data-off="No">
-      <div style="height: 30px"></div>
-      <%= f.hidden_field :enrolled %>
-
-      <strong>Transferred: </strong><br><br>
-      <input type="checkbox" <%= "checked" if @student.transferred %> data-toggle="toggle" id="transferred-checkbox" data-on="Yes" data-off="No">
-      <div style="height: 30px"></div>
-      <%= f.hidden_field :transferred %>
+      <div class="col-md-3">
+        <strong>Enrolled: </strong><br><br>
+        <input type="checkbox" <%= "checked" if @student.enrolled %> data-toggle="toggle" id="enroll-checkbox" data-on="Yes" data-off="No">
+        <div style="height: 30px"></div>
+        <%= f.hidden_field :enrolled %>
+      </div>
+      <div class="col-md-3">
+        <strong>Transferred: </strong><br><br>
+        <input type="checkbox" <%= "checked" if @student.transferred %> data-toggle="toggle" id="transferred-checkbox" data-on="Yes" data-off="No">
+        <div style="height: 30px"></div>
+        <%= f.hidden_field :transferred %>
+      </div>
     <% else %>
-      <strong>Enrolled: </strong> <%= @student.enrolled ? "Yes" : "No" %>
-      <strong>Transferred: </strong> <%= @student.transferred ? "Yes" : "No" %>
+      <div class="col-md-3">
+        <strong>Enrolled: </strong> <%= @student.enrolled ? "Yes" : "No" %>
+      </div>
+      <div class="col-md-3">
+        <strong>Transferred: </strong> <%= @student.transferred ? "Yes" : "No" %>
+      </div>
     <% end %>
 
     <div style="height: 30px"></div>
