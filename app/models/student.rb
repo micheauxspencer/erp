@@ -71,6 +71,7 @@
 #  m_state              :string(255)
 #  phone                :string(255)
 #  mobile               :string(255)
+#  transferred          :boolean          default(FALSE)
 #
 # Indexes
 #
@@ -105,6 +106,8 @@ class Student < ActiveRecord::Base
   has_many :curriculars
 
   scope :not_siblings, -> (student) { where('id NOT IN (?)', student.siblings.map(&:id) << student.id)}
+  scope :transferred, -> { where transferred: true}
+  scope :not_transferred, -> { where transferred: false}
 
   def grade_name
     grade.try(:name)

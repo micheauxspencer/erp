@@ -10,7 +10,7 @@ class GradesController < ApplicationController
   # GET /grades/1
   # GET /grades/1.json
   def show
-    @students = Student.all
+    @students = Student.not_transferred
     @teachers = User.teachers
     @teacher = @grade.teacher
   end
@@ -75,7 +75,7 @@ class GradesController < ApplicationController
   end
 
   def export_students
-    @students = @grade.students.order('last_name ASC, first_name ASC')
+    @students = @grade.students.not_transferred.order('last_name ASC, first_name ASC')
     @teacher = @grade.teacher
     respond_to do |format|
       format.html
@@ -93,7 +93,7 @@ class GradesController < ApplicationController
   end
 
   def export_attendance
-    
+
   end
 
   private

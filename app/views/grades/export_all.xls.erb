@@ -24,7 +24,7 @@
         <Cell><Data ss:Type="Number"><%= grade.id %></Data></Cell>
         <Cell><Data ss:Type="String"><%= grade.name %></Data></Cell>
         <Cell><Data ss:Type="String"><%= grade.teacher.name if grade.teacher %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= grade.students.count %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= grade.students.not_transferred.count %></Data></Cell>
       </Row>
     <% end %>
     </Table>

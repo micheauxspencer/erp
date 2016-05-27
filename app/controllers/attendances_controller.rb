@@ -7,12 +7,12 @@ class AttendancesController < ApplicationController
 
   def student_attendance
     grade = Grade.find(params[:grade_id].to_i)
-    @students = grade.students.order(sort_column + " " + sort_direction)
+    @students = grade.students.not_transferred.order(sort_column + " " + sort_direction)
   end
 
   def teacher_attendance
     @grade = Grade.find(params[:grade_id].to_i)
-    @teacher = @grade.teacher 
+    @teacher = @grade.teacher
   end
 
   def user_attendance
@@ -63,7 +63,7 @@ class AttendancesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @attendances.to_csv }
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@student.name} #{name_file}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@student.name} #{name_file}.xls\"" }
     end
   end
 
@@ -73,14 +73,14 @@ class AttendancesController < ApplicationController
     if params[:report][:day].present?
       name_file = params[:report][:day].to_s
       @attendances = Attendance.joins('LEFT JOIN students on students.id = attendances.student_id')
-                               .where('student_id IN (?)', @grade.students.map(&:id))
+                               .where('student_id IN (?)', @grade.students.not_transferred.map(&:id))
                                .where(attendanced_at: params[:report][:day].to_date)
                                .check_type_action
                                .order("students.last_name ASC, students.first_name ASC")
     elsif params[:report][:month].present? && params[:report][:year].present?
       name_file = params[:report][:month].to_s + "_" + params[:report][:year].to_s
       @attendances = Attendance.joins('LEFT JOIN students on students.id = attendances.student_id')
-                               .where('student_id IN (?)', @grade.students.map(&:id))
+                               .where('student_id IN (?)', @grade.students.not_transferred.map(&:id))
                                .where("extract(month from attendances.attendanced_at) = ?", params[:report][:month].to_i)
                                .where("extract(year from attendances.attendanced_at) = ?", params[:report][:year].to_i)
                                .check_type_action
@@ -88,7 +88,7 @@ class AttendancesController < ApplicationController
     elsif params[:report][:year].present?
       name_file = params[:report][:year].to_s
       @attendances = Attendance.joins('LEFT JOIN students on students.id = attendances.student_id')
-                               .where('student_id IN (?)', @grade.students.map(&:id))
+                               .where('student_id IN (?)', @grade.students.not_transferred.map(&:id))
                                .where("extract(year from attendances.attendanced_at) = ?", params[:report][:year].to_i)
                                .check_type_action
                                .order("students.last_name ASC, students.first_name ASC")
@@ -96,7 +96,7 @@ class AttendancesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @attendances.to_csv }
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@grade.name} #{name_file}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Attendance List #{@grade.name} #{name_file}.xls\"" }
     end
   end
 
@@ -128,7 +128,7 @@ class AttendancesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @attendances.to_csv }
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"staff attendance list #{name_file}.xls\"" } 
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"staff attendance list #{name_file}.xls\"" }
     end
   end
 

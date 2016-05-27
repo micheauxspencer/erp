@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get 'users/export_attendance' => "users#export_attendance", as: :export_attendance_users
   get 'teachers' => 'users#teachers', as: :teachers
   get 'accounting_export' => 'users#accounting_export',as: :accounting_export
-
+  get 'students/transferred' => "students#transferred", as: :students_transferred
   resources :acedemic_years
 
   resources :fee_categories
@@ -69,7 +69,6 @@ Rails.application.routes.draw do
   post 'students/assign_fee' => "students#assign_fee", as: :assign_fee
   post 'students/unassign_fee' => "students#unassign_fee", as: :unassign_fee
   post 'students/:student_id/routes' => "students#assign_route", as: :assign_route
-
   post 'students/:student_id/payment' => "students#payment", as: :student_fee
 
   get 'students/export_pdf/:student_id' => "students#export_pdf", as: :export_pdf
@@ -82,8 +81,9 @@ Rails.application.routes.draw do
   post 'students/save_curricular' => "students#save_curricular", as: :save_curricular
   get 'students/:student_id/select_term' => "students#select_term", as: :select_term
   post 'students/:student_id/enroll' => "students#enroll", as: :enroll_student
+  post 'students/:student_id/set_transferred' => "students#set_transferred", as: :set_transferred_student
   get 'students/:id/export_attendance' => "students#export_attendance", as: :export_attendance_students
-  
+
   post 'save_import_student' => "students#save_import_student", as: :save_import_student
   get 'import_student' => "students#import", as: :import_student
   post 'students/delete_all' => "students#delete_all", as: :delete_all_student

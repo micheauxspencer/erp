@@ -20,8 +20,14 @@
       <input type="checkbox" <%= "checked" if @student.enrolled %> data-toggle="toggle" id="enroll-checkbox" data-on="Yes" data-off="No">
       <div style="height: 30px"></div>
       <%= f.hidden_field :enrolled %>
+
+      <strong>Transferred: </strong><br><br>
+      <input type="checkbox" <%= "checked" if @student.transferred %> data-toggle="toggle" id="transferred-checkbox" data-on="Yes" data-off="No">
+      <div style="height: 30px"></div>
+      <%= f.hidden_field :transferred %>
     <% else %>
       <strong>Enrolled: </strong> <%= @student.enrolled ? "Yes" : "No" %>
+      <strong>Transferred: </strong> <%= @student.transferred ? "Yes" : "No" %>
     <% end %>
 
     <div style="height: 30px"></div>
@@ -517,6 +523,28 @@
           url : url,
           type : "POST",
           data : 'enrolled=' + enrolled,
+          dataType : "json",
+          context: this,
+          success : function(data) {
+            if (data.result == "success"){
+
+            }else{
+              alert(data.massage);
+            }
+          }
+        });
+      <% end %>
+    })
+
+    $('#transferred-checkbox').change(function() {
+      $("input[name='student[transferred]']").val($(this).prop('checked'));
+      var transferred = $(this).prop('checked') ;
+      <% if action_name == "edit" %>
+        var url = "<%= set_transferred_student_path(@student) %>"
+        $.ajax({
+          url : url,
+          type : "POST",
+          data : 'transferred=' + transferred,
           dataType : "json",
           context: this,
           success : function(data) {

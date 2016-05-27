@@ -23,7 +23,7 @@
       <tr>
         <td><%= link_to grade.id, grade_path(grade) %></td>
         <td><%= grade.name %></td>
-        <td><%= grade.students.count %></td>
+        <td><%= grade.students.not_transferred.count %></td>
         <td>
           <% if current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:accounting]) %>
             <%= link_to "Student Attendances", grade_student_attendance_path(grade), :class => 'btn btn-default btn-xs' %></li>
@@ -32,7 +32,7 @@
             <%= link_to "Teacher Attendances", grade_teacher_attendance_path(grade), :class => 'btn btn-default btn-xs' %></li>
             <%= link_to 'Show',
                         grade_path(grade), :class => 'btn btn-default btn-xs' %>
-            <%= link_to 'Export Students', 
+            <%= link_to 'Export Students',
                         export_students_grades_path(grade, format: "xls"), :class => 'btn btn-default btn-xs' %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         edit_grade_path(grade), :class => 'btn btn-default btn-xs' %>

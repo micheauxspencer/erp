@@ -50,7 +50,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @grade.students.each do |student| %>
+    <% @grade.students.not_transferred.each do |student| %>
       <tr>
         <td><%= link_to student.id, student_path(student) %></td>
         <td><%= student.last_name %>, <%= student.first_name %> <%= student.middle_name %></td>

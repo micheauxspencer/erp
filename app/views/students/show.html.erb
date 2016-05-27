@@ -2,7 +2,7 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.titleize %>: <%= @student.first_name + @student.last_name %></h1>
 </div>
-  
+
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
   <dd style="padding-top: 10px"><%= @student.last_name %></dd>
@@ -12,6 +12,8 @@
   <dd><%= @student.grade ? @student.grade.name : '' %></dd>
   <dt><strong><%= model_class.human_attribute_name(:enrolled) %>:</strong></dt>
   <dd><%= @student.enrolled ? "Yes" : "No" %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:transferred) %>:</strong></dt>
+  <dd><%= @student.transferred ? "Yes" : "No" %></dd>
   <dt><strong><%= model_class.human_attribute_name(:sin) %>:</strong></dt>
   <dd><%= @student.sin %></dd>
   <dt><strong><%= model_class.human_attribute_name(:birthdate) %>:</strong></dt>

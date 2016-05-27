@@ -2,11 +2,11 @@ class StudentsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :authenticate_user!
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report, :families_report, :export_attendance, :assign_fee, :unassign_fee], except: [:import, :export_all, :export_health, :export_route]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :curricular, :family_report, :families_report, :export_attendance, :assign_fee, :unassign_fee], except: [:import, :export_all, :export_health, :export_route, :transferred]
 
   before_action :check_permissions, only: [:update, :enter_mark]
-  before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all]
-  before_action :set_current_acedemic_year
+  before_action :check_accounting, only: [:new, :create, :import, :save_import_student, :destroy, :delete_all, :transferred, :set_transferred]
+  before_action :set_current_acedemic_year, except: [:transferred]
 
   # GET /students
   # GET /students.json
@@ -21,12 +21,12 @@ class StudentsController < ApplicationController
 
     redirect_to root_path if current_user.role?('teacher') && @grade && !current_user.grades.include?(@grade)
     if @grade
-      @students_all = Student.search_student( @grade.students.all, params[:search])
+      @students_all = Student.search_student( @grade.students.not_transferred, params[:search])
     else
       if current_user.role?('teacher')
-        @students_all = Student.search_student( current_user.students, params[:search])
+        @students_all = Student.search_student( current_user.students.not_transferred, params[:search])
       else
-        @students_all = Student.search_student( Student.all, params[:search])
+        @students_all = Student.search_student( Student.not_transferred, params[:search])
       end
     end
     if params[:year].present? && params[:year].to_i !=  0
@@ -46,7 +46,7 @@ class StudentsController < ApplicationController
   def new
     @student = Student.new
     @siblings = []
-    @not_siblings = Student.all
+    @not_siblings = Student.not_transferred
     @parents = []
     @not_parents = Parent.all
   end
@@ -135,6 +135,10 @@ class StudentsController < ApplicationController
       format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def transferred
+    @student_transferred = Student.search_student( Student.transferred, params[:search]).paginate(:page => params[:page], :per_page => 100)
   end
 
   def assign_fee
@@ -331,6 +335,15 @@ class StudentsController < ApplicationController
     end
   end
 
+  def set_transferred
+    student = Student.find(params[:student_id])
+    if student.present? && student.update_attributes(:transferred => params[:transferred])
+      render :json => { :result => "success"}
+    else
+      render :json => { :result => "not-success", :massage => student.errors.full_messages }
+    end
+  end
+
   def curricular
     @curricular = Curricular.where(student_id: @student.id).last.present? ? Curricular.where(student_id: @student.id).last : Curricular.new
   end
@@ -366,7 +379,7 @@ class StudentsController < ApplicationController
   end
 
   def export_all
-    @students = Student.all.order('last_name ASC, first_name ASC')
+    @students = Student.not_transferred.order('last_name ASC, first_name ASC')
     respond_to do |format|
       format.html
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student list.xls\"" }
@@ -374,7 +387,7 @@ class StudentsController < ApplicationController
   end
 
   def export_health
-    @students = Student.all.order('last_name ASC, first_name ASC')
+    @students = Student.not_transferred.order('last_name ASC, first_name ASC')
     respond_to do |format|
       format.html
       format.xls { headers["Content-Disposition"] = "attachment; filename=\"Health information list.xls\"" }
@@ -382,7 +395,7 @@ class StudentsController < ApplicationController
   end
 
   def export_route
-    @students = Student.where.not(route_id: nil)
+    @students = Student.not_transferred.where.not(route_id: nil)
                        .order('last_name ASC, first_name ASC')
     respond_to do |format|
       format.html
@@ -463,7 +476,8 @@ class StudentsController < ApplicationController
         :m_state,
         :phone,
         :mobile,
-        :parents
+        :parents,
+        :transferred
       )
     end
 
