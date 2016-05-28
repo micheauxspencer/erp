@@ -407,6 +407,15 @@ class StudentsController < ApplicationController
 
   end
 
+  def add_next_grade
+    student = Student.find(params[:student_id])
+    if student.update_attributes(next_grade: params[:grade_id].to_i)
+      render json: { results: "success"}
+    else
+      render json: { results: "error"}
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student

@@ -29,7 +29,7 @@
 </div>
 <label class="pull-left" style="line-height: 30px">Acedemic Year: </label>
 <div class="col-md-2">
-  <%= select_tag "select_year", options_for_select(AcedemicYear.all.collect{ |u| [u.year, u.year]}.unshift(["Select a year",0]),:selected => params[:year]), {:class =>"form-control", id: "select-year"} %>
+  <%= select_tag "select_year", options_for_select(AcedemicYear.all.collect{ |u| [u.year, u.year]}.unshift(["Select a year",0]), :selected => params[:year]), {:class =>"form-control", id: "select-year"} %>
 </div>
 
 <span style="line-height: 30px;">Students total: <%= @students.count %></span>

@@ -93,6 +93,7 @@ Rails.application.routes.draw do
 
   get 'students/family_report/:id' => "students#family_report", as: :student_family_report
   get 'students/families_report/:id' => "students#families_report", as: :student_families_report
+  post 'students/add_next_grade' => "students#add_next_grade", as: :student_add_next_grade
 
   post 'student_siblings/create' => "student_siblings#create", as: :create_sibling
   post 'student_siblings/delete' => "student_siblings#destroy", as: :delete_sibling

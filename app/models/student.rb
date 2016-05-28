@@ -72,6 +72,7 @@
 #  phone                :string(255)
 #  mobile               :string(255)
 #  transferred          :boolean          default(FALSE)
+#  next_grade           :integer
 #
 # Indexes
 #
@@ -115,6 +116,10 @@ class Student < ActiveRecord::Base
 
   def grade
     return self.grades.last
+  end
+
+  def get_next_grade
+    Grade.find(self.next_grade) if self.next_grade
   end
 
   def get_grade_id

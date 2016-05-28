@@ -1,6 +1,7 @@
 class GradesController < ApplicationController
   before_action :set_grade, only: [:show, :edit, :update, :destroy, :export_students, :export_attendance]
   before_action :check_permissions, only: [:show, :create, :edit, :update, :destroy]
+  before_action :set_current_acedemic_year
   # GET /grades
   # GET /grades.json
   def index
@@ -104,10 +105,13 @@ class GradesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def grade_params
-      params.require(:grade).permit(:name, :teacher_id, :term_id, :report_template_id,student_ids: [])
+      params.require(:grade).permit(:name, :teacher_id, :term_id, :report_template_id, :acedemic_year_id, student_ids: [])
     end
 
     def check_permissions
       redirect_to root_path unless current_user.role?("accounting")
+    end
+    def set_current_acedemic_year
+      @current_acedemic_year = AcedemicYear.find(current_acedemic_year)
     end
 end

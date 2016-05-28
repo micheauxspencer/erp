@@ -9,6 +9,7 @@
 #  teacher_id         :integer
 #  term_id            :integer
 #  report_template_id :integer
+#  acedemic_year_id   :integer
 #
 # Indexes
 #
@@ -19,8 +20,7 @@ class Grade < ActiveRecord::Base
 	has_many :graduations, dependent: :restrict_with_exception
 	has_many :students
 	has_many :users
-	has_many :year_grades, dependent: :restrict_with_exception
-	has_many :acedemic_years, through: :year_grades
+	belongs_to :acedemic_year
 
   belongs_to :teacher, :class_name => "User"
 
@@ -31,10 +31,18 @@ class Grade < ActiveRecord::Base
   has_many :students, through: :grade_students
 
   validates :name, presence: true
+  validates :acedemic_year_id, presence: true
 
- 	accepts_nested_attributes_for :year_grades, :graduations
+ 	accepts_nested_attributes_for :graduations
 
   def get_id_report_template
     self.report_template.present? ? self.report_template.id : nil
+  end
+
+  def get_next_grades
+    acedemic_year = self.acedemic_year
+    next_year = acedemic_year.try(:year).to_i + 1
+    acedemic_year_next = AcedemicYear.where(year: next_year.to_s).try(:first)
+    return acedemic_year_next.grades
   end
 end

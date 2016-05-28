@@ -11,9 +11,8 @@
 #
 
 class AcedemicYear < ActiveRecord::Base
-
-	has_many :year_grades, dependent: :restrict_with_error
-	has_many :grades, through: :year_grades
+  
+	has_many :grades
 
 	has_many :year_routes, dependent: :restrict_with_error
 	has_many :routes, through: :year_routes
@@ -23,6 +22,6 @@ class AcedemicYear < ActiveRecord::Base
 
   has_many :terms
 
-  accepts_nested_attributes_for :year_grades, :year_fees, :year_routes
+  accepts_nested_attributes_for :year_fees, :year_routes
 
 end

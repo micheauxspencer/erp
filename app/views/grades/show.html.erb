@@ -6,6 +6,8 @@
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @grade.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:acedemic_year) %>:</strong></dt>
+  <dd><%= @grade.acedemic_year.year if @grade.acedemic_year %></dd>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
@@ -46,6 +48,7 @@
       <th><%= model_class.human_attribute_name(:gender) %></th>
       <th><%= model_class.human_attribute_name(:birthdate) %></th>
       <th><%= t "grade.current_grade" %></th>
+      <th><%= model_class.human_attribute_name(:next_gender) %></th>
       <th>Action</th>
     </tr>
   </thead>
@@ -58,12 +61,29 @@
         <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
         <td><%= student.grade_name %></td>
         <td>
+          <%= select_tag "grade_id", options_from_collection_for_select(@grade.get_next_grades, "id", "name", student.next_grade), include_blank: "", class: "form-control add_next_grade", student_id: student.id %>
+        </td>
+        <td>
           <%= link_to "Export Attendance", export_attendance_students_path(student), class: "btn btn-xs btn-default" %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <%= render "assign_students_form", model_class: model_class %>
 <%= render "assign_teacher_form", model_class: model_class %>
+
+<script type="text/javascript">
+  $(".add_next_grade").on('change', function(){
+    var grade_id = $(this).val();
+    var student_id = $(this).attr('student_id');
+    $.ajax({
+      url : '/students/add_next_grade',
+      method : "POST",
+      data : 'grade_id=' + grade_id + '&student_id=' + student_id,
+      dataType : "json",
+      success : function(data) {
+      }
+    })
+  })
+</script>
