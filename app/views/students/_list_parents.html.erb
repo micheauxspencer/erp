@@ -10,27 +10,29 @@
       <th class="col-md-1">City</th>
       <th class="col-md-1">State</th>
       <th class="col-md-1">
-        <input name="parents" type="text" hidden value="<%= @parents.map(&:id) %>">
+        <input name="parents" type="text" hidden value="<%= @parents.map(&:id) unless @parents.blank? %>">
       </th>
     </tr>
   </thead>
   <tbody>
-    <% @parents.each do |parent| %>
-      <tr> 
-        <td class="parent-id"><%= parent.id %></td>
-        <td><%= parent.name %></td>
-        <td><%= parent.gender %></td>
-        <td><%= parent.phone %></td>
-        <td><%= parent.email %></td>
-        <td><%= parent.home_address %></td>
-        <td><%= parent.city %></td>
-        <td><%= parent.state %></td>
-        <td>
-        <% if current_user.role?("teacher") || current_user.role?("accounting") %>
-          <p class="btn btn-danger btn-sm delete_student_parent" parent="<%= parent.id %>"> Delete </p>
-        <% end %>
-        </td>
-      </tr>
+    <% unless @parents.blank? %>
+      <% @parents.each do |parent| %>
+        <tr> 
+          <td class="parent-id"><%= parent.id %></td>
+          <td><%= parent.name %></td>
+          <td><%= parent.gender %></td>
+          <td><%= parent.phone %></td>
+          <td><%= parent.email %></td>
+          <td><%= parent.home_address %></td>
+          <td><%= parent.city %></td>
+          <td><%= parent.state %></td>
+          <td>
+          <% if current_user.role?("teacher") || current_user.role?("accounting") %>
+            <p class="btn btn-danger btn-sm delete_student_parent" parent="<%= parent.id %>"> Delete </p>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

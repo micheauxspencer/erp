@@ -84,8 +84,6 @@ class Student < ActiveRecord::Base
 	has_many :enrollments
 	has_many :acedemic_years, through: :enrollments
 	belongs_to :acedemic_year
-
-	# belongs_to :grade
 	belongs_to :route
 
   has_many :student_siblings, :class_name => "StudentSibling"

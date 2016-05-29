@@ -72,7 +72,7 @@
         <td><%= link_to student.id, edit_student_path(student) %></td>
         <td><%= link_to student.first_name, edit_student_path(student) %></td>
         <td><%= link_to student.last_name, edit_student_path(student) %></td>
-        <td><%= student.grade.name if student.grade %></td>
+        <td><%= student.try(:grade).try(:name) %></td>
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
         <td><%= student.admission_date.strftime("%B, %d, %Y") if student.admission_date %></td>

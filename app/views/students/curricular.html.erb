@@ -9,7 +9,7 @@
       </div>
       <div class="info1">
         <label class="field-label">Grade: </label> <label class="infolbl">
-          <%= @student.grade.name %>
+          <%= @student.try(:grade).try(:name) %>
         </label>
       </div>
     </div>
@@ -21,7 +21,7 @@
       </div>
       <div class="info1">
         <label class="field-label">Teachers: </label> <label class="infolbl">
-          <%= @student.grade.teacher.name if @student.grade && @student.grade.teacher %>
+          <%= @student.try(:grade).try(:teacher).try(:name)%>
         </label>
       </div>
     </div>

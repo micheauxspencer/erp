@@ -12,12 +12,12 @@
         <tr>
           <td width="50%">
             <label class="field-label">Grade: </label> <label class="infolbl">
-              <%= @student.grade.name if @student.grade.present? %>
+              <%= @student.try(:grade).try(:name) %>
             </label>
           </td>
           <td width="50%">
             <label class="field-label">Teachers: </label> <label class="infolbl">
-              <%=  @student.grade.teacher.name if @student.grade && @student.grade.teacher %>
+              <%=  @student.try(:grade).try(:teacher).try(:name) %>
             </label>
           </td>
         </tr>

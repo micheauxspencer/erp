@@ -40,9 +40,13 @@ class Grade < ActiveRecord::Base
   end
 
   def get_next_grades
-    acedemic_year = self.acedemic_year
+    acedemic_year = self.try(:acedemic_year)
     next_year = acedemic_year.try(:year).to_i + 1
     acedemic_year_next = AcedemicYear.where(year: next_year.to_s).try(:first)
     return acedemic_year_next.grades
+  end
+
+  def name_year
+    self.try(:name) + " - " + self.try(:acedemic_year).try(:year).to_s
   end
 end

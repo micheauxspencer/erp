@@ -9,7 +9,7 @@
       <th class="col-md-1">Street</th>
       <th class="col-md-1">City</th>
       <th class="col-md-1">
-        <input name="siblings" type="text" hidden value="<%= @siblings.map(&:id) %>">
+        <input name="siblings" type="text" hidden value="<%= @siblings.map(&:id) unless @siblings.blank? %>">
       </th>
     </tr>
   </thead>

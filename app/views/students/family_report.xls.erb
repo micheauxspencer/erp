@@ -80,7 +80,7 @@
           <Cell><Data ss:Type="String"><%= student.postal_code %></Data></Cell>
           <Cell><Data ss:Type="String"><%= student.phone %></Data></Cell>
           <Cell><Data ss:Type="String"><%= student.mobile %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= student.grade.name if student.grade %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= student.try(:grade).try(:name) %></Data></Cell>
         </Row>
       <% end %>
     <% end %>

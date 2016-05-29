@@ -79,7 +79,7 @@
               <td class="padding-td"><label class="infolbl" style="line-height: 20px;">KHALSA COMMUNITY SCHOOL</label> </td>
               <td class="padding-td"><label class="infolbl" style="line-height: 20px;">Homeroom Teachers: </label></td>
               <td class="padding-td"><label class="infolbl" style="line-height: 20px;">
-                <%=  @student.grade.teacher.name if @student.grade && @student.grade.teacher %></label>
+                <%= @student.try(:grade).try(:teacher).try(:name) %></label>
               </td>
             </tr>
           </table>

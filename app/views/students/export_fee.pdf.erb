@@ -7,7 +7,7 @@
 </div>
 <div class="info1">
   <label class="field-label">Grade: </label> <label class="infolbl">
-    <%= @student.grade.name %>
+    <%= @student.try(:grade).try(:name) %>
   </label>
 </div>
 
