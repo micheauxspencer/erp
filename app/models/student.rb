@@ -72,7 +72,6 @@
 #  phone                :string(255)
 #  mobile               :string(255)
 #  transferred          :boolean          default(FALSE)
-#  next_grade           :integer
 #
 # Indexes
 #
@@ -116,10 +115,6 @@ class Student < ActiveRecord::Base
     return self.grades.last
   end
 
-  def get_next_grade
-    Grade.find(self.next_grade) if self.next_grade
-  end
-
   def get_grade_id
     self.grade.present? ? self.grade.id : nil
   end
@@ -136,6 +131,12 @@ class Student < ActiveRecord::Base
     students = students.where("first_name LIKE ? or last_name LIKE ?",
       "%#{search}%", "%#{search}%") if search.present?
     students
+  end
+
+  def get_next_grade acedemic_year_id
+    acedemic_year = AcedemicYear.find(acedemic_year_id)
+    grade_student = GradeStudent.where(student_id: self.id).where(grade_id: acedemic_year.grades.map(&:id)).try(:first)
+    return grade_student.try(:grade)
   end
 
   def get_report_template

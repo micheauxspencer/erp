@@ -5,7 +5,7 @@ class GradesController < ApplicationController
   # GET /grades
   # GET /grades.json
   def index
-    @grades = current_user.role?("teacher")? current_user.grades : Grade.all
+    @grades = current_user.role?("teacher")? current_user.grades.where(acedemic_year_id: @current_acedemic_year.id) : @current_acedemic_year.grades
   end
 
   # GET /grades/1

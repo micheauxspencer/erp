@@ -39,6 +39,12 @@ class Grade < ActiveRecord::Base
     self.report_template.present? ? self.report_template.id : nil
   end
 
+  def get_next_year
+    acedemic_year = self.try(:acedemic_year)
+    next_year = acedemic_year.try(:year).to_i + 1
+    return AcedemicYear.where(year: next_year.to_s).try(:first)
+  end
+
   def get_next_grades
     acedemic_year = self.try(:acedemic_year)
     next_year = acedemic_year.try(:year).to_i + 1

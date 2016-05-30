@@ -409,10 +409,20 @@ class StudentsController < ApplicationController
 
   def add_next_grade
     student = Student.find(params[:student_id])
-    if student.update_attributes(next_grade: params[:grade_id].to_i)
-      render json: { results: "success"}
+    acedemic_year = AcedemicYear.find(params[:acedemic_year_id])
+    grade_student = GradeStudent.where(student_id: student.id).where(grade_id: acedemic_year.grades.map(&:id)).try(:first)
+    if grade_student.present?
+      if grade_student.update_attributes(grade_id: params[:grade_id].to_i)
+        render json: { results: "success"}
+      else
+        render json: { results: "error"}
+      end
     else
-      render json: { results: "error"}
+      if GradeStudent.create(student_id: student.id, grade_id: params[:grade_id].to_i)
+        render json: { results: "success"}
+      else
+        render json: { results: "error"}
+      end
     end
   end
 

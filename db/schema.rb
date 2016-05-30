@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160528072314) do
+ActiveRecord::Schema.define(version: 20160530152530) do
 
   create_table "acedemic_year_grades", force: true do |t|
     t.integer  "acedemic_year_id"
@@ -341,7 +341,6 @@ ActiveRecord::Schema.define(version: 20160528072314) do
     t.string   "phone"
     t.string   "mobile"
     t.boolean  "transferred",          default: false
-    t.integer  "next_grade"
   end
 
   add_index "students", ["grade_id"], name: "index_students_on_grade_id"
