@@ -134,9 +134,13 @@ class Student < ActiveRecord::Base
   end
 
   def get_next_grade acedemic_year_id
-    acedemic_year = AcedemicYear.find(acedemic_year_id)
-    grade_student = GradeStudent.where(student_id: self.id).where(grade_id: acedemic_year.grades.map(&:id)).try(:first)
-    return grade_student.try(:grade)
+    if acedemic_year_id.present?
+      acedemic_year = AcedemicYear.where(acedemic_year_id: acedemic_year_id).try(:first)
+      grade_student = GradeStudent.where(student_id: self.id).where(grade_id: acedemic_year.try(:grades).map(&:id)).try(:first)
+      return grade_student.try(:grade)
+    else
+      return nil
+    end
   end
 
   def get_report_template

@@ -62,7 +62,7 @@
         <td><%= @grade.name %></td>
         <td>
           <%= select_tag "grade_id", 
-                options_from_collection_for_select(@grade.get_next_grades, "id", "name", 
+                options_from_collection_for_select(@grade.try(:get_next_grades), "id", "name", 
                 student.get_next_grade(@grade.try(:get_next_year).try(:id)).try(:id)),
                 include_blank: "", 
                 class: "form-control add_next_grade",
@@ -90,7 +90,7 @@
       data : 'grade_id=' + grade_id + '&student_id=' + student_id + '&acedemic_year_id=' + acedemic_year_id,
       dataType : "json",
       success : function(data) {
-        
+
       }
     })
   })
