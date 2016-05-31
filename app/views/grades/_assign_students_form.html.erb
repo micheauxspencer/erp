@@ -23,7 +23,7 @@
                   <td><%= link_to student.id, student_path(student) %></td>
                   <td><%= student.last_name %>, <%= student.first_name %> <%= student.middle_name %></td>
                   <td><%=l student.created_at %></td>
-                  <td><%= student.grade_name %></td>
+                  <td><%= student.current_grade(current_acedemic_year).try(:name) %></td>
                   <td>
                     <%= f.check_box :student_ids,
                       {name: "grade[student_ids][]",

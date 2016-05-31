@@ -12,26 +12,33 @@ class StudentsController < ApplicationController
   # GET /students.json
   def index
     if current_user.role?('teacher')
-      @grades =  current_user.grades
+      @grades =  current_user.grades.where(acedemic_year_id: current_acedemic_year)
       @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? current_user.grades.find(params[:grade_id]) : nil
     else
-      @grades = Grade.all
+      @grades = Grade.where(acedemic_year_id: current_acedemic_year)
       @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? Grade.find(params[:grade_id]) : nil
     end
 
     redirect_to root_path if current_user.role?('teacher') && @grade && !current_user.grades.include?(@grade)
+
+    @students_all = []
     if @grade
       @students_all = Student.search_student( @grade.students.not_transferred, params[:search])
     else
       if current_user.role?('teacher')
-        @students_all = Student.search_student( current_user.students.not_transferred, params[:search])
+        @students_all = Student.search_student( current_user.students.select_student_by_year(@current_acedemic_year).not_transferred, params[:search])
       else
-        @students_all = Student.search_student( Student.not_transferred, params[:search])
+        @students_all = Student.search_student( Student.select_student_by_year(@current_acedemic_year).not_transferred, params[:search])
       end
     end
+
     if params[:year].present? && params[:year].to_i !=  0
       @students_all = @students_all.where("extract(year from admission_date) = ?", params[:year].to_i)
       # @students_all = @students_all.where("cast(strftime('%Y', admission_date) as int) = ?", params[:year].to_i)
+    end
+    if params[:enrollment_year].present? && params[:enrollment_year].to_i !=  0
+      @students_all = @students_all.where("extract(year from enrollment_year) = ?", params[:enrollment_year].to_i)
+      # @students_all = @students_all.where("cast(strftime('%Y', enrollment_year) as int) = ?", params[:enrollment_year].to_i)
     end
     @students = @students_all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
   end
@@ -72,7 +79,8 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        grade_student = GradeStudent.create(student: @student, grade_id: student_params[:grade_id])
+        GradeStudent.create(student: @student, grade_id: student_params[:grade_id])
+        GradeStudent.create(student: @student, grade_id: params[:student][:next_grade_id])
         parents = params[:parents].scan( /\d+/ ).map(&:to_i)
         unless parents.empty?
           parents.each do |parent_id|
@@ -110,14 +118,23 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
-
     respond_to do |format|
       if @student.update(student_params)
-        if @student.grade && @student.grade.id != student_params[:grade_id]
-          @student.grade_students.last.update_attributes(grade_id: student_params[:grade_id])
+        grade_student = GradeStudent.where(student_id: @student.id).where(grade_id: @current_acedemic_year.grades.map(&:id)).try(:first)
+        if grade_student.present? && grade_student.try(:grade_id) != student_params[:grade_id]
+          grade_student.update_attributes(grade_id: student_params[:grade_id])
         else
           GradeStudent.create(student: @student, grade_id: student_params[:grade_id])
         end
+
+        next_acedemic_year = AcedemicYear.next_acedemic_year(@current_acedemic_year)
+        grade_student_next = GradeStudent.where(student_id: @student.id).where(grade_id: next_acedemic_year.grades.map(&:id)).try(:first)
+        if grade_student_next.present? && grade_student_next.try(:grade_id) != params[:student][:next_grade_id]
+          grade_student_next.update_attributes(grade_id: params[:student][:next_grade_id])
+        else
+          GradeStudent.create(student: @student, grade_id: params[:student][:next_grade_id])
+        end
+
         format.html { redirect_to students_path, notice: 'Student was successfully updated.' }
         format.json { render :show, status: :ok, location: @student }
       else
@@ -496,6 +513,7 @@ class StudentsController < ApplicationController
         :phone,
         :mobile,
         :parents,
+        :enrollment_year,
         :transferred
       )
     end

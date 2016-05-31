@@ -24,4 +24,13 @@ class AcedemicYear < ActiveRecord::Base
 
   accepts_nested_attributes_for :year_fees, :year_routes
 
+  def self.next_acedemic_year acedemic_year
+    if acedemic_year.present?
+      next_year =  acedemic_year.try(:year).to_i + 1
+      return AcedemicYear.where(year: next_year.to_s).try(:first)
+    else
+      return nil
+    end
+  end
+
 end

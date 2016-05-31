@@ -72,6 +72,7 @@
 #  phone                :string(255)
 #  mobile               :string(255)
 #  transferred          :boolean          default(FALSE)
+#  enrollment_year      :date
 #
 # Indexes
 #
@@ -107,12 +108,20 @@ class Student < ActiveRecord::Base
   scope :transferred, -> { where transferred: true}
   scope :not_transferred, -> { where transferred: false}
 
+  scope :select_student_by_year, -> (acedemic_year) {
+    joins(:grade_students).select('students.*').where("grade_students.grade_id IN (?)", acedemic_year.grades.map(&:id))
+  }
+
   def grade_name
     grade.try(:name)
   end
 
   def grade
     return self.grades.last
+  end
+
+  def current_grade acedemic_year_id
+    self.try(:grades).where(acedemic_year_id: acedemic_year_id).try(:first)
   end
 
   def get_grade_id

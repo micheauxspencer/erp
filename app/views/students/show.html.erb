@@ -9,7 +9,7 @@
   <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
   <dd><%= @student.first_name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:grade) %>:</strong></dt>
-  <dd><%= @student.try(:grade).try(:name) %></dd>
+  <dd><%= @student.current_grade(current_acedemic_year).try(:name) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:enrolled) %>:</strong></dt>
   <dd><%= @student.enrolled ? "Yes" : "No" %></dd>
   <dt><strong><%= model_class.human_attribute_name(:transferred) %>:</strong></dt>

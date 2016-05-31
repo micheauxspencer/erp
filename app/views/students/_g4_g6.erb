@@ -54,7 +54,7 @@
     <div class="page-break"></div>
       <div style="margin-top: 20px;">
       <span style="padding-left: 20px"><label>Student: <%= @student.name %></label></span>
-      <span style="float: right; padding-right: 20px;"><label>Grade: <%= @student.grade ? @student.grade.name : 'No Grade' %></label></span>
+      <span style="float: right; padding-right: 20px;"><label>Grade: <%= @student.current_grade(current_acedemic_year) ? @student.current_grade(current_acedemic_year).try(:name) : 'No Grade' %></label></span>
     </div>
     <div class="border" style="padding: 0px 5px; font-weight: bold;">
       <p style="">PERFORMANCE SCALE for work habits and personal and social development:<br/>

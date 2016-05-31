@@ -142,6 +142,12 @@
 
           <div class="control-group">
             <div class="controls">
+              <%= f.input :enrollment_year, as: :date_picker, :class => 'form-controll' %>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <div class="controls">
 
               <%#= f.association :grade, prompt: "Choosa a Grade", :class => 'form-control' %>
             </div>
@@ -155,18 +161,28 @@
           </div>
           <div class="control-group">
             <div class="controls">
-              <%= f.input :grade_id, collection: Grade.all.map { |g| [g.name_year, g.id, {'data-type' => g.name_year}] }, prompt: "Select grade", :class => 'form-control', selected: @student.get_grade_id %>
+              <%= f.input :grade_id,
+                          collection: @current_acedemic_year.grades.map { |g| [g.name, g.id, {'data-type' => g.name}] },
+                          prompt: "Select grade",
+                          :class => 'form-control',
+                          selected: @student.current_grade(current_acedemic_year).try(:id) %>
             </div>
             <%#= error_span(@student[:sibling_id]) %>
           </div>
           <div class="control-group">
-             <div class="controls">
-              <%= f.input :state, :class => 'form-control' %>
+            <div class="controls">
+              <% next_acedemic_year = AcedemicYear.next_acedemic_year(@current_acedemic_year) %>
+              <%= f.input :next_grade_id,
+                          collection: next_acedemic_year.try(:grades).to_a.map { |g| [g.name, g.id, {'data-type' => g.name}] },
+                          prompt: "Select grade",
+                          :class => 'form-control',
+                          selected: @student.get_next_grade(next_acedemic_year.try(:id)).try(:id) %>
             </div>
+          <%#= error_span(@student[:sibling_id]) %>
           </div>
           <div class="control-group">
-            <div class="controls">
-              <%= f.input :nationality, :class => 'form-control' %>
+             <div class="controls">
+              <%= f.input :state, :class => 'form-control' %>
             </div>
           </div>
           <div class="control-group">
@@ -186,14 +202,13 @@
             </div>
             <%#= error_span(@student[:tax_rec_req]) %>
           </div>
-          <!-- <div class="control-group">
-            <div class="controls">
-              <%#= f.association :siblings, label_method: :first_name, value_method: :id, :class => 'form-control' %>
-            </div>
-            <%#= error_span(@student[:sibling_id]) %>
-          </div> -->
         </div>
         <div class="col-md-6">
+          <div class="control-group">
+            <div class="controls">
+              <%= f.input :nationality, :class => 'form-control' %>
+            </div>
+          </div>
           <div class="control-group">
             <div class="controls">
               <%= f.input :street, :class => 'form-control' %>

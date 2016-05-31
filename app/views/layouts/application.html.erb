@@ -65,7 +65,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Office Management <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><%= link_to "Acedemic Years", acedemic_years_path %></li>
+                <li><%= link_to "Academic Years", acedemic_years_path %></li>
                 <li><%= link_to 'Fees', fees_path %></li>
                 <li><%= link_to 'Terms', terms_path %></li>
                 <li><%= link_to 'Students', students_path %></li>
@@ -85,7 +85,7 @@
             <ul class="nav navbar-nav">
               <li class="dropdown">
                   <% if AcedemicYear.count > 0 %>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="choose-year-text"> <%= current_acedemic_year && current_acedemic_year != "" ? current_year.year : 'Choose Acedemic Year' %> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="choose-year-text"> <%= current_acedemic_year && current_acedemic_year != "" ? current_year.year : 'Choose Academic Year' %> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                       <% AcedemicYear.all.each do |acedemic_year| %>
                         <li><%= link_to "#{acedemic_year.year}", set_current_acedemic_year_path(acedemic_year_id: acedemic_year.id) %></li>

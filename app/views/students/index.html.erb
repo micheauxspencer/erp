@@ -9,7 +9,10 @@
           <%= hidden_field_tag :grade_id, params[:grade_id] %>
         <% end %>
         <% if params[:year].present? %>
-          <%= hidden_field_tag :year, params[:grade_id] %>
+          <%= hidden_field_tag :year, params[:year] %>
+        <% end %>
+        <% if params[:enrollment_year].present? %>
+          <%= hidden_field_tag :enrollment_year, params[:enrollment_year] %>
         <% end %>
         <%= text_field_tag :search, params[:search], class: "form-control",
         placeholder: " Search by first name, last name" %>
@@ -23,13 +26,20 @@
   </div>
 
 </div>
+
 <label class="pull-left" style="line-height: 30px">Grade: </label>
 <div class="col-md-2">
   <%= select_tag "select_grade", options_for_select(@grades.collect{ |u| [u.name, u.id]}.unshift(["Select a grade",0]), :selected => params[:grade_id]), {class: "form-control", id: "select-grade"} %>
 </div>
-<label class="pull-left" style="line-height: 30px">Acedemic Year: </label>
+
+<label class="pull-left" style="line-height: 30px">Admission Year: </label>
 <div class="col-md-2">
   <%= select_tag "select_year", options_for_select(AcedemicYear.all.collect{ |u| [u.year, u.year]}.unshift(["Select a year",0]), :selected => params[:year]), {:class =>"form-control", id: "select-year"} %>
+</div>
+
+<label class="pull-left" style="line-height: 30px">Enrollment Year: </label>
+<div class="col-md-2">
+  <%= select_tag "select_year", options_for_select(AcedemicYear.all.collect{ |u| [u.year, u.year]}.unshift(["Select a year",0]), :selected => params[:enrollment_year]), {:class =>"form-control", id: "select-enrollment-year"} %>
 </div>
 
 <span style="line-height: 30px;">Students total: <%= @students.count %></span>
@@ -58,6 +68,7 @@
       <th><%= sortable "gender" %></th>
       <th><%= sortable "birthdate" %></th>
       <th><%= sortable "admission_date" %></th>
+      <th><%= sortable "enrollment_year" %></th>
       <% unless current_user.role?('teacher') %>
         <th>Fees Amount</th>
       <% end %>
@@ -72,17 +83,18 @@
         <td><%= link_to student.id, edit_student_path(student) %></td>
         <td><%= link_to student.first_name, edit_student_path(student) %></td>
         <td><%= link_to student.last_name, edit_student_path(student) %></td>
-        <td><%= student.try(:grade).try(:name) %></td>
+        <td><%= student.current_grade(current_acedemic_year).try(:name) %></td>
         <td><%= student.gender %></td>
-        <td><%= student.birthdate.strftime("%B, %d, %Y") if student.birthdate %></td>
-        <td><%= student.admission_date.strftime("%B, %d, %Y") if student.admission_date %></td>
+        <td><%= student.birthdate.strftime("%d/%m/%Y") if student.birthdate %></td>
+        <td><%= student.admission_date.strftime("%d/%m/%Y") if student.admission_date %></td>
+        <td><%= student.enrollment_year.strftime("%d/%m/%Y") if student.enrollment_year %></td>
         <% unless current_user.role?('teacher') %>
           <td><%= student.fees.sum(:amount) %></td>
         <% end %>
         <td><%= get_health_issue(student).html_safe %></td>
         <td><%= get_enrolled(student).html_safe %></td>
         <td>
-          <% if current_user.role?(User::ROLE[:teacher]) || current_user.role?(User::ROLE[:accounting]) %>
+          <% if current_user.role?(User::ROLE[:teacher]) %>
             <%= link_to "Enter Marks", enter_mark_path(student), class: "btn btn-xs btn-primary" %>
           <% end %>
           <%= link_to 'Show', student_path(student), :class => 'btn btn-default btn-xs' %>

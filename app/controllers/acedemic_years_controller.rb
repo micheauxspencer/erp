@@ -39,7 +39,7 @@ class AcedemicYearsController < ApplicationController
             ])
           end
         end
-        format.html { redirect_to @acedemic_year, notice: 'Acedemic year was successfully created.' }
+        format.html { redirect_to @acedemic_year, notice: 'Academic year was successfully created.' }
         format.json { render :show, status: :created, location: @acedemic_year }
       else
         format.html { render :new }
@@ -53,7 +53,7 @@ class AcedemicYearsController < ApplicationController
   def update
     respond_to do |format|
       if @acedemic_year.update(acedemic_year_params)
-        format.html { redirect_to @acedemic_year, notice: 'Acedemic year was successfully updated.' }
+        format.html { redirect_to @acedemic_year, notice: 'Academic year was successfully updated.' }
         format.json { render :show, status: :ok, location: @acedemic_year }
       else
         format.html { render :edit }
@@ -73,7 +73,7 @@ class AcedemicYearsController < ApplicationController
         cookies.permanent[:current_term] = acedemic_year_last.try(:terms).try(:first).try(:id)
       end
       respond_to do |format|
-        format.html { redirect_to acedemic_years_url, notice: 'Acedemic year was successfully destroyed.' }
+        format.html { redirect_to acedemic_years_url, notice: 'Academic year was successfully destroyed.' }
         format.json { head :no_content }
       end
     else
