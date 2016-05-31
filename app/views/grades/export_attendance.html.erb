@@ -31,7 +31,7 @@
       <%= simple_form_for :report, { url: attendance_export_by_grade_path, method: :get } do |f| %>
         <div class="col-md-3">
           <%= f.input :month, collection: 1..12, :include_blank => false, class: 'form-control' %>
-          <%= f.input :year, :collection => 2010..2025, :include_blank => false, class: 'form-control' %>
+          <%= f.input :year, :collection => Time.now.year-3..Time.now.year+2, :include_blank => false, class: 'form-control' %>
           <%= f.input :grade_id, :as => "hidden", :input_html => { :value => @grade.id } %>
           <%= f.button :submit, "Export", :class => 'btn btn-default' %>
         </div>
@@ -40,7 +40,7 @@
     <div role="tabpanel" class="tab-pane" id="report-year">
       <%= simple_form_for :report, { url: attendance_export_by_grade_path, method: :get } do |f| %>
         <div class="col-md-3">
-          <%= f.input :year, :collection => 2010..2025, :include_blank => false, class: 'form-control' %>
+          <%= f.input :year, :collection => Time.now.year-3..Time.now.year+2, :include_blank => false, class: 'form-control' %>
           <%= f.input :grade_id, :as => "hidden", :input_html => { :value => @grade.id } %>
         </div>
         <div class="col-md-9" style="margin-top: 26px;">

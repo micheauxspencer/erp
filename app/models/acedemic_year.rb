@@ -12,7 +12,7 @@
 
 class AcedemicYear < ActiveRecord::Base
   
-	has_many :grades
+	has_many :grades, :dependent => :destroy
 
 	has_many :year_routes, dependent: :restrict_with_error
 	has_many :routes, through: :year_routes
@@ -20,7 +20,7 @@ class AcedemicYear < ActiveRecord::Base
 	has_many :year_fees, dependent: :restrict_with_error
 	has_many :fees, through: :year_fees
 
-  has_many :terms
+  has_many :terms, :dependent => :destroy
 
   accepts_nested_attributes_for :year_fees, :year_routes
 

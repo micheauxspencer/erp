@@ -35,12 +35,13 @@
 <% end %>
 </ul>
 
-<h2>Fees</h2>
+<h2>Terms</h2>
 <ul>
-<% @acedemic_year.fees.each do |fee| %>
-  <li><%= fee.name %> (<%= fee.amount %>)</li>
+<% @acedemic_year.terms.each do |term| %>
+  <li><%= term.name %></li>
 <% end %>
 </ul>
+
 
 <%= link_to 'Back', acedemic_years_path, class: "btn btn-default" %>
 <%= link_to 'Edit', edit_acedemic_year_path(@acedemic_year), class: "btn btn-default" %>
