@@ -26,19 +26,19 @@ class StudentsController < ApplicationController
       @students_all = Student.search_student( @grade.students.not_transferred, params[:search])
     else
       if current_user.role?('teacher')
-        @students_all = Student.search_student( current_user.students.select_student_by_year(@current_acedemic_year).not_transferred, params[:search])
+        @students_all = Student.search_student( current_user.students.not_transferred, params[:search])
       else
-        @students_all = Student.search_student( Student.select_student_by_year(@current_acedemic_year).not_transferred, params[:search])
+        @students_all = Student.search_student( Student.not_transferred, params[:search])
       end
     end
 
     if params[:year].present? && params[:year].to_i !=  0
-      @students_all = @students_all.where("extract(year from admission_date) = ?", params[:year].to_i)
-      # @students_all = @students_all.where("cast(strftime('%Y', admission_date) as int) = ?", params[:year].to_i)
+      acedemic_year = AcedemicYear.where(year: params[:year].to_i).try(:first)
+      @students_all = @students_all.select_student_by_year(acedemic_year)
     end
+
     if params[:enrollment_year].present? && params[:enrollment_year].to_i !=  0
-      @students_all = @students_all.where("extract(year from enrollment_year) = ?", params[:enrollment_year].to_i)
-      # @students_all = @students_all.where("cast(strftime('%Y', enrollment_year) as int) = ?", params[:enrollment_year].to_i)
+      @students_all = @students_all.where(enrollment_year: params[:enrollment_year].to_i)
     end
     @students = @students_all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
   end
@@ -128,7 +128,7 @@ class StudentsController < ApplicationController
         end
 
         next_acedemic_year = AcedemicYear.next_acedemic_year(@current_acedemic_year)
-        grade_student_next = GradeStudent.where(student_id: @student.id).where(grade_id: next_acedemic_year.grades.map(&:id)).try(:first)
+        grade_student_next = GradeStudent.where(student_id: @student.id).where(grade_id: next_acedemic_year.try(:grades).to_a.map(&:id)).try(:first)
         if grade_student_next.present? && grade_student_next.try(:grade_id) != params[:student][:next_grade_id]
           grade_student_next.update_attributes(grade_id: params[:student][:next_grade_id])
         else
@@ -396,27 +396,33 @@ class StudentsController < ApplicationController
   end
 
   def export_all
-    @students = Student.not_transferred.order('last_name ASC, first_name ASC')
+    @students = Student.get_list_student( params[:grade_id], params[:search], params[:year], params[:enrollment_year])
+                       .order('last_name ASC, first_name ASC')
+    name_file = "Student list" + Student.name_file( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).to_s
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student list.xls\"" }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"#{name_file}.xls\"" }
     end
   end
 
   def export_health
-    @students = Student.not_transferred.order('last_name ASC, first_name ASC')
+    @students = Student.get_list_student( params[:grade_id], params[:search], params[:year], params[:enrollment_year])
+                       .order('last_name ASC, first_name ASC')
+    name_file = "Health information list" + Student.name_file( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).to_s
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Health information list.xls\"" }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"#{name_file}.xls\"" }
     end
   end
 
   def export_route
-    @students = Student.not_transferred.where.not(route_id: nil)
+    @students = Student.get_list_student( params[:grade_id], params[:search], params[:year], params[:enrollment_year])
+                       .where.not(route_id: nil)
                        .order('last_name ASC, first_name ASC')
+    name_file = "Student route list" + Student.name_file( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).to_s
     respond_to do |format|
       format.html
-      format.xls { headers["Content-Disposition"] = "attachment; filename=\"Student route list.xls\"" }
+      format.xls { headers["Content-Disposition"] = "attachment; filename=\"#{name_file}.xls\"" }
     end
   end
 

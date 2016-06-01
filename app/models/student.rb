@@ -72,7 +72,7 @@
 #  phone                :string(255)
 #  mobile               :string(255)
 #  transferred          :boolean          default(FALSE)
-#  enrollment_year      :date
+#  enrollment_year      :integer
 #
 # Indexes
 #
@@ -109,7 +109,7 @@ class Student < ActiveRecord::Base
   scope :not_transferred, -> { where transferred: false}
 
   scope :select_student_by_year, -> (acedemic_year) {
-    joins(:grade_students).select('students.*').where("grade_students.grade_id IN (?)", acedemic_year.grades.map(&:id))
+    joins(:grade_students).select('students.*').where("grade_students.grade_id IN (?)", acedemic_year.grades.map(&:id)).uniq
   }
 
   def grade_name
@@ -166,6 +166,38 @@ class Student < ActiveRecord::Base
 
   def self.get_total_times_late(student, acedemic_year)
     Attendance.where("student_id = ? and type_action = ? and term_id in (?)", student.id, "late", acedemic_year.terms.map(&:id)).count
+  end
+
+  def self.get_list_student (grade_id, search, year, enrollment_year)
+    grade = grade_id && grade_id.to_i != 0 ? Grade.find(grade_id.to_i) : nil
+
+    students_all = []
+    if grade
+      students_all = Student.search_student( grade.students.not_transferred, search)
+    else
+      students_all = Student.search_student( Student.not_transferred, search)
+    end
+
+    if year.present? && year.to_i !=  0
+      acedemic_year = AcedemicYear.where(year: year.to_i).try(:first)
+      students_all = students_all.select_student_by_year(acedemic_year)
+    end
+
+    if enrollment_year.present? && enrollment_year.to_i !=  0
+      students_all = students_all.where(enrollment_year: enrollment_year.to_i)
+    end
+
+    return students_all
+  end
+
+  def self.name_file (grade_id, search, year, enrollment_year)
+    grade = grade_id && grade_id.to_i != 0 ? Grade.find(grade_id.to_i) : nil
+    name_file = ""
+    name_file += " year_" + year.to_s if year.present? && year.to_i !=  0
+    name_file += " grade_" + grade.try(:name) if grade.present?
+    name_file += " enrollment_year_" + enrollment_year.to_s if enrollment_year.present? && enrollment_year.to_i != 0
+    name_file += " search_" + search.to_s if search.present?
+    return name_file
   end
 
   def self.import_csv(file)

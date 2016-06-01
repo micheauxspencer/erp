@@ -32,7 +32,7 @@
   <%= select_tag "select_grade", options_for_select(@grades.collect{ |u| [u.name, u.id]}.unshift(["Select a grade",0]), :selected => params[:grade_id]), {class: "form-control", id: "select-grade"} %>
 </div>
 
-<label class="pull-left" style="line-height: 30px">Admission Year: </label>
+<label class="pull-left" style="line-height: 30px">Academic Year: </label>
 <div class="col-md-2">
   <%= select_tag "select_year", options_for_select(AcedemicYear.all.collect{ |u| [u.year, u.year]}.unshift(["Select a year",0]), :selected => params[:year]), {:class =>"form-control", id: "select-year"} %>
 </div>
@@ -48,15 +48,20 @@
 <% if current_user.role?(User::ROLE[:accounting]) %>
   <%= link_to t('.new', :default => t("helpers.links.new")), new_student_path, :class => 'btn btn-primary' %>
   <%= link_to 'Import', import_student_path, :class => 'btn btn-primary' %>
-  <%= link_to 'Export All', student_export_all_path(format: "xls"), :class => "btn btn-primary" %>
-  <%= link_to 'Export Health', export_health_path(format: "xls"), :class => "btn btn-primary" %>
-  <%= link_to 'Export Route', export_route_student_path(format: "xls"), :class => "btn btn-primary" %>
-
+  <%= link_to 'Export Student', 
+              student_export_all_path(format: "xls", :grade_id => params[:grade_id], :year => params[:year], :enrollment_year => params[:enrollment_year], :search => params[:search]),
+              :class => "btn btn-primary" %>
+  <%= link_to 'Export Health', 
+              export_health_path(format: "xls", :grade_id => params[:grade_id], :year => params[:year], :enrollment_year => params[:enrollment_year], :search => params[:search]),
+              :class => "btn btn-primary" %>
+  <%= link_to 'Export Route',
+              export_route_student_path(format: "xls", :grade_id => params[:grade_id], :year => params[:year], :enrollment_year => params[:enrollment_year], :search => params[:search]),
+              :class => "btn btn-primary" %>
   <%= link_to 'Delete All',
-                      delete_all_student_path,
-                      :method => :post,
-                      :data => { :confirm => "Are you sure delete all students?" },
-                      :class => 'btn btn-danger pull-right' %>
+              delete_all_student_path,
+              :method => :post,
+              :data => { :confirm => "Are you sure delete all students?" },
+              :class => 'btn btn-danger pull-right' %>
 <% end %>
 <table class="table table-striped table-student">
   <thead>
@@ -87,7 +92,7 @@
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%d/%m/%Y") if student.birthdate %></td>
         <td><%= student.admission_date.strftime("%d/%m/%Y") if student.admission_date %></td>
-        <td><%= student.enrollment_year.strftime("%d/%m/%Y") if student.enrollment_year %></td>
+        <td><%= student.enrollment_year %></td>
         <% unless current_user.role?('teacher') %>
           <td><%= student.fees.sum(:amount) %></td>
         <% end %>

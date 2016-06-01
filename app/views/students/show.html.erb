@@ -17,7 +17,11 @@
   <dt><strong><%= model_class.human_attribute_name(:sin) %>:</strong></dt>
   <dd><%= @student.sin %></dd>
   <dt><strong><%= model_class.human_attribute_name(:birthdate) %>:</strong></dt>
-  <dd><%= @student.birthdate %></dd>
+  <dd><%= @student.birthdate.strftime("%d/%m/%Y") if @student.birthdate  %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:admission_date) %>:</strong></dt>
+  <dd><%= @student.admission_date.strftime("%d/%m/%Y") if @student.admission_date %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:enrollment_year) %>:</strong></dt>
+  <dd><%= @student.enrollment_year %></dd>
   <dt><strong><%= model_class.human_attribute_name(:trans_req) %>:</strong></dt>
   <dd><%= @student.trans_req %></dd>
   <dt><strong><%= model_class.human_attribute_name(:tax_rec_req) %>:</strong></dt>

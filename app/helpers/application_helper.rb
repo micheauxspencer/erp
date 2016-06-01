@@ -3,7 +3,7 @@ module ApplicationHelper
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-    link_to title, {grade_id: params[:grade_id], year: params[:year], :sort => column, :direction => direction, search: params[:search]}, {:class => css_class}
+    link_to title, {grade_id: params[:grade_id], year: params[:year], enrollment_year: params[:enrollment_year], :sort => column, :direction => direction, search: params[:search]}, {:class => css_class}
   end
 
   def sortable_attendance(column, title = nil)
