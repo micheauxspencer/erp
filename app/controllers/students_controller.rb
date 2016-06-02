@@ -391,7 +391,7 @@ class StudentsController < ApplicationController
   end
 
   def export_all
-    @students = Student.where(id: params[:students].map{|id| id.to_i}).order('last_name ASC, first_name ASC')
+    @students = params[:students].present? ? Student.where(id: params[:students].map{|id| id.to_i}).order('last_name ASC, first_name ASC') : Student.get_list_student( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).order('last_name ASC, first_name ASC')
     name_file = "Student list" + Student.name_file( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).to_s
     respond_to do |format|
       format.html
@@ -400,7 +400,7 @@ class StudentsController < ApplicationController
   end
 
   def export_health
-    @students = Student.where(id: params[:students].map{|id| id.to_i}).order('last_name ASC, first_name ASC')
+    @students = params[:students].present? ? Student.where(id: params[:students].map{|id| id.to_i}).order('last_name ASC, first_name ASC') : Student.get_list_student( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).order('last_name ASC, first_name ASC')
     name_file = "Health information list" + Student.name_file( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).to_s
     respond_to do |format|
       format.html
@@ -409,7 +409,7 @@ class StudentsController < ApplicationController
   end
 
   def export_route
-    @students = Student.where(id: params[:students].map{|id| id.to_i}).where.not(route_id: nil).order('last_name ASC, first_name ASC')
+    @students = params[:students].present? ? Student.get_list_student( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).where.not(route_id: nil).order('last_name ASC, first_name ASC') : Student.where(id: params[:students].map{|id| id.to_i}).where.not(route_id: nil).order('last_name ASC, first_name ASC')
     name_file = "Student route list" + Student.name_file( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).to_s
     respond_to do |format|
       format.html
