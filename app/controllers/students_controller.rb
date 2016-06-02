@@ -15,11 +15,11 @@ class StudentsController < ApplicationController
 
     if current_user.role?('teacher')
       @grades =  current_user.grades.where(acedemic_year_id: @current_year.id)
-      @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? @current_year.grades.find_by(id: params[:grade_id]) : nil
     else
       @grades = @current_year.grades
-      @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? @current_year.grades.find_by(id: params[:grade_id]) : nil
     end
+
+    @grade = params[:grade] && params[:grade] != '' ? @current_year.grades.where("name LIKE ?",  "%#{params[:grade]}%").first : nil
 
     redirect_to root_path if current_user.role?('teacher') && @grade && !current_user.grades.include?(@grade)
 

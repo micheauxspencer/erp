@@ -5,8 +5,8 @@
   <div id="search-studnent" class="col-md-5">
     <div id="imaginary_container">
       <%= form_tag students_path, :method => "get", class: "input-group stylish-input-group" do %>
-        <% if params[:grade_id].present? %>
-          <%= hidden_field_tag :grade_id, params[:grade_id] %>
+        <% if params[:grade].present? %>
+          <%= hidden_field_tag :grade, params[:grade] %>
         <% end %>
         <% if params[:year].present? %>
           <%= hidden_field_tag :year, params[:year] %>
@@ -29,7 +29,7 @@
 
 <label class="pull-left" style="line-height: 30px">Grade: </label>
 <div class="col-md-2">
-  <%= select_tag "select_grade", options_for_select(@grades.collect{ |u| [u.name, u.id]}.unshift(["Select a grade",0]), :selected => params[:grade_id]), {class: "form-control", id: "select-grade"} %>
+  <%= select_tag "select_grade", options_for_select(@grades.collect{ |u| [u.name, u.name]}.unshift(["Select a grade", '']), :selected => params[:grade]), {class: "form-control", id: "select-grade"} %>
 </div>
 
 <label class="pull-left" style="line-height: 30px">Academic Year: </label>
