@@ -3,7 +3,7 @@
   <h1 class="col-md-7" style="margin: 0px;"><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 
   <div id="search-studnent" class="col-md-5">
-    <div id="imaginary_container"> 
+    <div id="imaginary_container">
       <%= form_tag students_path, :method => "get", class: "input-group stylish-input-group" do %>
         <% if params[:grade_id].present? %>
           <%= hidden_field_tag :grade_id, params[:grade_id] %>
@@ -19,7 +19,7 @@
         <span class="input-group-addon">
           <button type="submit">
             <span><i class="fa fa-search"></i></span>
-          </button>  
+          </button>
         </span>
       <% end %>
     </div>
@@ -34,7 +34,7 @@
 
 <label class="pull-left" style="line-height: 30px">Academic Year: </label>
 <div class="col-md-2">
-  <%= select_tag "select_year", options_for_select(AcedemicYear.all.collect{ |u| [u.year, u.year]}.unshift(["Select a year",0]), :selected => params[:year]), {:class =>"form-control", id: "select-year"} %>
+  <%= select_tag "select_year", options_for_select(AcedemicYear.all.collect{ |u| [u.year, u.year]}.unshift(["Select a year", '']), :selected => @current_year.year), {:class =>"form-control", id: "select-year"} %>
 </div>
 
 <label class="pull-left" style="line-height: 30px">Enrollment Year: </label>
@@ -48,14 +48,14 @@
 <% if current_user.role?(User::ROLE[:accounting]) %>
   <%= link_to t('.new', :default => t("helpers.links.new")), new_student_path, :class => 'btn btn-primary' %>
   <%= link_to 'Import', import_student_path, :class => 'btn btn-primary' %>
-  <%= link_to 'Export Student', 
-              student_export_all_path(format: "xls", :grade_id => params[:grade_id], :year => params[:year], :enrollment_year => params[:enrollment_year], :search => params[:search]),
+  <%= link_to 'Export Student',
+              student_export_all_path(format: "xls", students: @students.pluck(:id)),
               :class => "btn btn-primary" %>
-  <%= link_to 'Export Health', 
-              export_health_path(format: "xls", :grade_id => params[:grade_id], :year => params[:year], :enrollment_year => params[:enrollment_year], :search => params[:search]),
+  <%= link_to 'Export Health',
+              export_health_path(format: "xls", students: @students.pluck(:id)),
               :class => "btn btn-primary" %>
   <%= link_to 'Export Route',
-              export_route_student_path(format: "xls", :grade_id => params[:grade_id], :year => params[:year], :enrollment_year => params[:enrollment_year], :search => params[:search]),
+              export_route_student_path(format: "xls", students: @students.pluck(:id)),
               :class => "btn btn-primary" %>
   <%= link_to 'Delete All',
               delete_all_student_path,
@@ -88,7 +88,7 @@
         <td><%= link_to student.id, edit_student_path(student) %></td>
         <td><%= link_to student.first_name, edit_student_path(student) %></td>
         <td><%= link_to student.last_name, edit_student_path(student) %></td>
-        <td><%= student.current_grade(current_acedemic_year).try(:name) %></td>
+        <td><%= student.grade.try(:name) %></td>
         <td><%= student.gender %></td>
         <td><%= student.birthdate.strftime("%d/%m/%Y") if student.birthdate %></td>
         <td><%= student.admission_date.strftime("%d/%m/%Y") if student.admission_date %></td>

@@ -11,7 +11,7 @@
 #
 
 class AcedemicYear < ActiveRecord::Base
-  
+
 	has_many :grades, :dependent => :destroy
 
 	has_many :year_routes, dependent: :restrict_with_error
@@ -21,6 +21,8 @@ class AcedemicYear < ActiveRecord::Base
 	has_many :fees, through: :year_fees
 
   has_many :terms, :dependent => :destroy
+
+  validates :year, :uniqueness => true
 
   accepts_nested_attributes_for :year_fees, :year_routes
 

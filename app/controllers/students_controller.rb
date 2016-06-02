@@ -11,35 +11,30 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
+    @current_year = params[:year].present? ? AcedemicYear.find_by(year: params[:year].to_i) : AcedemicYear.find(current_acedemic_year.to_i)
+
     if current_user.role?('teacher')
-      @grades =  current_user.grades.where(acedemic_year_id: current_acedemic_year)
-      @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? current_user.grades.find(params[:grade_id]) : nil
+      @grades =  current_user.grades.where(acedemic_year_id: @current_year.id)
+      @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? @current_year.grades.find_by(id: params[:grade_id]) : nil
     else
-      @grades = Grade.where(acedemic_year_id: current_acedemic_year)
-      @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? Grade.find(params[:grade_id]) : nil
+      @grades = @current_year.grades
+      @grade = params[:grade_id] && params[:grade_id].to_i != 0 ? @current_year.grades.find_by(id: params[:grade_id]) : nil
     end
 
     redirect_to root_path if current_user.role?('teacher') && @grade && !current_user.grades.include?(@grade)
 
-    @students_all = []
     if @grade
       @students_all = Student.search_student( @grade.students.not_transferred, params[:search])
+    elsif current_user.role?('teacher')
+      @students_all = Student.search_student( current_user.students.select_student_by_year(@current_year).not_transferred, params[:search])
     else
-      if current_user.role?('teacher')
-        @students_all = Student.search_student( current_user.students.not_transferred, params[:search])
-      else
-        @students_all = Student.search_student( Student.not_transferred, params[:search])
-      end
-    end
-
-    if params[:year].present? && params[:year].to_i !=  0
-      acedemic_year = AcedemicYear.where(year: params[:year].to_i).try(:first)
-      @students_all = @students_all.select_student_by_year(acedemic_year)
+      @students_all = Student.search_student( Student.select_student_by_year(@current_year).not_transferred, params[:search])
     end
 
     if params[:enrollment_year].present? && params[:enrollment_year].to_i !=  0
       @students_all = @students_all.where(enrollment_year: params[:enrollment_year].to_i)
     end
+
     @students = @students_all.order(sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 100)
   end
 
@@ -396,8 +391,7 @@ class StudentsController < ApplicationController
   end
 
   def export_all
-    @students = Student.get_list_student( params[:grade_id], params[:search], params[:year], params[:enrollment_year])
-                       .order('last_name ASC, first_name ASC')
+    @students = Student.where(id: params[:students].map{|id| id.to_i}).order('last_name ASC, first_name ASC')
     name_file = "Student list" + Student.name_file( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).to_s
     respond_to do |format|
       format.html
@@ -406,8 +400,7 @@ class StudentsController < ApplicationController
   end
 
   def export_health
-    @students = Student.get_list_student( params[:grade_id], params[:search], params[:year], params[:enrollment_year])
-                       .order('last_name ASC, first_name ASC')
+    @students = Student.where(id: params[:students].map{|id| id.to_i}).order('last_name ASC, first_name ASC')
     name_file = "Health information list" + Student.name_file( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).to_s
     respond_to do |format|
       format.html
@@ -416,9 +409,7 @@ class StudentsController < ApplicationController
   end
 
   def export_route
-    @students = Student.get_list_student( params[:grade_id], params[:search], params[:year], params[:enrollment_year])
-                       .where.not(route_id: nil)
-                       .order('last_name ASC, first_name ASC')
+    @students = Student.where(id: params[:students].map{|id| id.to_i}).where.not(route_id: nil).order('last_name ASC, first_name ASC')
     name_file = "Student route list" + Student.name_file( params[:grade_id], params[:search], params[:year], params[:enrollment_year]).to_s
     respond_to do |format|
       format.html
